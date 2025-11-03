@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 import 'package:personal_portfolio/components/education_cards.dart';
+// import 'package:personal_portfolio/components/hover_widget.dart';
 
 import 'package:personal_portfolio/components/scrollable_page.dart';
 import 'package:personal_portfolio/components/experience_cards.dart';
@@ -37,7 +38,7 @@ class ExperienceAndEducation extends StatelessWidget {
                     size: const Size(500, 300),
                     color: const Color.fromRGBO(252, 248, 230, 1.0),
                     lavaCount: 8,
-                    speed: 1,
+                    speed: 2,
                     repeatDuration: const Duration(seconds: 4),
                   ),
                 ),
@@ -139,7 +140,7 @@ class ExperienceAndEducation extends StatelessWidget {
                     const SizedBox(height: 48),
                     Socials(),
                     const SizedBox(height: 80),
-                    const FooterWave(),
+                    FooterWave(userColor: Color(0xFFF9FAFF)),
                   ],
                 ),
               ],

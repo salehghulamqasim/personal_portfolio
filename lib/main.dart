@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_portfolio/pages/contact_screen.dart';
 import 'package:personal_portfolio/pages/experience_and_edu.dart';
 import 'package:personal_portfolio/pages/homescreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
+        //builder is a function that returns a widget and underscore means we don't use the first parameter
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
             '/projects': (context) => const Placeholder(),
             '/experience_education': (context) =>
                 const ExperienceAndEducation(),
-            '/contact': (context) => const Placeholder(),
+            '/contact': (context) => const ContactScreen(),
           },
           title: 'Flutter Portfolio',
           theme: ThemeData(
@@ -61,14 +63,19 @@ class MyApp extends StatelessWidget {
             final widthScale = mq.size.width / chosen.width;
             final clampedTextScale = widthScale.clamp(1.0, 1.4);
 
-            return WebPointer(
-              circleColor: Colors.black,
-              roundColor: Colors.orange,
-              roundDuration: 10,
-              circleDuration: 200,
-              child: MediaQuery(
-                data: mq.copyWith(textScaleFactor: clampedTextScale),
-                child: childWidget!,
+            return MouseRegion(
+              cursor:
+                  SystemMouseCursors.none, //this should hide the mouse pointer
+
+              child: WebPointer(
+                circleColor: Colors.black,
+                roundColor: Colors.orange,
+                roundDuration: 10,
+                circleDuration: 200,
+                child: MediaQuery(
+                  data: mq.copyWith(textScaleFactor: clampedTextScale),
+                  child: childWidget!,
+                ),
               ),
             );
           },

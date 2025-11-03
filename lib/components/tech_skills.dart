@@ -1,6 +1,7 @@
 // This page renders simple outlined chips for tech skills.
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:personal_portfolio/components/hover_widget.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 
 class TechSkills extends StatelessWidget {
@@ -29,22 +30,27 @@ class TechSkills extends StatelessWidget {
   }
 
   Widget _buildChip(String label) {
-    return Chip(
-      label: Text(
-        label,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-      ),
-      backgroundColor: Colors.white,
-      side: const BorderSide(
-        color: AppColors.primaryOrange, // Orange outline
-        width: 2,
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    return HoverWidget(
+      hoverScale: 1.1,
+      borderRadius: BorderRadius.circular(20),
+      builder: (isHovered) {
+        return Chip(
+          label: Text(
+            label,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          backgroundColor: isHovered ? AppColors.primaryOrange : Colors.white,
+          side: const BorderSide(color: AppColors.primaryOrange, width: 2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        );
+      },
     );
   }
 }

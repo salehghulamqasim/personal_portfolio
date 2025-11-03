@@ -78,14 +78,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     _buildNavButton(
                       text: 'About Me',
                       onPressed: () => _onAboutPressed(context),
-                      isActive: currentRoute == '/about', // ← Check if active
+                      isActive: currentRoute == '/about',
                     ),
 
                     _buildNavButton(
                       text: 'Projects',
                       onPressed: () => _onProjectsPressed(context),
-                      isActive:
-                          currentRoute == '/projects', // ← Check if active
+                      isActive: currentRoute == '/projects',
                     ),
                     _buildNavButton(
                       text: 'Experience & Education',
@@ -94,9 +93,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
 
                     _buildNavButton(
-                      text: 'My Contacts',
+                      text: 'Contacts Me',
                       onPressed: () => _onContactPressed(context),
-                      isActive: currentRoute == '/contact', // ← Check if active
+                      isActive: currentRoute == '/contact',
                     ),
                   ],
                 ),

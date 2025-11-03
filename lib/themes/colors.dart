@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary Colors
-  static const Color primaryOrange = Color(
-    0xFFFCC346,
-  ); // Your primary orange color
+  static const Color primaryOrange = Color.fromRGBO(
+    252,
+    195,
+    70,
+    1.0,
+  ); // RGB(252, 195, 70)
 
   // Background Colors
   static const Color background = Color(0xFFF9FAFF); // RGB(249, 250, 255)

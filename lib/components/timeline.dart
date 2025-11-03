@@ -1,13 +1,11 @@
-// for connecting lines with animation logic
-// Create: lib/components/experience_timeline.dart
+// Simple timeline that uses ExperienceCards data
 import 'package:flutter/material.dart';
-import 'package:timelines/timelines.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// ignore: unused_import
 import 'package:personal_portfolio/themes/text_styles.dart';
 
+// Simple timeline that takes raw data (same as ExperienceCards)
 class ExperienceTimeline extends StatelessWidget {
-  final List<ExperienceData> experiences;
+  final List<ExperienceCardData> experiences;
   final int? selectedIndex;
 
   const ExperienceTimeline({
@@ -18,59 +16,27 @@ class ExperienceTimeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(maxWidth: 900.w),
-      child: Timeline.tileBuilder(
-        theme: TimelineThemeData(
-          nodePosition: 0.0, // Put dots on the left
-          connectorTheme: ConnectorThemeData(
-            thickness: 2.0,
-            color: Color(0xFFFDC435).withOpacity(0.3), // Connecting line
+    return Column(
+      children: [
+        for (int i = 0; i < experiences.length; i++)
+          TimelineItem(
+            experience: experiences[i],
+            isLast: i == experiences.length - 1,
+            isSelected: selectedIndex == i,
           ),
-        ),
-        builder: TimelineTileBuilder.connected(
-          itemCount: experiences.length,
-
-          // The timeline dots
-          indicatorBuilder: (context, index) => DotIndicator(
-            color: selectedIndex == index
-                ? Color(0xFFFDC435)
-                : Color(0xFFFDC435).withOpacity(0.7),
-            size: selectedIndex == index ? 24.0 : 20.0,
-          ),
-
-          // The connecting lines
-          connectorBuilder: (context, index, type) {
-            if (index < experiences.length - 1) {
-              return SolidLineConnector(
-                color: Color(0xFFFDC435).withOpacity(0.3),
-              );
-            }
-            return null; // No line after last item
-          },
-
-          // Your experience card content
-          contentsBuilder: (context, index) => Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width < 768 ? 20.w : 40.w,
-              bottom: 20.h,
-            ),
-            child: ExperienceCardContent(experience: experiences[index]),
-          ),
-        ),
-      ),
+      ],
     );
   }
 }
 
-// Data model
-class ExperienceData {
+// Data structure that matches ExperienceCards
+class ExperienceCardData {
   final String title;
   final String position;
   final String dateRange;
   final String description;
 
-  ExperienceData({
+  ExperienceCardData({
     required this.title,
     required this.position,
     required this.dateRange,
@@ -78,36 +44,173 @@ class ExperienceData {
   });
 }
 
-// Just the card content (without the dot)
-class ExperienceCardContent extends StatelessWidget {
-  final ExperienceData experience;
+// Single timeline item
+class TimelineItem extends StatelessWidget {
+  final ExperienceCardData experience;
+  final bool isLast;
+  final bool isSelected;
 
-  const ExperienceCardContent({super.key, required this.experience});
+  const TimelineItem({
+    super.key,
+    required this.experience,
+    required this.isLast,
+    required this.isSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(
-        MediaQuery.of(context).size.width < 768 ? 20.w : 32.w,
+      constraints: BoxConstraints(maxWidth: 900.w),
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width < 768 ? 20.w : 0,
       ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          MediaQuery.of(context).size.width < 768 ? 12.r : 16.r,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x14708FB0),
-            offset: Offset(0, 4),
-            blurRadius: 24,
-          ),
-        ],
-      ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Your existing card content here...
-          // (date badge, title, position, description)
+          // Timeline dot + line
+          Column(
+            children: [
+              // Yellow dot
+              Container(
+                width: isSelected ? 24.w : 20.w,
+                height: isSelected ? 24.h : 20.h,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFDC435),
+                  shape: BoxShape.circle,
+                ),
+              ),
+
+              // Line below dot
+              if (!isLast)
+                Container(
+                  width: 2.w,
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  color: const Color(0xFFFDC435).withOpacity(0.5),
+                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                ),
+            ],
+          ),
+
+          SizedBox(
+            width: MediaQuery.of(context).size.width < 768 ? 20.w : 40.w,
+          ),
+
+          // Experience card content (same styling as ExperienceCards)
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 24.h),
+              padding: EdgeInsets.all(
+                MediaQuery.of(context).size.width < 768 ? 20.w : 32.w,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.circular(
+                  MediaQuery.of(context).size.width < 768 ? 12.r : 16.r,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0x14708FB0),
+                    offset: const Offset(0, 4),
+                    blurRadius: 24,
+                    spreadRadius: 0,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Date badge (same as ExperienceCards)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Spacer(),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width < 768
+                              ? 12.w
+                              : 16.w,
+                          vertical: MediaQuery.of(context).size.width < 768
+                              ? 4.h
+                              : 6.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFCC346),
+                          borderRadius: BorderRadius.circular(
+                            MediaQuery.of(context).size.width < 768
+                                ? 8.r
+                                : 12.r,
+                          ),
+                        ),
+                        child: Text(
+                          experience.dateRange,
+                          style: Fonts.roboto.copyWith(
+                            fontSize: MediaQuery.of(context).size.width < 768
+                                ? 12.sp
+                                : 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF25282B),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width < 768
+                        ? 12.h
+                        : 16.h,
+                  ),
+
+                  // Company name (same as ExperienceCards)
+                  Text(
+                    experience.title,
+                    style: Fonts.playfair.copyWith(
+                      fontSize: MediaQuery.of(context).size.width < 768
+                          ? 22.sp
+                          : 28.sp,
+                      fontWeight: FontWeight.w900,
+                      color: const Color(0xFF25282B),
+                      height: 1.3,
+                    ),
+                  ),
+
+                  SizedBox(height: 4.h),
+
+                  // Position (same as ExperienceCards)
+                  Text(
+                    experience.position,
+                    style: Fonts.nunito.copyWith(
+                      fontSize: MediaQuery.of(context).size.width < 768
+                          ? 16.sp
+                          : 18.sp,
+                      color: const Color(0xFF828282),
+                      fontWeight: FontWeight.w400,
+                      height: 1.5,
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width < 768
+                        ? 12.h
+                        : 16.h,
+                  ),
+
+                  // Description (same as ExperienceCards)
+                  Text(
+                    experience.description,
+                    style: Fonts.nunito.copyWith(
+                      fontSize: MediaQuery.of(context).size.width < 768
+                          ? 14.sp
+                          : 16.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF828282),
+                      height: 1.6,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

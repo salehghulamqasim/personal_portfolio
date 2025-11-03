@@ -67,7 +67,7 @@ class HeroImageStack extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           // Background
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(

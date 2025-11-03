@@ -110,6 +110,8 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
       ),
+      // Remove any bottomNavigationBar or ensure resizeToAvoidBottomInset: false
+      resizeToAvoidBottomInset: false,
     );
   }
 }
