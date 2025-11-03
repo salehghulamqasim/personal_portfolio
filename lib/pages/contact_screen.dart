@@ -25,34 +25,35 @@ class ContactScreen extends StatelessWidget {
               height: kToolbarHeight,
             ), // Add space for transparent AppBar
 
-            SizedBox(
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: LavaLampEffect(
-                      size: const Size(500, 300), // Same as experience page
-                      color: AppColors.primaryOrange,
-                      lavaCount: 8,
-                      speed: 2,
-                      repeatDuration: const Duration(seconds: 4),
+            Stack(
+              children: [
+                // Fixed container for lava lamp background
+                Container(
+                  height: 600, // Fixed height
+                  width: double.infinity,
+                  child: LavaLampEffect(
+                    size: const Size(800, 600),
+                    color: AppColors.primaryOrange,
+                    lavaCount: 8,
+                    speed: 2,
+                    repeatDuration: const Duration(seconds: 4),
+                  ),
+                ),
+
+                Column(
+                  children: [
+                    const SizedBox(height: 18),
+
+                    const SectionTitle(
+                      text: 'Get in Touch!',
+                      lineWidth: 100,
+                      size: 32,
                     ),
-                  ),
-
-                  Column(
-                    children: [
-                      const SizedBox(height: 18),
-
-                      const SectionTitle(
-                        text: 'Get in Touch!',
-                        lineWidth: 100,
-                        size: 32,
-                      ),
-                      const SizedBox(height: 8), // Add some space
-                      ContactForm(),
-                    ],
-                  ),
-                ],
-              ),
+                    const SizedBox(height: 8), // Add some space
+                    ContactForm(),
+                  ],
+                ),
+              ],
             ),
 
             const SizedBox(height: 20),

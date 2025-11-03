@@ -33,9 +33,12 @@ class ExperienceAndEducation extends StatelessWidget {
             ), // Add space for transparent AppBar
             Stack(
               children: [
-                Positioned.fill(
+                // Fixed container for lava lamp background
+                Container(
+                  height: 2000, // Fixed large height
+                  width: double.infinity,
                   child: LavaLampEffect(
-                    size: const Size(500, 300),
+                    size: const Size(800, 2000),
                     color: const Color.fromRGBO(252, 248, 230, 1.0),
                     lavaCount: 8,
                     speed: 2,
