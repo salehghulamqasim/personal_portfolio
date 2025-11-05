@@ -28,8 +28,16 @@ class HeroSection extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
+                    // the actual file size is [2880×2516] but the oen being load is 640×559
+                    //so we add cache height and widht so flutter knows it needs to be only load at 640x559 so it wont cause perfoamcen issues
                     Image.asset(
-                      "assets/images/MaskedSaleh.png",
+                      "assets/images/MaskedSaleh.webp",
+                      cacheHeight:
+                          (560 * MediaQuery.of(context).devicePixelRatio)
+                              .round(),
+                      cacheWidth:
+                          (640 * MediaQuery.of(context).devicePixelRatio)
+                              .round(),
                       fit: BoxFit.cover,
                     ),
                   ],
@@ -61,7 +69,7 @@ class HeroImageStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 400.h,
       child: Stack(
         alignment: Alignment.center,
@@ -71,7 +79,11 @@ class HeroImageStack extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(
-              "assets/images/MaskedSaleh.png",
+              "assets/images/MaskedSaleh.webp",
+              cacheHeight: (560 * MediaQuery.of(context).devicePixelRatio)
+                  .round(),
+              cacheWidth: (640 * MediaQuery.of(context).devicePixelRatio)
+                  .round(),
               fit: BoxFit.cover,
             ),
           ),
@@ -115,7 +127,7 @@ class HeroTextContent extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Text(
-            'Front-end developer and designer. I\'m passionate about creating beautiful and functional digital experiences.',
+            'I build apps that people actually want to use.\nStarted coding during university, got obsessed with Flutter, and now I can\'t stop building stuff. Currently crushing on clean animations and pixel-perfect UIs.',
             style: Fonts.nunito.copyWith(
               fontSize: 16.sp,
               color: Colors.grey[600],

@@ -1,6 +1,7 @@
 //this page is just about creating a scrollable page with appbar
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/components/app_bar.dart';
+import 'package:personal_portfolio/components/mobilebar.dart';
 
 class ScrollablePage extends StatefulWidget {
   final Widget child;
@@ -14,6 +15,7 @@ class ScrollablePage extends StatefulWidget {
 
 class _ScrollablePageState extends State<ScrollablePage> {
   final ScrollController _scrollController = ScrollController();
+
   bool _isAtTop = true;
 
   @override
@@ -35,16 +37,43 @@ class _ScrollablePageState extends State<ScrollablePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: CustomAppBar(
-        opacity: _isAtTop ? 1.0 : 0.0,
-        currentRoute: widget.currentRoute,
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: widget.child,
-      ),
-    );
+    final isMobile = MediaQuery.of(context).size.width < 768;
+
+    if (isMobile) {
+      // Mobile: Use built-in endDrawer for right-side drawer
+      return Scaffold(
+        extendBodyBehindAppBar: true,
+        endDrawer: MobileDrawerContent(currentRoute: widget.currentRoute),
+        appBar: MobileAppBar(
+          opacity: _isAtTop ? 1.0 : 0.0,
+          currentRoute: widget.currentRoute,
+        ),
+        body: SafeArea(
+          top: false, // Important: This was missing!
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: widget.child,
+          ),
+        ),
+        resizeToAvoidBottomInset: false, // Important: This was missing!
+      );
+    } else {
+      // Desktop: Use regular AppBar
+      return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: CustomAppBar(
+          opacity: _isAtTop ? 1.0 : 0.0,
+          currentRoute: widget.currentRoute,
+        ),
+        body: SafeArea(
+          top: false, // Important: This was missing!
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: widget.child,
+          ),
+        ),
+        resizeToAvoidBottomInset: false, // Important: This was missing!
+      );
+    }
   }
 }

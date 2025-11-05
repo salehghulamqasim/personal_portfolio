@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -11,7 +12,7 @@ class FooterWave extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 100, // Fixed height
+      height: 100.h, // Responsive height
       child: Stack(
         children: [
           // Background to ensure no gaps
@@ -32,7 +33,7 @@ class FooterWave extends StatelessWidget {
               heightPercentages: [0.35, 0.25, 0.15],
             ),
             backgroundColor: Colors.transparent,
-            size: Size(double.infinity, 100),
+            size: Size(double.infinity, 100.h),
             waveAmplitude: 0,
           ),
         ],

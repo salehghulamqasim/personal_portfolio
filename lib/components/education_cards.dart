@@ -39,10 +39,12 @@ class _EducationCardsState extends State<EducationCards> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 768;
+
     return ConstrainedBox(
       constraints: BoxConstraints(
-        minWidth: MediaQuery.of(context).size.width < 768 ? 280.w : 400.w,
-        maxWidth: MediaQuery.of(context).size.width < 768 ? 350.w : 400.w,
+        minWidth: isMobile ? 280.w : 350.w,
+        maxWidth: isMobile ? 350.w : 400.w,
       ),
       child: MouseRegion(
         onEnter: (_) => setState(() => isHovered = true),
@@ -50,19 +52,19 @@ class _EducationCardsState extends State<EducationCards> {
         cursor: SystemMouseCursors.click,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          // Move UP by 8px when hovered
+          // Move UP by 8px when hovered (same as experience cards)
           transform: Matrix4.translationValues(0, isHovered ? -8 : 0, 0),
           padding: EdgeInsets.all(
-            MediaQuery.of(context).size.width < 768 ? 16.w : 20.w,
+            isMobile ? 20.w : 24.w, // Match experience cards padding better
           ),
           decoration: BoxDecoration(
             color: AppColors.cardBackground, // White stays same
             borderRadius: BorderRadius.circular(
-              MediaQuery.of(context).size.width < 768 ? 16.r : 24.r,
+              isMobile ? 12.r : 16.r, // Match experience cards border radius
             ),
             boxShadow: [
               BoxShadow(
-                // Exact shadow specifications
+                // Exact shadow specifications (same as experience cards)
                 color: isHovered
                     ? const Color(0x26708FB0) // rgba(112, 144, 176, 0.15)
                     : const Color(0x14708FB0), // rgba(112, 144, 176, 0.08)
@@ -75,68 +77,69 @@ class _EducationCardsState extends State<EducationCards> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 12.w : 16.w,
+                      vertical: isMobile ? 4.h : 6.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryOrange,
+                      borderRadius: BorderRadius.circular(
+                        isMobile ? 8.r : 12.r,
+                      ),
+                    ),
+                    child: Text(
+                      widget.dateRange,
+                      style: Fonts.roboto.copyWith(
+                        fontSize: isMobile ? 12.sp : 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: isMobile ? 16.h : 20.h),
+
+              // Institution name (main title)
               Text(
                 widget.institution,
                 style: Fonts.playfair.copyWith(
-                  fontSize: MediaQuery.of(context).size.width < 768
-                      ? 18.sp
-                      : 20.sp,
-                  fontWeight: FontWeight.bold,
+                  fontSize: isMobile ? 20.sp : 24.sp, // Slightly larger
+                  fontWeight: FontWeight.w900, // Match experience cards
                   color: AppColors.textPrimary,
+                  height: 1.3,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width < 768 ? 12.h : 16.h,
-              ),
+
+              SizedBox(height: 8.h),
+
+              // Degree (subtitle)
               Text(
                 widget.degree,
                 style: Fonts.nunito.copyWith(
-                  fontSize: MediaQuery.of(context).size.width < 768
-                      ? 14.sp
-                      : 16.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textPrimary,
+                  fontSize: isMobile ? 14.sp : 16.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors
+                      .textSecondary, // Use secondary color like experience cards
+                  height: 1.5,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width < 768 ? 10.h : 12.h,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width < 768
-                      ? 10.w
-                      : 12.w,
-                  vertical: MediaQuery.of(context).size.width < 768 ? 3.h : 4.h,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.primaryOrange.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(
-                    MediaQuery.of(context).size.width < 768 ? 8.r : 12.r,
-                  ),
-                ),
-                child: Text(
-                  widget.dateRange,
-                  style: Fonts.roboto.copyWith(
-                    fontSize: MediaQuery.of(context).size.width < 768
-                        ? 10.sp
-                        : 12.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width < 768 ? 10.h : 12.h,
-              ),
+
+              SizedBox(height: isMobile ? 16.h : 20.h),
+
+              // Description
               Text(
                 widget.description,
                 style: Fonts.nunito.copyWith(
-                  fontSize: MediaQuery.of(context).size.width < 768
-                      ? 12.sp
-                      : 14.sp,
+                  fontSize: isMobile ? 14.sp : 16.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.textSecondary,
-                  height: 1.5,
+                  height: 1.6, // Match experience cards line height
                 ),
               ),
             ],

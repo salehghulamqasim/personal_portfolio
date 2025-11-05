@@ -17,6 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.currentRoute,
     this.scrollController,
   });
+
   //below are navigation functions to navigate to different pages
   /// Navigation handler methods for the main menu actions.
   /// These methods use Flutter's Navigator to push named routes when menu items are pressed.

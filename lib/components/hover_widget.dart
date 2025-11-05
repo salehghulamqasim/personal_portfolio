@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /*
 
@@ -128,7 +129,7 @@ class _HoverWidgetState extends State<HoverWidget>
             currentChild = Material(
               elevation: _elevationAnimation.value,
               color: _colorAnimation.value ?? Colors.transparent,
-              borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
+              borderRadius: widget.borderRadius ?? BorderRadius.circular(8.r),
               child: Padding(
                 padding: widget.padding ?? EdgeInsets.zero,
                 child: currentChild,

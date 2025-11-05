@@ -32,23 +32,23 @@ class TechSkills extends StatelessWidget {
   Widget _buildChip(String label) {
     return HoverWidget(
       hoverScale: 1.1,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(20.r),
       builder: (isHovered) {
         return Chip(
           label: Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 16.sp,
             ),
           ),
           backgroundColor: isHovered ? AppColors.primaryOrange : Colors.white,
-          side: const BorderSide(color: AppColors.primaryOrange, width: 2),
+          side: BorderSide(color: AppColors.primaryOrange, width: 2.w),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20.r),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         );
       },
     );

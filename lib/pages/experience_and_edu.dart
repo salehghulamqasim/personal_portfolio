@@ -34,7 +34,7 @@ class ExperienceAndEducation extends StatelessWidget {
             Stack(
               children: [
                 // Fixed container for lava lamp background
-                Container(
+                SizedBox(
                   height: 2000, // Fixed large height
                   width: double.infinity,
                   child: LavaLampEffect(

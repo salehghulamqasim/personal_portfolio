@@ -3,6 +3,7 @@ import 'package:personal_portfolio/pages/contact_screen.dart';
 import 'package:personal_portfolio/pages/experience_and_edu.dart';
 import 'package:personal_portfolio/pages/homescreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:personal_portfolio/themes/colors.dart';
 import 'package:web_pointer/web_pointer.dart';
 
 void main() {
@@ -62,21 +63,39 @@ class MyApp extends StatelessWidget {
             // Adjust the clamp range to taste (1.0 means use exactly the same size).
             final widthScale = mq.size.width / chosen.width;
             final clampedTextScale = widthScale.clamp(1.0, 1.4);
+            final isMobile = mq.size.width < 768;
 
             return MouseRegion(
-              cursor:
-                  SystemMouseCursors.none, //this should hide the mouse pointer
-
-              child: WebPointer(
-                circleColor: Colors.black,
-                roundColor: Colors.orange,
-                roundDuration: 10,
-                circleDuration: 200,
-                child: MediaQuery(
-                  data: mq.copyWith(textScaleFactor: clampedTextScale),
-                  child: childWidget!,
-                ),
-              ),
+              //this should hide the mouse pointer on mobile devices
+              cursor: isMobile
+                  ? SystemMouseCursors
+                        .basic //show normal cursor on mobile
+                  : SystemMouseCursors.none, //hide cursor on desktop
+              child: isMobile
+                  ? MediaQuery(
+                      // Mobile: No WebPointer, just the app
+                      data: mq.copyWith(
+                        textScaler: TextScaler.linear(clampedTextScale),
+                      ),
+                      child: childWidget!,
+                    )
+                  : WebPointer(
+                      // Desktop: WebPointer with custom cursor
+                      circleColor: Colors.black,
+                      roundColor: AppColors.primaryOrange,
+                      roundDuration: 10, //speed for inner dot
+                      circleDuration: 200, //speed for outer circle
+                      //bigger the duration slower the animation
+                      child: MediaQuery(
+                        data: mq.copyWith(
+                          //mq is mediaquery current device data
+                          textScaler: TextScaler.linear(
+                            clampedTextScale,
+                          ), //calculated value that is clamped . clamped means it won't go beyond certain limit
+                        ),
+                        child: childWidget!,
+                      ),
+                    ),
             );
           },
         );

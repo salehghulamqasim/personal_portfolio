@@ -58,7 +58,7 @@ class ProjectCard extends StatelessWidget {
     //image side
     Widget imageSide = Expanded(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         child: Image.asset(imagePath, fit: BoxFit.cover, height: 350.h),
       ),
     );
@@ -70,7 +70,7 @@ class ProjectCard extends StatelessWidget {
         margin: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade300),
         ),
         child: Row(
