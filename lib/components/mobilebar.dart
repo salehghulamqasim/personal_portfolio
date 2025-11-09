@@ -15,7 +15,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity( 
+    return AnimatedOpacity(
       opacity: opacity,
       duration: const Duration(milliseconds: 200),
       child: IgnorePointer(

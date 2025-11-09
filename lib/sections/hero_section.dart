@@ -1,6 +1,6 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/themes/colors.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,37 +13,61 @@ class HeroSection extends StatelessWidget {
       builder: (context, constraints) {
         // WIDE SCREEN LAYOUT (Laptop)
         if (constraints.maxWidth > 800) {
-          return Row(
-            children: [
-              // 1. LEFT SIDE: Text content with padding
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 24.w),
-                  child: HeroTextContent(),
+          return SizedBox(
+            height: 600.h, // Fixed height prevents layout shift
+            child: Row(
+              children: [
+                // 1. LEFT SIDE: Text content with padding
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 24.w),
+                    child: HeroTextContent(),
+                  ),
                 ),
-              ),
 
-              // 2. RIGHT SIDE: Image without padding (full width)
-              Expanded(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // the actual file size is [2880×2516] but the oen being load is 640×559
-                    //so we add cache height and widht so flutter knows it needs to be only load at 640x559 so it wont cause perfoamcen issues
-                    Image.asset(
-                      "assets/images/MaskedSaleh.webp",
-                      cacheHeight:
-                          (560 * MediaQuery.of(context).devicePixelRatio)
-                              .round(),
-                      cacheWidth:
-                          (640 * MediaQuery.of(context).devicePixelRatio)
-                              .round(),
-                      fit: BoxFit.cover,
-                    ),
-                  ],
+                // 2. RIGHT SIDE: Image without padding (full width)
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Placeholder with same aspect ratio
+                      Container(
+                        color:
+                            Colors.grey[100], // Subtle background while loading
+                        child: AspectRatio(
+                          aspectRatio: 640 / 560, // Match your image ratio
+                          child: Image.asset(
+                            "assets/images/MaskedSaleh.webp",
+                            cacheHeight:
+                                (560 * MediaQuery.of(context).devicePixelRatio)
+                                    .round(),
+                            cacheWidth:
+                                (640 * MediaQuery.of(context).devicePixelRatio)
+                                    .round(),
+                            fit: BoxFit.cover,
+                            frameBuilder:
+                                (
+                                  context,
+                                  child,
+                                  frame,
+                                  wasSynchronouslyLoaded,
+                                ) {
+                                  if (wasSynchronouslyLoaded) return child;
+                                  return AnimatedOpacity(
+                                    opacity: frame == null ? 0 : 1,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeOut,
+                                    child: child,
+                                  );
+                                },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }
         // NARROW SCREEN LAYOUT (Mobile)
@@ -69,8 +93,9 @@ class HeroImageStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 400.h,
+      color: Colors.grey[100], // Subtle background while loading
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -85,10 +110,17 @@ class HeroImageStack extends StatelessWidget {
               cacheWidth: (640 * MediaQuery.of(context).devicePixelRatio)
                   .round(),
               fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return AnimatedOpacity(
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+              },
             ),
           ),
-
-          // Photo
         ],
       ),
     );
@@ -116,14 +148,22 @@ class HeroTextContent extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16.h),
-          Text(
-            'Hello, my name\nis Saleh Ghulam',
-            style: Fonts.playfair.copyWith(
-              fontSize: 42.sp,
-              color: Colors.black87,
-              height: 1.2,
-              fontFamily: Fonts.playfair.fontFamily,
-            ),
+          AnimatedTextKit(
+            animatedTexts: [
+              TypewriterAnimatedText(
+                'Hello, my name\nis Saleh Ghulam',
+                textStyle: Fonts.playfair.copyWith(
+                  fontSize: 42.sp,
+                  color: Colors.black87,
+                  height: 1.2,
+                  fontFamily: Fonts.playfair.fontFamily,
+                ),
+                speed: Duration(milliseconds: 150),
+              ),
+            ],
+            totalRepeatCount: 1,
+            pause: Duration(milliseconds: 1000),
+            displayFullTextOnTap: true,
           ),
           SizedBox(height: 16.h),
           Text(
@@ -151,7 +191,7 @@ class HeroTextContent extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Portfolio',
+                  'Resume',
                   style: Fonts.roboto.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,

@@ -6,8 +6,14 @@ import 'package:personal_portfolio/themes/colors.dart';
 
 class TechSkills extends StatelessWidget {
   final List<String> skills;
+  final WrapAlignment alignment;
 
-  const TechSkills({super.key, required this.skills});
+  const TechSkills({
+    super.key,
+    required this.skills,
+    this.alignment = WrapAlignment
+        .center, //default to center if we dont specify when reusing this component
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +26,10 @@ class TechSkills extends StatelessWidget {
       padding: EdgeInsets.all(12.w),
       color: Colors.transparent, // no border/background, just constraints
       child: Wrap(
-        alignment: WrapAlignment.center, // center items in each row
-        runAlignment: WrapAlignment.center, // center rows as well
+        alignment:
+            alignment, //by default its center but we can specify where we want it
+        // center items in each row
+        runAlignment: alignment, // center rows as well
         spacing: 14.w, // horizontal gap
         runSpacing: 14.h, // vertical gap
         children: [for (var skill in skills) _buildChip(skill)],

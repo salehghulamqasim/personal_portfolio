@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:personal_portfolio/themes/colors.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -47,6 +49,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: IgnorePointer(
         ignoring: opacity < 0.5, // avoid clicks when hidden/fading out
         child: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: AppColors.primaryOrange, // Android status bar
+            statusBarIconBrightness: Brightness.dark, // Dark icons
+          ),
           //backgroundColor: Colors.blue.withOpacity(0.0), // Make transparent
           backgroundColor: Colors.transparent,
           //elevation: 0, // Remove shadow

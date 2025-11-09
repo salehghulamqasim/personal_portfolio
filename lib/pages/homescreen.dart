@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:personal_portfolio/components/project_card.dart';
 import 'package:personal_portfolio/components/scrollable_page.dart';
 import 'package:personal_portfolio/components/section_title.dart';
-import 'package:personal_portfolio/pages/expandable.dart';
 import 'package:personal_portfolio/sections/footer_wave.dart';
 import 'package:personal_portfolio/sections/hero_section.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:personal_portfolio/sections/project_sections.dart';
 import 'package:personal_portfolio/sections/socials_footer.dart';
 
 class Homescreen extends StatefulWidget {
@@ -59,25 +58,12 @@ class _HomescreenState extends State<Homescreen> {
                   SizedBox(height: 108.h),
                   SectionTitle(text: 'Projects!', lineWidth: 80),
                   SizedBox(height: 48.h),
-                  const ProjectCard(
-                    title: 'Play Baloot',
-                    description:
-                        'I created this personal project in order to show how to create an interface in Figma using a portfolio as an example.',
-                    imagePath: 'assets/images/circle.jpg',
-                    imageOnRight: true,
-                  ),
-                  const ProjectCard(
-                    title: 'Ashwat Counter',
-                    description:
-                        'I created this personal project in order to show how to create an interface in Figma using a portfolio as an example.',
-                    imagePath: 'assets/images/circle.jpg',
-                    imageOnRight: false,
-                  ),
+                  ProjectSection(),
 
                   const SizedBox(height: 80),
-
                   Socials(),
                   const SizedBox(height: 40),
+
                   FooterWave(),
                 ],
               ),

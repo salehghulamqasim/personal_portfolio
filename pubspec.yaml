@@ -16,7 +16,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   google_fonts: ^6.3.2
-  flutter_screenutil: ^5.9.3
   flutter_svg: ^2.2.1
   
   web_pointer: ^1.1.4
@@ -31,8 +30,25 @@ dependencies:
   url_launcher: ^6.3.2
   flutter_advanced_drawer: ^1.5.0
   animated_sidebar: ^1.0.1
-  expandable: ^5.0.1
-  tap_to_expand: ^0.7.2
+  # expandable: ^5.0.1
+  # tap_to_expand: ^0.7.2
+  carousel_slider: ^5.1.1
+  # expandable_cardview: ^1.1.0
+  expansion_tile_card: ^3.0.0
+  skeletonizer: ^2.1.0+1
+  visibility_detector: ^0.4.0+2
+  animated_text_kit: ^4.3.0
+  animate_do: ^4.2.0
+  typewritertext: ^3.0.9
+  flutter_custom_cursor: ^0.0.4
+  rive: ^0.13.20
+  rive_splash_screen: ^0.1.1
+  another_flutter_splash_screen: ^1.2.1
+  alp_animated_splashscreen: ^0.0.6
+  lottie: ^3.3.2
+  responsive_framework: ^1.5.1
+  flutter_animate: ^4.5.2
+  flutter_screenutil: ^5.9.3
 
   
 
@@ -51,7 +67,31 @@ flutter:
   assets:
     # Images (use wildcard to include all files)
     - assets/images/
-    - assets/images/MaskedSaleh.webp
+    
+    # Project images - each folder explicitly listed
+    - assets/project_images/
+    - assets/project_images/beauty/
+    - assets/project_images/greenproject/
+    - assets/project_images/myphotos/
+    - assets/project_images/playbaloot_images/
+    - assets/project_images/viva/
+    - assets/project_images/wavy/
+    - assets/project_images/Ashwate/
+
+    # Main photos of each project (edited in canva by me :)
+    - assets/project_images/mainImage/
+    - assets/project_images/mainImage/beauty.png
+    - assets/project_images/mainImage/green.png
+    - assets/project_images/mainImage/ashwat.png
+    - assets/project_images/mainImage/baloot.png
+    - assets/project_images/mainImage/viva.png 
+    - assets/project_images/mainImage/wavvy.png
+
+    - assets/splash_screen/
+    - assets/splash_screen/15450-29175-splash-screen-bouncing-ball.riv
+    - assets/splash_screen/Gradient_blob.json
+    - assets/splash_screen/Gradient_blob.lottie
+
     
     # Icons/SVGs
     - assets/icons/
