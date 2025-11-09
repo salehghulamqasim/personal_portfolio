@@ -1,21 +1,21 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:personal_portfolio/components/skeleton.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // WIDE SCREEN LAYOUT (Laptop)
-        if (constraints.maxWidth > 800) {
-          return SizedBox(
-            height: 600.h, // Fixed height prevents layout shift
-            child: Row(
+    return EasySkeleton(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // WIDE SCREEN LAYOUT (Laptop)
+          if (constraints.maxWidth > 800) {
+            return Row(
               children: [
                 // 1. LEFT SIDE: Text content with padding
                 Expanded(
@@ -30,59 +30,38 @@ class HeroSection extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // Placeholder with same aspect ratio
-                      Container(
-                        color:
-                            Colors.grey[100], // Subtle background while loading
-                        child: AspectRatio(
-                          aspectRatio: 640 / 560, // Match your image ratio
-                          child: Image.asset(
-                            "assets/images/MaskedSaleh.webp",
-                            cacheHeight:
-                                (560 * MediaQuery.of(context).devicePixelRatio)
-                                    .round(),
-                            cacheWidth:
-                                (640 * MediaQuery.of(context).devicePixelRatio)
-                                    .round(),
-                            fit: BoxFit.cover,
-                            frameBuilder:
-                                (
-                                  context,
-                                  child,
-                                  frame,
-                                  wasSynchronouslyLoaded,
-                                ) {
-                                  if (wasSynchronouslyLoaded) return child;
-                                  return AnimatedOpacity(
-                                    opacity: frame == null ? 0 : 1,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeOut,
-                                    child: child,
-                                  );
-                                },
-                          ),
-                        ),
+                      // the actual file size is [2880×2516] but the oen being load is 640×559
+                      //so we add cache height and widht so flutter knows it needs to be only load at 640x559 so it wont cause perfoamcen issues
+                      Image.asset(
+                        "assets/images/MaskedSaleh.webp",
+                        cacheHeight:
+                            (560 * MediaQuery.of(context).devicePixelRatio)
+                                .round(),
+                        cacheWidth:
+                            (640 * MediaQuery.of(context).devicePixelRatio)
+                                .round(),
+                        fit: BoxFit.cover,
                       ),
                     ],
                   ),
                 ),
               ],
-            ),
-          );
-        }
-        // NARROW SCREEN LAYOUT (Mobile)
-        else {
-          return Column(
-            children: [
-              HeroImageStack(), // Image stays full-width
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: HeroTextContent(),
-              ),
-            ],
-          );
-        }
-      },
+            );
+          }
+          // NARROW SCREEN LAYOUT (Mobile)
+          else {
+            return Column(
+              children: [
+                HeroImageStack(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: HeroTextContent(),
+                ),
+              ],
+            );
+          }
+        },
+      ),
     );
   }
 }
@@ -93,9 +72,8 @@ class HeroImageStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 400.h,
-      color: Colors.grey[100], // Subtle background while loading
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -110,17 +88,10 @@ class HeroImageStack extends StatelessWidget {
               cacheWidth: (640 * MediaQuery.of(context).devicePixelRatio)
                   .round(),
               fit: BoxFit.cover,
-              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                if (wasSynchronouslyLoaded) return child;
-                return AnimatedOpacity(
-                  opacity: frame == null ? 0 : 1,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                  child: child,
-                );
-              },
             ),
           ),
+
+          // Photo
         ],
       ),
     );

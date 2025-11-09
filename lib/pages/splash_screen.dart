@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:personal_portfolio/pages/homescreen.dart';
+import 'package:personal_portfolio/utils/preload_assets.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,12 +13,27 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Timer? _navTimer;
+  bool assetsLoaded = false;
 
   // Fallback safety max (so splash never hangs longer than this).
   static const Duration _maxFallback = Duration(milliseconds: 4000);
 
+  @override
+  void initState() {
+    super.initState();
+    _loadAssets();
+  }
+
+  Future<void> _loadAssets() async {
+    await preloadAssets(context);
+    setState(() {
+      assetsLoaded = true;
+    });
+    _navigateToHome(); // Ensure navigation happens after assets load
+  }
+
   void _navigateToHome() {
-    if (!mounted) return;
+    if (!mounted || !assetsLoaded) return;
     Navigator.of(
       context,
     ).pushReplacement(MaterialPageRoute(builder: (_) => const Homescreen()));
@@ -38,27 +53,17 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Lottie.asset(
           'assets/splash_screen/Gradient_blob.json',
           repeat: false,
-          // optional: control size for different screens
           width: 300,
           height: 300,
           fit: BoxFit.contain,
           onLoaded: (composition) {
-            // composition.duration gives the animation duration if available
-            final compositionDuration = composition.duration;
             final durationToWait =
-                // ignore: unnecessary_null_comparison
-                (compositionDuration != null &&
-                    compositionDuration > Duration.zero)
-                ? compositionDuration +
-                      const Duration(milliseconds: 150) // small padding
-                : const Duration(milliseconds: 1700); // fallback if not present
+                composition.duration + const Duration(milliseconds: 150);
 
-            // Use the smaller of the two to prevent very long animations from blocking navigation:
             final wait = durationToWait < _maxFallback
                 ? durationToWait
                 : _maxFallback;
 
-            // schedule navigation
             _navTimer?.cancel();
             _navTimer = Timer(wait, _navigateToHome);
           },

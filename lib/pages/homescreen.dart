@@ -16,7 +16,6 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   final ScrollController _scrollController = ScrollController();
-  // final _advancedDrawerController = AdvancedDrawerController();
   bool _isAtTop = true;
   bool isMobile = false; // Set based on your responsive logic
 
@@ -38,7 +37,6 @@ class _HomescreenState extends State<Homescreen> {
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
-    // _advancedDrawerController.dispose();
     super.dispose();
   }
 

@@ -1,4 +1,7 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:expandable/expandable.dart';
+import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:personal_portfolio/components/hover_widget.dart';
 import 'package:personal_portfolio/components/tech_skills.dart';
 import 'package:personal_portfolio/themes/colors.dart';
@@ -6,15 +9,13 @@ import 'package:personal_portfolio/themes/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class ProjectCard extends StatefulWidget {
+class ProjectCard extends StatelessWidget {
   final String title;
   final String description;
   final String? expandedDescription;
-  final List<String>? keyFeatures; // Add this parameter
+  final List<String>? keyFeatures;
   final List<String> imagePaths;
-
   final List<String>? technologies;
-  //main image
   final String mainImage;
   final bool imageOnRight;
 
@@ -23,7 +24,7 @@ class ProjectCard extends StatefulWidget {
     required this.title,
     required this.description,
     this.expandedDescription,
-    this.keyFeatures, // Add this parameter
+    this.keyFeatures,
     required this.imagePaths,
     this.imageOnRight = true,
     required this.mainImage,
@@ -31,200 +32,183 @@ class ProjectCard extends StatefulWidget {
   });
 
   @override
-  State<ProjectCard> createState() => _ProjectCardState();
-}
-
-class _ProjectCardState extends State<ProjectCard> {
-  bool isExpanded = false;
-
-  @override
   Widget build(BuildContext context) {
-    // Check if mobile (you can adjust the breakpoint)
     bool isMobile = MediaQuery.of(context).size.width < 768;
 
-    Widget textSection = Padding(
-      padding: EdgeInsets.all(isMobile ? 16.w : 24.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            widget.title,
-            style: TextStyle(
-              fontSize: isMobile ? 20.sp : 24.sp,
-              fontWeight: FontWeight.bold,
-              fontFamily: Fonts.playfair.fontFamily,
-            ),
-          ),
-          SizedBox(height: isMobile ? 12.h : 16.h),
+    return ExpandableNotifier(
+      // here we add builder in child to get context of expandable
+      child: Builder(
+        builder: (context) {
+          final controller = ExpandableController.of(context);
+          final isExpanded = controller?.expanded ?? false;
 
-          // Animated description switcher
-          AnimatedSwitcher(
-            duration: Duration(milliseconds: 300),
-            layoutBuilder: (currentChild, previousChildren) {
-              return Stack(
-                alignment: Alignment.centerLeft, // Align text to the left
-                children: <Widget>[
-                  ...previousChildren,
-                  if (currentChild != null) currentChild,
-                ],
-              );
-            },
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            child: Text(
-              isExpanded && widget.expandedDescription != null
-                  ? widget.expandedDescription!
-                  : widget.description,
-              style: TextStyle(
-                fontSize: isMobile ? 14.sp : 16.sp,
-                fontFamily: Fonts.roboto.fontFamily,
-                height: 1.5,
-              ),
-            ),
-          ),
+          Widget textSection = Padding(
+            padding: EdgeInsets.all(isMobile ? 16.w : 24.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: isMobile ? 20.sp : 24.sp,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: Fonts.playfair.fontFamily,
+                  ),
+                ),
+                SizedBox(height: isMobile ? 12.h : 16.h),
 
-          SizedBox(height: isMobile ? 12.h : 22.h),
-          OutlinedButton(
-            //on pressed would expand the entire box not just description
-            onPressed: () {
-              setState(() {
-                // isExpanded = !isExpanded;
-              });
-            },
-            child: Text(
-              'tap to expand',
-              style: TextStyle(
-                fontFamily: Fonts.roboto.fontFamily,
-                fontSize: isMobile ? 14.sp : 16.sp,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+                AnimatedSwitcher(
+                  duration: Duration(milliseconds: 300),
+                  child: Text(
+                    isExpanded
+                        ? (expandedDescription ?? description)
+                        : description,
 
-    // Main image section - shows only the first image from the list
-    Widget imageSection = HoverWidget(
-      hoverScale: 1.05, // Slightly enlarge the image on hover
-      animationDuration: Duration(milliseconds: 300),
-      child: SizedBox(
-        height: isMobile ? 320.h : 550.h, // Increased height for larger images
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12.r),
-          child: Image.asset(
-            widget.imagePaths.isNotEmpty
-                ? widget.mainImage
-                : widget.imagePaths[0],
-            fit: BoxFit.cover, // Ensures the image fills the container
-            width: double.infinity, // Ensures the image takes full width
-          ),
-        ),
-      ),
-    );
+                    key: ValueKey(isExpanded), // Important!
+                    style: TextStyle(
+                      fontSize: isMobile ? 14.sp : 16.sp,
+                      fontFamily: Fonts.roboto.fontFamily,
+                      height: 1.5,
+                    ),
+                  ),
+                ),
 
-    // Mobile: Stack vertically, Desktop: Side by side
-    Widget cardContent = isMobile
-        ? Column(children: [imageSection, textSection])
-        : Row(
-            children: [
-              Expanded(child: widget.imageOnRight ? textSection : imageSection),
-              Expanded(child: widget.imageOnRight ? imageSection : textSection),
-            ],
-          );
+                SizedBox(height: isMobile ? 12.h : 22.h),
 
-    return Container(
-      width: isMobile ? double.infinity : 1000.w,
-      margin: EdgeInsets.all(isMobile ? 8.w : 20.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          tilePadding: EdgeInsets.zero,
-          childrenPadding: EdgeInsets.zero,
-          trailing: SizedBox.shrink(), // Removes the arrow icon
-
-          onExpansionChanged: (expanded) {
-            setState(() {
-              isExpanded = expanded;
-            });
-          },
-
-          title: Row(
-            children: [Expanded(child: cardContent)],
-          ), //to ensure tile takes or uses free space by arrow above which we turned to shrink()
-          // Expanded section with key features and carousel
-          children: [
-            Container(
-              padding: EdgeInsets.all(isMobile ? 12.w : 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Key Features Section
-                  if (widget.keyFeatures != null &&
-                      widget.keyFeatures!.isNotEmpty) ...[
-                    Text(
-                      'Key Features',
+                // Expandable button indicator
+                ExpandableButton(
+                  child: OutlinedButton(
+                    onPressed: null, // Handled by ExpandableButton
+                    child: Text(
+                      isExpanded ? 'tap to collapse' : 'tap to expand',
                       style: TextStyle(
-                        fontSize: isMobile ? 20.sp : 20.sp,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: Fonts.playfair.fontFamily,
-                        color: Colors.black87,
+                        fontFamily: Fonts.roboto.fontFamily,
+                        fontSize: isMobile ? 14.sp : 16.sp,
                       ),
                     ),
-                    SizedBox(height: isMobile ? 16.h : 16.h),
+                  ),
+                ),
+              ],
+            ),
+          );
 
-                    // Features list with bullet points
-                    ...widget.keyFeatures!
-                        // ... means instead of adding a single widget, it expands the entire
-                        // list and adds each item as a separate widget.
-                        .map(
-                          (feature) => Padding(
-                            padding: EdgeInsets.only(bottom: 8.h),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 8.h,
-                                    right: 12.w,
-                                  ),
-                                  width: 8.w,
-                                  height: 8.h,
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    feature,
-                                    style: TextStyle(
-                                      fontSize: isMobile ? 16.sp : 16.sp,
-                                      fontFamily: Fonts.roboto.fontFamily,
-                                      height: 1.5,
-                                      color: Colors.grey[700],
-                                    ),
-                                  ),
-                                ),
-                              ],
+          // Main image section - CENTERED
+          Widget imageSection = Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: HoverWidget(
+              hoverScale: 1.05,
+              animationDuration: Duration(milliseconds: 300),
+              child: SizedBox(
+                height: isMobile ? 320.h : 550.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: Image.asset(
+                    imagePaths.isNotEmpty ? mainImage : imagePaths[0],
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+          );
+
+          Widget cardContent = isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [imageSection, textSection],
+                )
+              : Row(
+                  children: [
+                    Expanded(child: imageOnRight ? textSection : imageSection),
+                    Expanded(child: imageOnRight ? imageSection : textSection),
+                  ],
+                );
+
+          return Container(
+            width: isMobile ? double.infinity : 1000.w,
+            margin: EdgeInsets.all(isMobile ? 8.w : 20.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: Column(
+              children: [
+                ExpandablePanel(
+                  header: cardContent,
+                  collapsed: SizedBox.shrink(),
+                  expanded: Container(
+                    padding: EdgeInsets.all(isMobile ? 12.w : 20.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (keyFeatures != null && keyFeatures!.isNotEmpty) ...[
+                          // // Expanded description
+                          // if (expandedDescription != null) ...[
+                          //   Text(
+                          //     expandedDescription!,
+                          //     style: TextStyle(
+                          //       fontSize: isMobile ? 14.sp : 16.sp,
+                          //       fontFamily: Fonts.roboto.fontFamily,
+                          //       height: 1.5,
+                          //       color: Colors.grey[700],
+                          //     ),
+                          //   ),
+                          //   SizedBox(height: isMobile ? 24.h : 24.h),
+                          // ],
+                          Text(
+                            'Key Features',
+                            style: TextStyle(
+                              fontSize: isMobile ? 20.sp : 20.sp,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: Fonts.playfair.fontFamily,
+                              color: Colors.black87,
                             ),
                           ),
-                        )
-                        .toList(),
+                          SizedBox(height: isMobile ? 16.h : 16.h),
 
-                    SizedBox(height: isMobile ? 32.h : 24.h),
-                    //text style to say technologies used
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                          // Features list with bullet points
+                          ...keyFeatures!
+                              .map(
+                                (feature) => Padding(
+                                  padding: EdgeInsets.only(bottom: 8.h),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top: 8.h,
+                                          right: 12.w,
+                                        ),
+                                        width: 8.w,
+                                        height: 8.h,
+                                        decoration: BoxDecoration(
+                                          color: Colors.orange,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          feature,
+                                          style: TextStyle(
+                                            fontSize: isMobile ? 16.sp : 16.sp,
+                                            fontFamily: Fonts.roboto.fontFamily,
+                                            height: 1.5,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+
+                          SizedBox(height: isMobile ? 32.h : 24.h),
+
+                          // Technologies section
                           Text(
                             'Technologies',
                             style: TextStyle(
@@ -238,11 +222,10 @@ class _ProjectCardState extends State<ProjectCard> {
 
                           TechSkills(
                             alignment: WrapAlignment.center,
-                            skills: widget.technologies ?? [],
-                            //if technologies is null, provide empty list
+                            skills: technologies ?? [],
                           ),
 
-                          //buttons for demo and source code
+                          // Buttons for demo and source code
                           SizedBox(height: isMobile ? 24.h : 24.h),
                           Row(
                             children: [
@@ -291,45 +274,96 @@ class _ProjectCardState extends State<ProjectCard> {
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
 
-                    // Carousel Section
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        height: isMobile ? 350.h : 500.h,
-                        viewportFraction: isMobile ? 1.0 : 0.9,
-                        enableInfiniteScroll: widget.imagePaths.length > 1,
-                        autoPlay: false,
-                        enlargeCenterPage: !isMobile,
-                      ),
-                      items: widget.imagePaths.map((imagePath) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: isMobile ? 0 : 8.w,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12.r),
-                                child: Image.asset(
-                                  imagePath,
-                                  fit: BoxFit.contain,
-                                  width: double.infinity,
+                          SizedBox(height: isMobile ? 24.h : 24.h),
+
+                          // Replace your CarouselSlider section with this:
+                          SizedBox(
+                            height: isMobile ? 350.h : 500.h,
+                            child: Swiper(
+                              itemCount: imagePaths.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: isMobile ? 8.w : 12.w,
+                                  ), // spacing between images
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    child: FittedBox(
+                                      fit: BoxFit
+                                          .contain, // make sure the full image fits without cropping
+                                      child: Image.asset(imagePaths[index]),
+                                    ),
+                                  ),
+                                );
+                              },
+                              layout: SwiperLayout.DEFAULT,
+                              viewportFraction:
+                                  0.9, // slightly smaller than 1 to show next image
+                              scale: 1.0, // full scale, no shrinking
+                              autoplay: false,
+                              loop: true,
+                              pagination: const SwiperPagination(
+                                builder: DotSwiperPaginationBuilder(
+                                  color: Colors.grey,
+                                  activeColor: AppColors.primaryOrange,
+                                  size: 8.0,
+                                  activeSize: 12.0,
                                 ),
                               ),
-                            );
-                          },
-                        );
-                      }).toList(),
+                              // control: const SwiperControl(
+                              //   color: AppColors.primaryOrange,
+                              // ),
+                            ),
+                          ),
+
+                          // // Carousel Section
+                          // CarouselSlider(
+                          //   options: CarouselOptions(
+                          //     height: isMobile ? 350.h : 500.h,
+                          //     viewportFraction: isMobile ? 1.0 : 0.9,
+                          //     enableInfiniteScroll: imagePaths.length > 1,
+                          //     autoPlay: false,
+                          //     enlargeCenterPage: !isMobile,
+                          //   ),
+                          //   items: imagePaths.map((imagePath) {
+                          //     return Builder(
+                          //       builder: (BuildContext context) {
+                          //         return Container(
+                          //           margin: EdgeInsets.symmetric(
+                          //             horizontal: isMobile ? 0 : 8.w,
+                          //           ),
+                          //           child: ClipRRect(
+                          //             borderRadius: BorderRadius.circular(12.r),
+                          //             child: Image.asset(
+                          //               imagePath,
+                          //               fit: BoxFit.contain,
+                          //               width: double.infinity,
+                          //             ),
+                          //           ),
+                          //         );
+                          //       },
+                          //     );
+                          //   }).toList(),
+                          // ),
+                        ],
+                      ],
                     ),
-                  ],
-                ],
-              ),
+                  ),
+                  theme: const ExpandableThemeData(
+                    hasIcon: false,
+                    tapHeaderToExpand: true,
+                    tapBodyToCollapse: false,
+                    animationDuration: Duration(milliseconds: 400),
+                    iconPadding: EdgeInsets.zero,
+                    headerAlignment: ExpandablePanelHeaderAlignment.center,
+                    useInkWell: true,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
