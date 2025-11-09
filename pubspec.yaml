@@ -49,6 +49,7 @@ dependencies:
   flutter_animate: ^4.5.2
   flutter_screenutil: ^5.9.3
   flutter_swiper_view: ^1.1.8
+  confirmation_success: ^0.0.2
 
   
 
