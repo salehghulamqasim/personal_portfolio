@@ -61,7 +61,7 @@ class _SectionTitleState extends State<SectionTitle> {
           Text(
             widget.text,
             style: Fonts.playfair.copyWith(
-              fontSize: (widget.size ?? 28).sp,
+              fontSize: 36.sp, // Unified font size
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -71,12 +71,7 @@ class _SectionTitleState extends State<SectionTitle> {
             duration: Duration(milliseconds: 800),
             curve: Curves.easeOutCubic,
             height: 4.h,
-            //if user specifies width okay if not the use default 100
-            //we wrap it inside parathesis so we can apply .w to it for screen util
-            // if not expanded width is 0
-            width: _isExpanded
-                ? (widget.lineWidth ?? 100).w
-                : 0, // Remove .w from 0
+            width: _isExpanded ? (widget.lineWidth ?? 100).w : 0,
             color: AppColors.primaryOrange,
           ),
         ],

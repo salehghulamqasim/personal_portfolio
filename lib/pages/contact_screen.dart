@@ -5,9 +5,9 @@ import 'package:personal_portfolio/components/section_title.dart';
 import 'package:personal_portfolio/sections/contact_me.dart';
 import 'package:personal_portfolio/sections/footer_wave.dart';
 import 'package:personal_portfolio/sections/socials_footer.dart';
-import 'package:personal_portfolio/themes/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
@@ -30,14 +30,12 @@ class ContactScreen extends StatelessWidget {
 
             Stack(
               children: [
-                // Fixed container for lava lamp background
                 SizedBox(
-                  height: 600.h, // responsive height
+                  height: 600.h,
                   width: double.infinity,
                   child: LavaLampEffect(
-                    // keep lava lamp, only scale the size responsively
                     size: Size(800.w, 600.h),
-                    color: AppColors.primaryOrange.withOpacity(0.1),
+                    color: const Color.fromRGBO(252, 248, 230, 1.0),
                     lavaCount: 4,
                     speed: 2,
                     repeatDuration: const Duration(seconds: 4),
@@ -52,8 +50,13 @@ class ContactScreen extends StatelessWidget {
                       text: 'Get in Touch!',
                       lineWidth: 100,
                       size: isMobile ? 42 : 66,
-                    ),
-                    SizedBox(height: 16.h),
+                    )
+                        .animate()
+                        .fadeIn(delay: 200.ms, duration: 600.ms)
+                        .slideY(begin: -0.1, end: 0, duration: 600.ms, curve: Curves.easeOut),
+                    SizedBox(
+                      height: 32.h,
+                    ), // Standardized height after SectionTitle
                     SizedBox(
                       width: isMobile ? 300.w : 700.w,
                       child: Text(
@@ -67,23 +70,32 @@ class ContactScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         maxLines: 4,
                       ),
-                    ),
+                    )
+                        .animate()
+                        .fadeIn(delay: 400.ms, duration: 600.ms)
+                        .slideY(begin: 0.1, end: 0, duration: 600.ms, curve: Curves.easeOut),
 
                     SizedBox(height: 30.h),
 
-                    const ContactForm(),
+                    const ContactForm()
+                        .animate()
+                        .fadeIn(delay: 600.ms, duration: 600.ms)
+                        .scale(begin: const Offset(0.95, 0.95), duration: 600.ms, curve: Curves.easeOut),
                   ],
                 ),
               ],
             ),
 
             SizedBox(height: 60.h),
-            // Social links/footer (static, no heavy animations)
-            Socials(),
+            // Social links/footer
+            Socials()
+                .animate()
+                .fadeIn(delay: 800.ms, duration: 600.ms),
 
             SizedBox(height: 80.h),
-            // Removed animated footer wave on this page to keep it simple and light
-            FooterWave(userColor: Color(0xFFF9FAFF)),
+            FooterWave(userColor: Color(0xFFF9FAFF))
+                .animate()
+                .fadeIn(delay: 1000.ms, duration: 600.ms),
           ],
         ),
       ),

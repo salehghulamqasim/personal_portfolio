@@ -129,24 +129,34 @@ class _ProfessionalSidebarState extends State<ProfessionalSidebar> {
         child: Column(
           children: [
             // Sidebar Header
-            if (widget.header != null)
-              Container(padding: EdgeInsets.all(8.w), child: widget.header!),
+            if (widget.header != null) widget.header!,
 
             // Sidebar Content (Scrollable)
             Expanded(
               child: ListView(
                 controller: _scrollController,
-                padding: EdgeInsets.all(8.w),
-                children: [_buildMenuGroup('Navigation', widget.menuItems)],
+                children: [
+                  // Add Home Button
+                  _buildMenuItem(
+                    SidebarMenuItem(
+                      title: "Home",
+                      icon: Icons.home,
+                      route: "/",
+                      onTap: () {
+                        Navigator.pushNamed(context, "/");
+                      },
+                      isActive: widget.currentRoute == "/",
+                    ),
+                  ),
+
+                  // Existing Menu Items
+                  ...widget.menuItems.map((item) => _buildMenuItem(item)),
+                ],
               ),
             ),
 
             // Sidebar Separator
-            Container(
-              height: 1.h,
-              margin: EdgeInsets.symmetric(horizontal: 8.w),
-              color: borderColor,
-            ),
+            Container(height: 1.h, color: borderColor),
 
             // Sidebar Footer
             if (widget.footer != null)
@@ -154,34 +164,6 @@ class _ProfessionalSidebarState extends State<ProfessionalSidebar> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildMenuGroup(String label, List<SidebarMenuItem> items) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Group Label
-        Container(
-          height: 32.h,
-          padding: EdgeInsets.symmetric(horizontal: 8.w),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w500,
-              color: foregroundColor.withOpacity(0.7),
-              fontFamily: Fonts.comfortaa.fontFamily,
-            ),
-          ),
-        ),
-
-        SizedBox(height: 4.h),
-
-        // Menu Items
-        ...items.map((item) => _buildMenuItem(item)),
-      ],
     );
   }
 
@@ -269,7 +251,7 @@ class _ProfessionalSidebarState extends State<ProfessionalSidebar> {
                       Icon(
                         Icons.chevron_right,
                         size: 14.sp,
-                        color: foregroundColor.withOpacity(0.5),
+                        color: foregroundColor.withValues(alpha: 0.5),
                       ),
                   ],
                 ),
@@ -422,7 +404,7 @@ class SidebarHeader extends StatelessWidget {
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w400,
-              color: foregroundColor.withOpacity(0.7),
+              color: foregroundColor.withValues(alpha: 0.7),
               fontFamily: Fonts.comfortaa.fontFamily,
             ),
             textAlign: TextAlign.center,
@@ -430,6 +412,12 @@ class SidebarHeader extends StatelessWidget {
         ],
 
         SizedBox(height: 16.h),
+
+        // Divider below "Menu"
+        Container(
+          height: 1.h,
+          color: SidebarColors.lightBorder.withValues(alpha: 0.5),
+        ),
       ],
     );
   }
@@ -459,12 +447,23 @@ class SidebarFooter extends StatelessWidget {
           copyrightText,
           style: TextStyle(
             fontSize: 12.sp,
-            color: foregroundColor.withOpacity(0.6),
+            color: foregroundColor.withValues(alpha: 0.6),
             fontFamily: Fonts.comfortaa.fontFamily,
           ),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 8.h),
+
+        // Add "Saleh Ghulam 2025" at the bottom
+        Text(
+          "Saleh Ghulam 2025",
+          style: TextStyle(
+            fontSize: 12.sp,
+            color: foregroundColor.withValues(alpha: 0.7),
+            fontFamily: Fonts.comfortaa.fontFamily,
+          ),
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:personal_portfolio/components/skeleton.dart';
 
 class Socials extends StatelessWidget {
   const Socials({super.key});
@@ -21,8 +20,7 @@ class Socials extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EasySkeleton(
-      child: Center(
+    return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min, // keeps content centered vertically
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +66,6 @@ class Socials extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

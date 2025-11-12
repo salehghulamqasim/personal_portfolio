@@ -186,7 +186,7 @@
 //       crossAxisAlignment: CrossAxisAlignment.start,
 //       children: [
 //         Divider(height: 32.h, thickness: 1, color: Colors.grey[300]),
-        
+
 //         // Full Description
 //         Text(
 //           fullDescription,
@@ -196,9 +196,9 @@
 //             height: 1.6,
 //           ),
 //         ),
-        
+
 //         SizedBox(height: 24.h),
-        
+
 //         // All Tech Stack
 //         if (techStack.length > (isFeatured ? 6 : 4))
 //           Wrap(
@@ -221,9 +221,9 @@
 //               );
 //             }).toList(),
 //           ),
-        
+
 //         SizedBox(height: 24.h),
-        
+
 //         // Screenshots Gallery
 //         if (screenshots.isNotEmpty) ...[
 //           Text(
@@ -258,7 +258,7 @@
 //           ),
 //           SizedBox(height: 24.h),
 //         ],
-        
+
 //         // Action Buttons
 //         Wrap(
 //           spacing: 12.w,

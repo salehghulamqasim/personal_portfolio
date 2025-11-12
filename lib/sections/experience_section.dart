@@ -3,15 +3,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/components/experience_cards.dart';
-import 'package:personal_portfolio/components/skeleton.dart';
 
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return EasySkeleton(
-      child: Column(
+    return Column(
         children: [
           ExperienceCards(
             title: 'QaYd Company',
@@ -45,7 +43,6 @@ class ExperienceSection extends StatelessWidget {
                 'Developed robot arm control interfaces and implemented PHP/MySQL backends.',
           ),
         ],
-      ),
-    );
+      );
   }
 }

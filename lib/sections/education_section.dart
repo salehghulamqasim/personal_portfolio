@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:personal_portfolio/components/education_cards.dart';
-import 'package:personal_portfolio/components/skeleton.dart';
 
 class EducationSection extends StatelessWidget {
   const EducationSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return EasySkeleton(
-      child: Wrap(
+    return Wrap(
         spacing: 24.w,
         runSpacing: 24.h,
         children: const [
@@ -29,7 +27,6 @@ class EducationSection extends StatelessWidget {
                 'Graduated with Honors. Relevant coursework: Data Structures, Algorithms, Database Systems, Coding...',
           ),
         ],
-      ),
-    );
+      );
   }
 }

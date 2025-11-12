@@ -59,9 +59,7 @@ class _EducationCardsState extends State<EducationCards> {
           ),
           decoration: BoxDecoration(
             color: AppColors.cardBackground, // White stays same
-            borderRadius: BorderRadius.circular(
-              isMobile ? 12.r : 16.r, // Match experience cards border radius
-            ),
+            borderRadius: BorderRadius.circular(isMobile ? 12.r : 16.r),
             boxShadow: [
               BoxShadow(
                 // Exact shadow specifications (same as experience cards)

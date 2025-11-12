@@ -85,7 +85,7 @@ class TimelineItem extends StatelessWidget {
                 Container(
                   width: 2.w,
                   height: MediaQuery.of(context).size.height * 0.08,
-                  color: const Color(0xFFFDC435).withOpacity(0.5),
+                  color: const Color(0xFFFDC435).withValues(alpha: 0.5),
                   margin: EdgeInsets.symmetric(vertical: 8.h),
                 ),
             ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:personal_portfolio/components/skeleton.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HeroSection extends StatelessWidget {
@@ -10,8 +9,7 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EasySkeleton(
-      child: LayoutBuilder(
+    return LayoutBuilder(
         builder: (context, constraints) {
           // WIDE SCREEN LAYOUT (Laptop)
           if (constraints.maxWidth > 800) {
@@ -20,7 +18,7 @@ class HeroSection extends StatelessWidget {
                 // 1. LEFT SIDE: Text content with padding
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 24.w),
+                    padding: EdgeInsets.only(left: 12.w),
                     child: HeroTextContent(),
                   ),
                 ),
@@ -50,19 +48,22 @@ class HeroSection extends StatelessWidget {
           }
           // NARROW SCREEN LAYOUT (Mobile)
           else {
+            final isMobile = MediaQuery.of(context).size.width < 768;
+            // create a small variable for mobile horizontal padding so it's easy to tweak
+            final horizontalPadding = isMobile ? 16.w : 24.w;
+
             return Column(
               children: [
-                HeroImageStack(),
+                const HeroImageStack(),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: HeroTextContent(),
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: const HeroTextContent(),
                 ),
               ],
             );
           }
         },
-      ),
-    );
+      );
   }
 }
 
@@ -104,8 +105,13 @@ class HeroTextContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 768;
+
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 24.w),
+      padding: EdgeInsets.symmetric(
+        vertical: 24.h,
+        horizontal: isMobile ? 18.w : 24.w,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -122,9 +128,11 @@ class HeroTextContent extends StatelessWidget {
           AnimatedTextKit(
             animatedTexts: [
               TypewriterAnimatedText(
-                'Hello, my name\nis Saleh Ghulam',
+                'Hello, my name is Saleh Ghulam',
                 textStyle: Fonts.playfair.copyWith(
-                  fontSize: 42.sp,
+                  fontSize: MediaQuery.of(context).size.width < 768
+                      ? 30.sp
+                      : 40.sp, // Mobile: 20.sp, Desktop: 40.sp
                   color: Colors.black87,
                   height: 1.2,
                   fontFamily: Fonts.playfair.fontFamily,
@@ -138,11 +146,11 @@ class HeroTextContent extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Text(
-            'I build apps that people actually want to use.\nStarted coding during university, got obsessed with Flutter, and now I can\'t stop building stuff. Currently crushing on clean animations and pixel-perfect UIs.',
+            'From concept to clean, responsive user interfaces\nI love turning ideas into products that just feel right.',
             style: Fonts.nunito.copyWith(
               fontSize: 16.sp,
               color: Colors.grey[600],
-              height: 1.5,
+              height: 1.5.h,
               fontFamily: Fonts.nunito.fontFamily,
             ),
           ),

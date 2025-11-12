@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
@@ -7,9 +6,8 @@ import 'package:personal_portfolio/components/tech_skills.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
-class ProjectCard extends StatelessWidget {
+class ProjectCard extends StatefulWidget {
   final String title;
   final String description;
   final String? expandedDescription;
@@ -32,9 +30,20 @@ class ProjectCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    bool isMobile = MediaQuery.of(context).size.width < 768;
+  State<ProjectCard> createState() => _ProjectCardState();
+}
 
+class _ProjectCardState extends State<ProjectCard> {
+  late bool isMobile;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    isMobile = MediaQuery.of(context).size.width < 768;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ExpandableNotifier(
       // here we add builder in child to get context of expandable
       child: Builder(
@@ -43,13 +52,13 @@ class ProjectCard extends StatelessWidget {
           final isExpanded = controller?.expanded ?? false;
 
           Widget textSection = Padding(
-            padding: EdgeInsets.all(isMobile ? 16.w : 24.w),
+            padding: EdgeInsets.all(isMobile ? 16.w : 16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  widget.title,
                   style: TextStyle(
                     fontSize: isMobile ? 20.sp : 24.sp,
                     fontWeight: FontWeight.bold,
@@ -62,8 +71,8 @@ class ProjectCard extends StatelessWidget {
                   duration: Duration(milliseconds: 300),
                   child: Text(
                     isExpanded
-                        ? (expandedDescription ?? description)
-                        : description,
+                        ? (widget.expandedDescription ?? widget.description)
+                        : widget.description,
 
                     key: ValueKey(isExpanded), // Important!
                     style: TextStyle(
@@ -79,9 +88,9 @@ class ProjectCard extends StatelessWidget {
                 // Expandable button indicator
                 ExpandableButton(
                   child: OutlinedButton(
-                    onPressed: null, // Handled by ExpandableButton
+                    onPressed: null, // Disabled tap functionality
                     child: Text(
-                      isExpanded ? 'tap to collapse' : 'tap to expand',
+                      isExpanded ? 'Details Disabled' : 'Details Disabled',
                       style: TextStyle(
                         fontFamily: Fonts.roboto.fontFamily,
                         fontSize: isMobile ? 14.sp : 16.sp,
@@ -105,7 +114,9 @@ class ProjectCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
                   child: Image.asset(
-                    imagePaths.isNotEmpty ? mainImage : imagePaths[0],
+                    widget.imagePaths.isNotEmpty
+                        ? widget.mainImage
+                        : widget.imagePaths[0],
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -120,14 +131,18 @@ class ProjectCard extends StatelessWidget {
                 )
               : Row(
                   children: [
-                    Expanded(child: imageOnRight ? textSection : imageSection),
-                    Expanded(child: imageOnRight ? imageSection : textSection),
+                    Expanded(
+                      child: widget.imageOnRight ? textSection : imageSection,
+                    ),
+                    Expanded(
+                      child: widget.imageOnRight ? imageSection : textSection,
+                    ),
                   ],
                 );
 
           return Container(
-            width: isMobile ? double.infinity : 1000.w,
-            margin: EdgeInsets.all(isMobile ? 8.w : 20.w),
+            width: isMobile ? double.infinity : 900.w,
+            margin: EdgeInsets.all(isMobile ? 8.w : 16.w),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12.r),
@@ -143,7 +158,8 @@ class ProjectCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (keyFeatures != null && keyFeatures!.isNotEmpty) ...[
+                        if (widget.keyFeatures != null &&
+                            widget.keyFeatures!.isNotEmpty) ...[
                           // // Expanded description
                           // if (expandedDescription != null) ...[
                           //   Text(
@@ -169,42 +185,39 @@ class ProjectCard extends StatelessWidget {
                           SizedBox(height: isMobile ? 16.h : 16.h),
 
                           // Features list with bullet points
-                          ...keyFeatures!
-                              .map(
-                                (feature) => Padding(
-                                  padding: EdgeInsets.only(bottom: 8.h),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 8.h,
-                                          right: 12.w,
-                                        ),
-                                        width: 8.w,
-                                        height: 8.h,
-                                        decoration: BoxDecoration(
-                                          color: Colors.orange,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          feature,
-                                          style: TextStyle(
-                                            fontSize: isMobile ? 16.sp : 16.sp,
-                                            fontFamily: Fonts.roboto.fontFamily,
-                                            height: 1.5,
-                                            color: Colors.grey[700],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                          ...widget.keyFeatures!.map(
+                            (feature) => Padding(
+                              padding: EdgeInsets.only(bottom: 8.h),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 8.h,
+                                      right: 12.w,
+                                    ),
+                                    width: 8.w,
+                                    height: 8.h,
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
-                                ),
-                              )
-                              .toList(),
+                                  Expanded(
+                                    child: Text(
+                                      feature,
+                                      style: TextStyle(
+                                        fontSize: isMobile ? 16.sp : 16.sp,
+                                        fontFamily: Fonts.roboto.fontFamily,
+                                        height: 1.5,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
 
                           SizedBox(height: isMobile ? 32.h : 24.h),
 
@@ -222,7 +235,7 @@ class ProjectCard extends StatelessWidget {
 
                           TechSkills(
                             alignment: WrapAlignment.center,
-                            skills: technologies ?? [],
+                            skills: widget.technologies ?? [],
                           ),
 
                           // Buttons for demo and source code
@@ -281,7 +294,7 @@ class ProjectCard extends StatelessWidget {
                           SizedBox(
                             height: isMobile ? 350.h : 500.h,
                             child: Swiper(
-                              itemCount: imagePaths.length,
+                              itemCount: widget.imagePaths.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
@@ -292,7 +305,9 @@ class ProjectCard extends StatelessWidget {
                                     child: FittedBox(
                                       fit: BoxFit
                                           .contain, // make sure the full image fits without cropping
-                                      child: Image.asset(imagePaths[index]),
+                                      child: Image.asset(
+                                        widget.imagePaths[index],
+                                      ),
                                     ),
                                   ),
                                 );

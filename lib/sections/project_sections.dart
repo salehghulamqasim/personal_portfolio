@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:personal_portfolio/components/project_card.dart';
-import 'package:personal_portfolio/components/skeleton.dart';
 
 class ProjectSection extends StatelessWidget {
   const ProjectSection({super.key});
@@ -13,8 +12,7 @@ class ProjectSection extends StatelessWidget {
     return Column(
       children: [
         // Play Baloot
-        EasySkeleton(
-          child: ProjectCard(
+        ProjectCard(
             title: 'Play Baloot',
             description:
                 'A traditional card game application with modern UI design and multiplayer functionality.',
@@ -36,25 +34,21 @@ class ProjectSection extends StatelessWidget {
               'Figma',
             ],
             imagePaths: [
-              'assets/project_images/playbaloot_images/homescreen.png',
-              'assets/project_images/playbaloot_images/introscreen.png',
-              'assets/project_images/playbaloot_images/joinscreen.png',
-              'assets/project_images/playbaloot_images/LoGoBaloot.png',
-              'assets/project_images/playbaloot_images/LogoDark.jpg',
-              'assets/project_images/playbaloot_images/Screenshot_20250913-195857.png',
-              'assets/project_images/playbaloot_images/Screenshot_20250913-195935.png',
-              'assets/project_images/playbaloot_images/Screenshot_20250913-195950.png',
-              'assets/project_images/playbaloot_images/Screenshot_20250913-200004.png',
-              'assets/project_images/playbaloot_images/Screenshot_20250913-200102.png',
+              'assets/project_images/playbaloot_images/1.png',
+              'assets/project_images/playbaloot_images/2.png',
+              'assets/project_images/playbaloot_images/3.png',
+              'assets/project_images/playbaloot_images/4.png',
+              'assets/project_images/playbaloot_images/5.png',
+              'assets/project_images/playbaloot_images/6.png',
+              'assets/project_images/playbaloot_images/7.png',
+              'assets/project_images/playbaloot_images/8.png',
             ],
             mainImage: 'assets/project_images/mainImage/baloot.png',
             imageOnRight: false,
           ),
-        ),
 
         // Beauty App
-        EasySkeleton(
-          child: ProjectCard(
+        ProjectCard(
             title: 'Beauty App',
             description:
                 'A comprehensive beauty and skincare application with elegant UI design and smooth user experience.',
@@ -84,11 +78,9 @@ class ProjectSection extends StatelessWidget {
             mainImage: 'assets/project_images/mainImage/beauty.png',
             imageOnRight: true,
           ),
-        ),
 
         // Wavy Design
-        EasySkeleton(
-          child: ProjectCard(
+        ProjectCard(
             title: 'Wavy Design',
             description:
                 'A creative design project featuring fluid wave patterns and modern visual aesthetics.',
@@ -104,20 +96,17 @@ class ProjectSection extends StatelessWidget {
             ],
             technologies: ['Flutter', 'Figma', 'Rive', 'Dart'],
             imagePaths: [
+              'assets/project_images/wavy/1.png',
               'assets/project_images/wavy/2.png',
-              'assets/project_images/wavy/Screenshot From 2025-02-18 23-14-38.png',
-              'assets/project_images/wavy/Screenshot From 2025-02-18 23-14-47.png',
-              'assets/project_images/wavy/Screenshot From 2025-02-18 23-14-53.png',
-              'assets/project_images/wavy/Screenshot From 2025-02-18 23-15-11.png',
+              'assets/project_images/wavy/3.png',
+              'assets/project_images/wavy/4.png',
             ],
             mainImage: 'assets/project_images/mainImage/wavvy.png',
             imageOnRight: false,
           ),
-        ),
 
         // Green Project
-        EasySkeleton(
-          child: ProjectCard(
+        ProjectCard(
             title: 'Green Project',
             description:
                 'An eco-friendly application focused on sustainability and environmental awareness.',
@@ -144,11 +133,9 @@ class ProjectSection extends StatelessWidget {
             mainImage: 'assets/project_images/mainImage/green.png',
             imageOnRight: true,
           ),
-        ),
 
         // Ashwat App
-        EasySkeleton(
-          child: ProjectCard(
+        ProjectCard(
             title: 'Ashwat App',
             description:
                 //app counts ashwat of u when u r doing tawwaf in mecca
@@ -165,20 +152,17 @@ class ProjectSection extends StatelessWidget {
             ],
             technologies: ['Flutter', 'Dart', 'Vibe Coding'],
             imagePaths: [
-              'assets/project_images/Ashwate/5796241533882273040.jpg',
-              'assets/project_images/Ashwate/5796241533882273041.jpg',
-              'assets/project_images/Ashwate/5796241533882273043.jpg',
-              'assets/project_images/Ashwate/5796241533882273044.jpg',
-              'assets/project_images/Ashwate/5796241533882273041.jpg',
+              'assets/project_images/Ashwate/1.png',
+              'assets/project_images/Ashwate/2.png',
+              'assets/project_images/Ashwate/3.png',
+              'assets/project_images/Ashwate/4.png',
             ],
             mainImage: 'assets/project_images/mainImage/ashwat.png',
             imageOnRight: false,
           ),
-        ),
 
         // Viva App
-        EasySkeleton(
-          child: ProjectCard(
+        ProjectCard(
             title: 'Viva App',
             description:
                 'A vibrant lifestyle application with dynamic features and engaging user interface.',
@@ -208,7 +192,6 @@ class ProjectSection extends StatelessWidget {
             mainImage: 'assets/project_images/mainImage/viva.png',
             imageOnRight: true,
           ),
-        ),
       ],
     );
   }

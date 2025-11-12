@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'pages/aboutMe_screen.dart';
 import 'package:personal_portfolio/pages/contact_screen.dart';
 import 'package:personal_portfolio/pages/experience_and_edu.dart';
 import 'package:personal_portfolio/pages/homescreen.dart';
-import 'package:personal_portfolio/pages/splash_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 import 'package:web_pointer/web_pointer.dart';
@@ -32,12 +32,12 @@ class MyApp extends StatelessWidget {
         //builder is a function that returns a widget and underscore means we don't use the first parameter
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: '/splash',
+          initialRoute: '/',
           routes: {
-            '/splash': (context) =>
-                const SplashScreen(), //initial splash screen
+            // '/splash': (context) =>
+            //     const SplashScreen(), //initial splash screen
             '/': (context) => const Homescreen(),
-            '/about': (context) => const Placeholder(),
+            '/about': (context) => AboutMePage(),
             '/projects': (context) => const Placeholder(),
             '/experience_education': (context) =>
                 const ExperienceAndEducation(),
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Portfolio',
           theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
-            hoverColor: AppColors.primaryOrange.withOpacity(0.1),
+            hoverColor: AppColors.primaryOrange.withValues(alpha: 0.1),
             primaryColor: AppColors.primaryOrange,
             // Use numeric multiplier (not 1.sp)
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.0),

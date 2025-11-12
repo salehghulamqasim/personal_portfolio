@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_portfolio/themes/text_styles.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String name = "Saleh Ghulam";
@@ -76,12 +77,13 @@ class MobileDrawerContent extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Menu',
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                       color: Colors.black,
+                      fontFamily: Fonts.comfortaa.fontFamily,
                     ),
                   ),
                   GestureDetector(
@@ -96,16 +98,28 @@ class MobileDrawerContent extends StatelessWidget {
               ),
             ),
 
+            // Light grey divider under "Menu"
+            const Divider(
+              height: 1,
+              thickness: 1,
+              color: Color(0xFFE8E8E8), // subtle grey divider
+            ),
+
             // Simple menu buttons
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
+                    // small spacing between divider and first item
+                    SizedBox(height: 12),
+                    // Home button (new)
+                    _buildSimpleButton(context, 'Home', '/'),
+                    const SizedBox(height: 8),
                     _buildSimpleButton(context, 'About', '/about'),
                     const SizedBox(height: 8),
-                    _buildSimpleButton(context, 'Projects', '/projects'),
-                    const SizedBox(height: 8),
+                    // _buildSimpleButton(context, 'Projects', '/projects'),
+                    // const SizedBox(height: 8),
                     _buildSimpleButton(
                       context,
                       'Experience',
@@ -114,6 +128,18 @@ class MobileDrawerContent extends StatelessWidget {
                     const SizedBox(height: 8),
                     _buildSimpleButton(context, 'Contact', '/contact'),
                   ],
+                ),
+              ),
+            ),
+
+            // Footer text at bottom
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Saleh Ghulam 2025',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                 ),
               ),
             ),
@@ -135,15 +161,18 @@ class MobileDrawerContent extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         decoration: BoxDecoration(
-          color: isActive ? const Color(0xFFFCC346) : Colors.transparent,
+          color: isActive
+              ? const Color(0xFFFCC346).withValues(alpha: 0.3)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
           title,
           style: TextStyle(
             fontSize: 16,
-            color: isActive ? Colors.white : Colors.black87,
+            color: isActive ? Colors.black87 : Colors.black,
             fontWeight: isActive ? FontWeight.w500 : FontWeight.normal,
+            fontFamily: Fonts.comfortaa.fontFamily,
           ),
         ),
       ),
