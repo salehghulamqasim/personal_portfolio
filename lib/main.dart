@@ -36,14 +36,12 @@ class MyApp extends StatelessWidget {
           routes: {
             // '/splash': (context) =>
             //     const SplashScreen(), //initial splash screen
-            '/': (context) => const LavaLampWrapper(child: Homescreen()),
-            '/about': (context) => LavaLampWrapper(child: AboutMePage()),
-            '/projects': (context) =>
-                const LavaLampWrapper(child: Placeholder()),
+            '/': (context) => const Homescreen(),
+            '/about': (context) => AboutMePage(),
+            '/projects': (context) => const Placeholder(),
             '/experience_education': (context) =>
-                const LavaLampWrapper(child: ExperienceAndEducation()),
-            '/contact': (context) =>
-                const LavaLampWrapper(child: ContactScreen()),
+                const ExperienceAndEducation(),
+            '/contact': (context) => const ContactScreen(),
           },
           title: 'Flutter Portfolio',
           theme: ThemeData(
@@ -109,47 +107,6 @@ class MyApp extends StatelessWidget {
         );
       },
       child: const Homescreen(),
-    );
-  }
-}
-
-// Lava Lamp Wrapper with fade-in animation
-class LavaLampWrapper extends StatefulWidget {
-  final Widget child;
-
-  const LavaLampWrapper({super.key, required this.child});
-
-  @override
-  State<LavaLampWrapper> createState() => _LavaLampWrapperState();
-}
-
-class _LavaLampWrapperState extends State<LavaLampWrapper> {
-  bool _showLavaLamp = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Delay lava lamp loading for better initial page load performance
-    Future.delayed(const Duration(milliseconds: 800), () {
-      if (mounted) {
-        setState(() => _showLavaLamp = true);
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Lava lamp with fade-in animation
-        AnimatedOpacity(
-          opacity: _showLavaLamp ? 1.0 : 0.0,
-          duration: const Duration(milliseconds: 1500),
-          curve: Curves.easeInOut,
-          child: widget
-              .child, // This is where your existing lava lamp will be in each page
-        ),
-      ],
     );
   }
 }

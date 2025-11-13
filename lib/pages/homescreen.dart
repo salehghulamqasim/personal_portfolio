@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 import 'package:personal_portfolio/components/scrollable_page.dart';
 import 'package:personal_portfolio/components/section_title.dart';
 import 'package:personal_portfolio/pages/about_screen.dart';
@@ -50,12 +49,8 @@ class _HomescreenState extends State<Homescreen> {
                 SizedBox(
                   height: 950.h,
                   width: double.infinity,
-                  child: LavaLampEffect(
-                    size: Size(800.w, 950.h),
+                  child: Container(
                     color: const Color.fromRGBO(252, 248, 230, 1.0),
-                    lavaCount: 6,
-                    speed: 1,
-                    repeatDuration: const Duration(seconds: 4),
                   ),
                 ),
                 Column(
