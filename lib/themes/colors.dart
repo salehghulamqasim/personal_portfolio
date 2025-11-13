@@ -11,6 +11,8 @@ class AppColors {
     1.0,
   ); // RGB(252, 195, 70)
 
+  
+
   // Background Colors
   static const Color background = Color(0xFFF9FAFF); // RGB(249, 250, 255)
 

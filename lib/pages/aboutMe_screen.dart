@@ -5,11 +5,8 @@ import 'package:personal_portfolio/sections/footer_wave.dart';
 import 'package:personal_portfolio/sections/socials_footer.dart';
 import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:personal_portfolio/pages/aboutMe_section.dart';
 
-/// Bento Box Style About Me
-/// Compact, visual, with hover effects
-/// Lava lamp background + grid layout
+import 'aboutMe_section.dart'; // ← sections live here
 
 class AboutMePage extends StatelessWidget {
   const AboutMePage({Key? key}) : super(key: key);
@@ -24,7 +21,7 @@ class AboutMePage extends StatelessWidget {
         color: const Color(0xFFF9FAFF),
         child: Stack(
           children: [
-            // Lava Lamp Background
+            // Lava-lamp background
             Positioned.fill(
               child: LavaLampEffect(
                 size: Size(800.w, 2000.h),
@@ -39,12 +36,9 @@ class AboutMePage extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: kToolbarHeight + 20.h), // Reduced from +60.h
-                  // Hero
+                  SizedBox(height: kToolbarHeight + 20.h),
                   const HeroSection(),
-
-                  SizedBox(height: 40.h), // Reduced from 60.h
-                  // Bento Grid
+                  SizedBox(height: 40.h),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: ConstrainedBox(
@@ -52,12 +46,10 @@ class AboutMePage extends StatelessWidget {
                       child: const BentoGridSection(),
                     ),
                   ),
-
                   SizedBox(height: 80.h),
-
-                  Socials(),
+                  const Socials(),
                   SizedBox(height: 40.h),
-                  FooterWave(userColor: Color(0xFFF9FAFF)),
+                  FooterWave(userColor: const Color(0xFFF9FAFF)),
                 ],
               ),
             ),

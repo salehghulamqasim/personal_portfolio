@@ -41,7 +41,7 @@ dependencies:
   flutter_swiper_view: ^1.1.8
   web_smooth_scroll: ^2.0.0
   # flutter_staggered_animations: ^1.1.1
-  auto_animated: ^3.2.0 
+  # auto_animated: ^3.2.0 
   confirmation_success: ^0.0.2
 
 dev_dependencies:
@@ -64,6 +64,8 @@ flutter:
     # Project images - each folder explicitly listed
     - assets/project_images/
     - assets/project_images/beauty/
+
+    
     - assets/project_images/greenproject/
     - assets/project_images/myphotos/
     - assets/project_images/playbaloot_images/
@@ -73,12 +75,13 @@ flutter:
 
     # Main photos of each project (edited in canva by me :)
     - assets/project_images/mainImage/
-    - assets/project_images/mainImage/beauty.png
-    - assets/project_images/mainImage/green.png
-    - assets/project_images/mainImage/ashwat.png
-    - assets/project_images/mainImage/baloot.png
-    - assets/project_images/mainImage/viva.png 
-    - assets/project_images/mainImage/wavvy.png
+    - assets/project_images/mainImage/ashwat.webp
+    - assets/project_images/mainImage/beauty.webp
+    - assets/project_images/mainImage/green.webp
+    
+    - assets/project_images/mainImage/playbaloot.webp
+    - assets/project_images/mainImage/viva.webp
+    - assets/project_images/mainImage/wavvy.webp
 
 
     # Splash screen 
@@ -87,12 +90,7 @@ flutter:
     - assets/splash_screen/Gradient_blob.json
     - assets/splash_screen/Gradient_blob.lottie
 
-    # languages icons 
-    - assets/icons/saudi-arabia.png
-    - assets/icons/pakistan.png
-    - assets/icons/united-kingdom.png
+ 
     # Icons/SVGs
     - assets/icons/
-
-
 

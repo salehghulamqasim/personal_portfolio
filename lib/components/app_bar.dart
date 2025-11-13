@@ -28,9 +28,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     Navigator.pushNamed(context, '/about');
   }
 
-  void _onProjectsPressed(BuildContext context) {
-    Navigator.pushNamed(context, '/projects');
-  }
+  // void _onProjectsPressed(BuildContext context) {
+  //   Navigator.pushNamed(context, '/projects');
+  // }
 
   void _onExperienceEducationPressed(BuildContext context) {
     Navigator.pushNamed(context, '/experience_education');
@@ -88,11 +88,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       isActive: currentRoute == '/about',
                     ),
 
-                    _buildNavButton(
-                      text: 'Projects',
-                      onPressed: () => _onProjectsPressed(context),
-                      isActive: currentRoute == '/projects',
-                    ),
+                    // _buildNavButton(
+                    //   text: 'Projects',
+                    //   onPressed: () => _onProjectsPressed(context),
+                    //   isActive: currentRoute == '/projects',
+                    // ),
                     _buildNavButton(
                       text: 'Experience & Education',
                       onPressed: () => _onExperienceEducationPressed(context),

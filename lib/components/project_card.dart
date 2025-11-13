@@ -90,7 +90,7 @@ class _ProjectCardState extends State<ProjectCard> {
                   child: OutlinedButton(
                     onPressed: null, // Disabled tap functionality
                     child: Text(
-                      isExpanded ? 'Details Disabled' : 'Details Disabled',
+                      isExpanded ? 'Tap to Collapse' : 'Tap to Expand',
                       style: TextStyle(
                         fontFamily: Fonts.roboto.fontFamily,
                         fontSize: isMobile ? 14.sp : 16.sp,

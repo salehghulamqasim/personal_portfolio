@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:personal_portfolio/components/section_title.dart';
 
 /*  --------------------------------------------------
     STORY  BOX  (tap opens modal)
@@ -157,7 +159,7 @@ class _StoryBoxState extends State<StoryBox> {
                   'Tap to learn more',
                   style: TextStyle(
                     fontSize: 11.sp,
-                    color: const Color(0xFFFCC346).withOpacity(0.35),
+                    color: const Color(0xFF828282).withOpacity(0.75),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -174,15 +176,10 @@ class _StoryBoxState extends State<StoryBox> {
     PASSION  BOX  (simple – no modal)
     -------------------------------------------------- */
 class PassionBox extends StatefulWidget {
-  final IconData icon;
+  final IconData? icon;
   final String title;
-  final Color color;
-  const PassionBox({
-    Key? key,
-    required this.icon,
-    required this.title,
-    required this.color,
-  }) : super(key: key);
+  final Color? color;
+  const PassionBox({super.key, this.icon, required this.title, this.color});
 
   @override
   State<PassionBox> createState() => _PassionBoxState();
@@ -204,18 +201,20 @@ class _PassionBoxState extends State<PassionBox> {
               ..translate(0.0, _isHovered ? -8.0 : 0.0)
               ..scale(_isHovered ? 1.05 : 1.0),
             decoration: BoxDecoration(
-              color: widget.color.withOpacity(_isHovered ? 0.15 : 0.1),
+              color: widget.color?.withValues(alpha: _isHovered ? 0.15 : 0.1),
               borderRadius: BorderRadius.circular(24.r),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  widget.icon,
-                  size: isMobile ? 36.sp : 48.sp,
-                  color: widget.color,
-                ),
-                SizedBox(height: 12.h),
+                if (widget.icon != null) ...[
+                  Icon(
+                    widget.icon,
+                    size: isMobile ? 36.sp : 48.sp,
+                    color: widget.color,
+                  ),
+                  SizedBox(height: 12.h),
+                ],
                 Text(
                   widget.title,
                   style: TextStyle(
@@ -235,11 +234,76 @@ class _PassionBoxState extends State<PassionBox> {
 }
 
 /*  --------------------------------------------------
+    TITLE BOX WHITE (white background with SectionTitle)
+    -------------------------------------------------- */
+class TitleBoxWhite extends StatelessWidget {
+  final String title;
+  final int size;
+  const TitleBoxWhite({super.key, required this.title, this.size = 28});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 768;
+    return Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(isMobile ? 20.w : 32.w),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: SectionTitle(text: title, size: size),
+        )
+        .animate()
+        .fadeIn(duration: 300.ms, delay: 100.ms * title.length)
+        .scale(begin: const Offset(0.8, 0.8), curve: Curves.easeOutCubic);
+  }
+}
+
+/*  --------------------------------------------------
+    TITLE BOX COLORED (transparent/colored background with SectionTitle)
+    -------------------------------------------------- */
+class TitleBoxColored extends StatelessWidget {
+  final String title;
+  final Color? color;
+  final int size;
+  const TitleBoxColored({
+    super.key,
+    required this.title,
+    this.color,
+    this.size = 28,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 768;
+    return Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(isMobile ? 20.w : 32.w),
+          decoration: BoxDecoration(
+            color: color?.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(24.r),
+          ),
+          child: SectionTitle(text: title, size: size),
+        )
+        .animate()
+        .fadeIn(duration: 300.ms, delay: 100.ms * title.length)
+        .scale(begin: const Offset(0.8, 0.8), curve: Curves.easeOutCubic);
+  }
+}
+
+/*  --------------------------------------------------
     HACKATHON  BOX  (tap opens modal)
     -------------------------------------------------- */
 class HackathonBox extends StatefulWidget {
   final String number;
-  const HackathonBox({Key? key, required this.number}) : super(key: key);
+  const HackathonBox({super.key, required this.number});
 
   @override
   State<HackathonBox> createState() => _HackathonBoxState();
@@ -252,7 +316,7 @@ class _HackathonBoxState extends State<HackathonBox> {
     '1': {
       'name': 'Computer Club Member',
       'project': 'University',
-      'award': '🥈 Outstanding Contribution',
+      // 'award': '🥈 Outstanding Contribution',
       'description':
           'Led workshops on mobile development and contributed to club\'s open-source projects. Mentored 20+ students in Flutter development.',
       'tech': ['Flutter', 'Dart', 'Firebase'],
@@ -262,7 +326,7 @@ class _HackathonBoxState extends State<HackathonBox> {
     '2': {
       'name': 'International Conference on Logistics',
       'project': 'Jeddah University',
-      'award': '🥈 Technical Presentation Award',
+      // 'award': '🥈 Technical Presentation Award',
       'description':
           'Presented research on logistics optimization using AI and mobile tracking solutions. Received recognition for technical excellence.',
       'tech': ['Research', 'AI', 'Mobile Apps'],
@@ -272,7 +336,7 @@ class _HackathonBoxState extends State<HackathonBox> {
     '3': {
       'name': 'Tech Meetup 3',
       'project': 'Augmented Reality Bookstore',
-      'award': '⭐ Top 10 Finalist',
+      // 'award': '⭐ Top 10 Finalist',
       'description':
           'Built an AR app that transforms traditional bookstores into interactive experiences. Users can preview books in 3D before purchasing.',
       'tech': ['Unity', 'ARCore', 'C#'],
@@ -282,12 +346,22 @@ class _HackathonBoxState extends State<HackathonBox> {
     '4': {
       'name': 'Smart City Hackathon',
       'project': 'Jeddah University',
-      'award': '🏆 Best Urban Solution',
+      // 'award': '🏆 Best Urban Solution',
       'description':
           'Developed a smart parking solution that reduces traffic congestion by 30% using IoT sensors and real-time data analytics.',
       'tech': ['IoT', 'Firebase', 'Flutter', 'Node.js'],
       'team': '3 members',
       'duration': '36 hours',
+    },
+    '5': {
+      'name': 'Interests',
+      // 'project': 'Jeddah University',
+      // 'award': '🏆 Best Urban Solution',
+      // 'description':
+      //     'Developed a smart parking solution that reduces traffic congestion by 30% using IoT sensors and real-time data analytics.',
+      // 'tech': ['IoT', 'Firebase', 'Flutter', 'Node.js'],
+      // 'team': '3 members',
+      // 'duration': '36 hours',
     },
   };
 
@@ -326,7 +400,7 @@ class _HackathonBoxState extends State<HackathonBox> {
     final data = _hackathons[widget.number]!;
     final hackathonColor = _getHackathonColor();
     final hackathonIcon = _getHackathonIcon();
-    
+
     showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.5),
@@ -394,25 +468,25 @@ class _HackathonBoxState extends State<HackathonBox> {
                               color: hackathonColor,
                             ),
                           ),
-                          SizedBox(height: 12.h),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 8.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: hackathonColor.withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            child: Text(
-                              data['award']!,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: hackathonColor,
-                              ),
-                            ),
-                          ),
+                          // SizedBox(height: 12.h),
+                          // Container(
+                          //   padding: EdgeInsets.symmetric(
+                          //     horizontal: 16.w,
+                          //     vertical: 8.h,
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //     color: hackathonColor.withOpacity(0.15),
+                          //     borderRadius: BorderRadius.circular(12.r),
+                          //   ),
+                          //   child: Text(
+                          //     data['award']!,
+                          //     style: TextStyle(
+                          //       fontSize: 14.sp,
+                          //       fontWeight: FontWeight.w600,
+                          //       color: hackathonColor,
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(height: 24.h),
                           const Text(
                             'About the Project',
@@ -539,7 +613,7 @@ class _HackathonBoxState extends State<HackathonBox> {
     final cardData = _hackathons[widget.number]!;
     final hackathonColor = _getHackathonColor();
     final hackathonIcon = _getHackathonIcon();
-    
+
     return MouseRegion(
           onEnter: (_) => setState(() => _isHovered = true),
           onExit: (_) => setState(() => _isHovered = false),
@@ -600,34 +674,34 @@ class _HackathonBoxState extends State<HackathonBox> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  // const Spacer(),
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(
+                  //     horizontal: 12.w,
+                  //     vertical: 6.h,
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     color: hackathonColor.withOpacity(0.15),
+                  //     borderRadius: BorderRadius.circular(12.r),
+                  //   ),
+                  //   child: Text(
+                  //     cardData['award']!,
+                  //     style: TextStyle(
+                  //       fontSize: isMobile ? 11.sp : 12.sp,
+                  //       fontWeight: FontWeight.w600,
+                  //       color: hackathonColor,
+                  //     ),
+                  //     maxLines: 1,
+                  //     overflow: TextOverflow.ellipsis,
+                  //   ),
+                  // ),
                   const Spacer(),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 6.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: hackathonColor.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: Text(
-                      cardData['award']!,
-                      style: TextStyle(
-                        fontSize: isMobile ? 11.sp : 12.sp,
-                        fontWeight: FontWeight.w600,
-                        color: hackathonColor,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  SizedBox(height: 12.h),
                   Center(
                     child: Text(
                       'Tap for details',
                       style: TextStyle(
                         fontSize: 11.sp,
-                        color: hackathonColor.withOpacity(0.35),
+                        color: const Color(0xFF828282).withOpacity(0.75),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -937,13 +1011,23 @@ class _GDSCBoxState extends State<GDSCBox> {
                   ),
                   const Spacer(),
                   Center(
-                    child: Text(
-                      'Tap for details',
-                      style: TextStyle(
-                        fontSize: 11.sp,
-                        color: const Color(0xFF4ECDC4).withOpacity(0.35),
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        ColorizeAnimatedText(
+                          'Tap for details',
+                          textStyle: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          colors: [
+                            const Color(0xFF828282).withOpacity(0.6),
+                            const Color(0xFFB0B0B0).withOpacity(0.8),
+                            const Color(0xFF828282).withOpacity(0.6),
+                          ],
+                        ),
+                      ],
+                      repeatForever: true,
+                      pause: const Duration(milliseconds: 500),
                     ),
                   ),
                 ],

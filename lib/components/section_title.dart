@@ -21,13 +21,13 @@ import 'package:personal_portfolio/themes/text_styles.dart';
 class SectionTitle extends StatefulWidget {
   final String text; // we will type it in when we use the widget
   final double? lineWidth; // optional line width
-  final double? size; // optional font size
+  final int size; // optional font size
 
   const SectionTitle({
     super.key,
     required this.text,
     this.lineWidth,
-    this.size,
+    this.size = 36, // default font size is 36
   });
 
   @override
@@ -61,7 +61,7 @@ class _SectionTitleState extends State<SectionTitle> {
           Text(
             widget.text,
             style: Fonts.playfair.copyWith(
-              fontSize: 36.sp, // Unified font size
+              fontSize: widget.size.sp, // Unified font size
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -73,7 +73,7 @@ class _AboutCardState extends State<AboutCard>
             height: isMobile ? 220.h : 340.h,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(24.r),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xFF7090B0).withValues(alpha: 0.1),

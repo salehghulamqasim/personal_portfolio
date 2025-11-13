@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../components/aboutMe.dart';
+import 'package:personal_portfolio/components/aboutMe.dart'
+    show
+        PassionBox,
+        HackathonBox,
+        StoryBox,
+        GDSCBox,
+        TitleBoxWhite,
+        TitleBoxColored;
+
+// import 'package:personal_portfolio/components/section_title.dart';
 
 /// ---------------------------  HERO  ---------------------------
 class HeroSection extends StatelessWidget {
@@ -56,36 +65,45 @@ class BentoGridSection extends StatelessWidget {
 
     if (isMobile) {
       return GridView.count(
-        shrinkWrap: true,
+        shrinkWrap:
+            true, //shrinkwrap is used to shrink the grid view to the size of the content
+        // below line stops the user from scrolling that widget by touch/drag
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 2,
         mainAxisSpacing: 20.h,
         crossAxisSpacing: 16.w,
         childAspectRatio: 0.75,
         children: const [
-          StoryBox(),
+          // StoryBox(),
+          TitleBoxWhite(title: 'Interests', size: 24),
           PassionBox(
             icon: Icons.camera_alt,
             title: 'Photography',
             color: Color(0xFFFCC346),
           ),
-          PassionBox(
-            icon: Icons.music_note,
-            title: 'Music',
-            color: Color(0xFFFF6B6B),
-          ),
+          // PassionBox(
+          //   icon: Icons.music_note,
+          //   title: 'Music',
+          //   color: Color(0xFFFF6B6B),
+          // ),
           PassionBox(
             icon: Icons.menu_book,
             title: 'Reading',
             color: Color(0xFF4ECDC4),
           ),
-          HackathonBox(number: '1'),
-          HackathonBox(number: '2'),
           PassionBox(
             icon: Icons.sports_esports,
             title: 'Gaming',
             color: Color(0xFF95E1D3),
           ),
+          TitleBoxColored(
+            title: 'Activities',
+            size: 24,
+            color: Color(0xFFFCC346),
+          ),
+
+          HackathonBox(number: '1'),
+          HackathonBox(number: '2'),
           GDSCBox(),
           HackathonBox(number: '3'),
           HackathonBox(number: '4'),
@@ -93,7 +111,7 @@ class BentoGridSection extends StatelessWidget {
       );
     }
 
-    // Desktop layout - Passions grouped above, one wider hackathon box
+    // Desktop layout
     return Wrap(
       spacing: 24.w,
       runSpacing: 28.h,
@@ -112,35 +130,6 @@ class BentoGridSection extends StatelessWidget {
             color: Color(0xFFFCC346),
           ),
         ),
-        // Passions row - grouped together
-        SizedBox(
-          width: (1200.w - 48.w) / 3,
-          height: 180.h,
-          child: const PassionBox(
-            icon: Icons.music_note,
-            title: 'Music',
-            color: Color(0xFFFF6B6B),
-          ),
-        ),
-        SizedBox(
-          width: (1200.w - 48.w) / 3,
-          height: 180.h,
-          child: const PassionBox(
-            icon: Icons.menu_book,
-            title: 'Reading',
-            color: Color(0xFF4ECDC4),
-          ),
-        ),
-        SizedBox(
-          width: (1200.w - 48.w) / 3,
-          height: 180.h,
-          child: const PassionBox(
-            icon: Icons.sports_esports,
-            title: 'Gaming',
-            color: Color(0xFF95E1D3),
-          ),
-        ),
-        // Wider hackathon box
         SizedBox(
           width: (1200.w - 48.w) / 2,
           height: 420.h,
@@ -148,22 +137,63 @@ class BentoGridSection extends StatelessWidget {
         ),
         SizedBox(
           width: (1200.w - 48.w) / 2,
-          height: 420.h,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 180.h,
+                child: Row(
+                  children: const [
+                    Expanded(
+                      child: PassionBox(
+                        icon: Icons.music_note,
+                        title: 'Music',
+                        color: Color(0xFFFF6B6B),
+                      ),
+                    ),
+                    SizedBox(width: 24),
+                    Expanded(
+                      child: PassionBox(
+                        icon: Icons.menu_book,
+                        title: 'Reading',
+                        color: Color(0xFF4ECDC4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                height: 216.h,
+                child: Row(
+                  children: const [
+                    Expanded(
+                      child: PassionBox(
+                        icon: Icons.sports_esports,
+                        title: 'Gaming',
+                        color: Color(0xFF95E1D3),
+                      ),
+                    ),
+                    SizedBox(width: 24),
+                    Expanded(child: HackathonBox(number: '2')),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: (1200.w - 48.w) / 2,
+          height: 310.h,
           child: const GDSCBox(),
         ),
         SizedBox(
-          width: (1200.w - 72.w) / 3,
-          height: 300.h,
-          child: const HackathonBox(number: '2'),
-        ),
-        SizedBox(
-          width: (1200.w - 72.w) / 3,
-          height: 300.h,
+          width: (1200.w - 72.w) / 4,
+          height: 310.h,
           child: const HackathonBox(number: '3'),
         ),
         SizedBox(
-          width: (1200.w - 72.w) / 3,
-          height: 300.h,
+          width: (1200.w - 72.w) / 4,
+          height: 310.h,
           child: const HackathonBox(number: '4'),
         ),
       ],

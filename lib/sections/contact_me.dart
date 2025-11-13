@@ -48,9 +48,7 @@ class _ContactFormState extends State<ContactForm> {
           context: context,
           barrierDismissible: false,
           useRootNavigator: true,
-          builder: (context) => Dialog(
-            backgroundColor: Colors.transparent,
-            insetPadding: EdgeInsets.all(20.w),
+          builder: (context) => _FadeAwayDialog(
             child: ConfirmationSuccess(
               reactColor: AppColors.primaryOrange,
               bubbleColors: [
@@ -77,9 +75,6 @@ class _ContactFormState extends State<ContactForm> {
             ),
           ),
         );
-
-        await Future.delayed(const Duration(seconds: 5));
-        if (mounted) Navigator.of(context).pop();
       } else {
         // Non-200 code
         ScaffoldMessenger.of(context).showSnackBar(
@@ -97,9 +92,7 @@ class _ContactFormState extends State<ContactForm> {
         context: context,
         barrierDismissible: false,
         useRootNavigator: true,
-        builder: (context) => Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.all(20.w),
+        builder: (context) => _FadeAwayDialog(
           child: ConfirmationSuccess(
             reactColor: const Color(0xFFFDC435),
             bubbleColors: [const Color(0xFFFDC435)],
@@ -119,7 +112,7 @@ class _ContactFormState extends State<ContactForm> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Thanks for reaching out — I’ll get back to you soon.",
+                  "Thanks for reaching out — I'll get back to you soon.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Nunito',
@@ -132,9 +125,6 @@ class _ContactFormState extends State<ContactForm> {
           ),
         ),
       );
-
-      await Future.delayed(const Duration(seconds: 5));
-      if (mounted) Navigator.of(context).pop();
     } finally {
       setState(() => isSubmitting = false);
     }
@@ -170,119 +160,119 @@ class _ContactFormState extends State<ContactForm> {
     final isMobile = MediaQuery.of(context).size.width < 768;
 
     return Center(
-        child: Container(
-          constraints: BoxConstraints(maxWidth: 700.w),
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 20.w : 40.w,
-            vertical: 20.h,
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 600.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildLabel('Name'),
-                  _buildTextField(
-                    controller: nameController,
-                    hintText: 'Your name',
-                  ),
-                  SizedBox(height: 32.h),
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 700.w),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 20.w : 40.w,
+          vertical: 20.h,
+        ),
+        child: Align(
+          alignment: Alignment.center,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildLabel('Name'),
+                _buildTextField(
+                  controller: nameController,
+                  hintText: 'Your name',
+                ),
+                SizedBox(height: 32.h),
 
-                  _buildLabel('Email'),
-                  _buildTextField(
-                    controller: emailController,
-                    hintText: 'your.email@example.com',
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  SizedBox(height: 32.h),
+                _buildLabel('Email'),
+                _buildTextField(
+                  controller: emailController,
+                  hintText: 'your.email@example.com',
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: 32.h),
 
-                  _buildLabel('Message'),
-                  _buildTextField(
-                    controller: messageController,
-                    hintText: 'Tell me about your project...',
-                    maxLines: 6,
-                  ),
-                  SizedBox(height: 32.h),
+                _buildLabel('Message'),
+                _buildTextField(
+                  controller: messageController,
+                  hintText: 'Tell me about your project...',
+                  maxLines: 6,
+                ),
+                SizedBox(height: 32.h),
 
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: isSubmitting ? null : sendEmail,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFDC435),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 38.w,
-                          vertical: 32.h,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                        shadowColor: const Color(
-                          0xFFFDC435,
-                        ).withValues(alpha: 0.3),
-                        elevation: 4,
+                Center(
+                  child: ElevatedButton(
+                    onPressed: isSubmitting ? null : sendEmail,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFDC435),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 38.w,
+                        vertical: 32.h,
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            isSubmitting ? 'Sending...' : 'Send Message',
-                            style: const TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              color: Color(0xFF25282B),
-                            ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      shadowColor: const Color(
+                        0xFFFDC435,
+                      ).withValues(alpha: 0.3),
+                      elevation: 4,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          isSubmitting ? 'Sending...' : 'Send Message',
+                          style: const TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: Color(0xFF25282B),
                           ),
-                          if (!isSubmitting) ...[
-                            SizedBox(width: 10.w),
-                            const Icon(
-                              Icons.send,
-                              size: 20,
-                              color: Color(0xFF25282B),
-                            ),
-                          ],
+                        ),
+                        if (!isSubmitting) ...[
+                          SizedBox(width: 10.w),
+                          const Icon(
+                            Icons.send,
+                            size: 20,
+                            color: Color(0xFF25282B),
+                          ),
                         ],
-                      ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 60.h),
+                ),
+                SizedBox(height: 60.h),
 
-                  // ALT EMAIL LINK
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Or email me directly at: ',
+                // ALT EMAIL LINK
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Or email me directly at: ',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 16,
+                        color: Color(0xFF828282),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: launchEmail,
+                      child: const Text(
+                        'SalehTheCoder@gmail.com',
                         style: TextStyle(
                           fontFamily: 'Nunito',
                           fontSize: 16,
-                          color: Color(0xFF828282),
+                          color: Color(0xFF25282B),
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: launchEmail,
-                        child: const Text(
-                          'SalehTheCoder@gmail.com',
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontSize: 16,
-                            color: Color(0xFF25282B),
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 
   // 🧩 Helper for field labels
@@ -353,6 +343,76 @@ class _ContactFormState extends State<ContactForm> {
   }
 }
 
+// Beautiful fade-away dialog with smooth animation
+class _FadeAwayDialog extends StatefulWidget {
+  final Widget child;
+
+  const _FadeAwayDialog({required this.child});
+
+  @override
+  State<_FadeAwayDialog> createState() => _FadeAwayDialogState();
+}
+
+class _FadeAwayDialogState extends State<_FadeAwayDialog>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+
+    // Smooth fade animation with easeOutCubic curve
+    _fadeAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+
+    // Subtle scale animation (slightly shrink as it fades)
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.9,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+
+    // Start fade out after 2 seconds
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        _controller.forward().then((_) {
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.all(20.w),
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+}
+
 /* 
 ──────────────────────────────
 📘 HOW IT WORKS
@@ -360,8 +420,8 @@ class _ContactFormState extends State<ContactForm> {
 1. When user taps "Send Message", sendEmail() runs.
 2. It posts data to your Formspree endpoint.
 3. If statusCode == 200 → it clears form + shows ConfirmationSuccess.
-4. The animation dialog stays for 5 seconds, then auto-closes.
+4. The animation dialog shows for 2 seconds, then beautifully fades away.
 5. Prevents multiple sends using isSubmitting flag.
-6. Works both in localhost & Netlify since it’s tied to success status, not Flutter DevTools.
+6. Works both in localhost & Netlify since it's tied to success status, not Flutter DevTools.
 ──────────────────────────────
 */
