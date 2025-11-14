@@ -31,8 +31,8 @@ dependencies:
   skeletonizer: ^2.1.0+1
   visibility_detector: ^0.4.0+2
   animated_text_kit: ^4.3.0
-  # rive: ^0.13.20
-  # rive_splash_screen: ^0.1.1
+  rive: ^0.13.20
+
   another_flutter_splash_screen: ^1.2.1
   # alp_animated_splashscreen: ^0.0.6
   lottie: ^3.3.2
@@ -60,12 +60,11 @@ flutter:
     # Images (use wildcard to include all files)
     - assets/images/
     - assets/images/MaskedSaleh.webp
-    
+
     # Project images - each folder explicitly listed
     - assets/project_images/
     - assets/project_images/beauty/
 
-    
     - assets/project_images/greenproject/
     - assets/project_images/myphotos/
     - assets/project_images/playbaloot_images/
@@ -78,19 +77,19 @@ flutter:
     - assets/project_images/mainImage/ashwat.webp
     - assets/project_images/mainImage/beauty.webp
     - assets/project_images/mainImage/green.webp
-    
+
     - assets/project_images/mainImage/playbaloot.webp
     - assets/project_images/mainImage/viva.webp
     - assets/project_images/mainImage/wavvy.webp
 
-
     # Splash screen 
     - assets/splash_screen/
-    - assets/splash_screen/15450-29175-splash-screen-bouncing-ball.riv
-    - assets/splash_screen/Gradient_blob.json
-    - assets/splash_screen/Gradient_blob.lottie
+    - web/splash.riv
+    - web/splash.json
+    # - assets/splash_screen/15450-29175-splash-screen-bouncing-ball.riv
+    # - assets/splash_screen/Gradient_blob.json
+    # - assets/splash_screen/Gradient_blob.lottie
 
- 
     # Icons/SVGs
     - assets/icons/
 

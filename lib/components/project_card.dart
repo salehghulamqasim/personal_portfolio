@@ -112,7 +112,7 @@ class _ProjectCardState extends State<ProjectCard> {
               child: SizedBox(
                 height: isMobile ? 320.h : 550.h,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(24.r),
                   child: Image.asset(
                     widget.imagePaths.isNotEmpty
                         ? widget.mainImage
@@ -145,7 +145,7 @@ class _ProjectCardState extends State<ProjectCard> {
             margin: EdgeInsets.all(isMobile ? 8.w : 16.w),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(24.r),
               border: Border.all(color: Colors.grey.shade300),
             ),
             child: Column(
@@ -238,40 +238,46 @@ class _ProjectCardState extends State<ProjectCard> {
                             skills: widget.technologies ?? [],
                           ),
 
+                          // Divider line
+                          Divider(
+                            color: AppColors.mobileMenuBarColor,
+                            thickness: 1.5,
+                            height: 32.h,
+                          ),
+
                           // Buttons for demo and source code
                           SizedBox(height: isMobile ? 24.h : 24.h),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primaryOrange,
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: isMobile ? 20.w : 16.w,
-                                    vertical: isMobile ? 14.h : 29.h,
+                                    horizontal: isMobile ? 24.w : 32.w,
+                                    vertical: isMobile ? 16.h : 20.h,
                                   ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
                                 child: Text(
-                                  isMobile
-                                      ? 'Github Repo'
-                                      : 'Github Repository',
+                                  isMobile ? 'Github' : 'Github Repository',
                                   style: Fonts.roboto.copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
-                              SizedBox(width: isMobile ? 12.w : 16.w),
+                              SizedBox(width: isMobile ? 16.w : 24.w),
                               OutlinedButton(
                                 onPressed: () {},
                                 style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(color: Colors.black),
+                                  side: BorderSide(color: Colors.black),
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: isMobile ? 20.w : 16.w,
-                                    vertical: isMobile ? 14.h : 29.h,
+                                    horizontal: isMobile ? 24.w : 32.w,
+                                    vertical: isMobile ? 16.h : 20.h,
                                   ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
@@ -298,15 +304,24 @@ class _ProjectCardState extends State<ProjectCard> {
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: isMobile ? 8.w : 12.w,
-                                  ), // spacing between images
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                    child: FittedBox(
-                                      fit: BoxFit
-                                          .contain, // make sure the full image fits without cropping
-                                      child: Image.asset(
-                                        widget.imagePaths[index],
+                                    horizontal: isMobile
+                                        ? 8.w
+                                        : 12.w, // spacing between images
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: isMobile
+                                          ? 12.h
+                                          : 16.h, // Further raised above dots
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.r),
+                                      child: FittedBox(
+                                        fit: BoxFit
+                                            .contain, // make sure the full image fits without cropping
+                                        child: Image.asset(
+                                          widget.imagePaths[index],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -326,41 +341,13 @@ class _ProjectCardState extends State<ProjectCard> {
                                   activeSize: 12.0,
                                 ),
                               ),
-                              // control: const SwiperControl(
-                              //   color: AppColors.primaryOrange,
-                              // ),
+                              control: isMobile
+                                  ? null // No swipe control for mobile
+                                  : const SwiperControl(
+                                      color: AppColors.primaryOrange,
+                                    ),
                             ),
                           ),
-
-                          // // Carousel Section
-                          // CarouselSlider(
-                          //   options: CarouselOptions(
-                          //     height: isMobile ? 350.h : 500.h,
-                          //     viewportFraction: isMobile ? 1.0 : 0.9,
-                          //     enableInfiniteScroll: imagePaths.length > 1,
-                          //     autoPlay: false,
-                          //     enlargeCenterPage: !isMobile,
-                          //   ),
-                          //   items: imagePaths.map((imagePath) {
-                          //     return Builder(
-                          //       builder: (BuildContext context) {
-                          //         return Container(
-                          //           margin: EdgeInsets.symmetric(
-                          //             horizontal: isMobile ? 0 : 8.w,
-                          //           ),
-                          //           child: ClipRRect(
-                          //             borderRadius: BorderRadius.circular(12.r),
-                          //             child: Image.asset(
-                          //               imagePath,
-                          //               fit: BoxFit.contain,
-                          //               width: double.infinity,
-                          //             ),
-                          //           ),
-                          //         );
-                          //       },
-                          //     );
-                          //   }).toList(),
-                          // ),
                         ],
                       ],
                     ),

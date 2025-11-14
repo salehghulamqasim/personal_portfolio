@@ -10,60 +10,60 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-        builder: (context, constraints) {
-          // WIDE SCREEN LAYOUT (Laptop)
-          if (constraints.maxWidth > 800) {
-            return Row(
-              children: [
-                // 1. LEFT SIDE: Text content with padding
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 12.w),
-                    child: HeroTextContent(),
-                  ),
+      builder: (context, constraints) {
+        // WIDE SCREEN LAYOUT (Laptop)
+        if (constraints.maxWidth > 800) {
+          return Row(
+            children: [
+              // 1. LEFT SIDE: Text content with padding
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 12.w),
+                  child: HeroTextContent(),
                 ),
+              ),
 
-                // 2. RIGHT SIDE: Image without padding (full width)
-                Expanded(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // the actual file size is [2880×2516] but the oen being load is 640×559
-                      //so we add cache height and widht so flutter knows it needs to be only load at 640x559 so it wont cause perfoamcen issues
-                      Image.asset(
-                        "assets/images/MaskedSaleh.webp",
-                        cacheHeight:
-                            (560 * MediaQuery.of(context).devicePixelRatio)
-                                .round(),
-                        cacheWidth:
-                            (640 * MediaQuery.of(context).devicePixelRatio)
-                                .round(),
-                        fit: BoxFit.cover,
-                      ),
-                    ],
-                  ),
+              // 2. RIGHT SIDE: Image without padding (full width)
+              Expanded(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // the actual file size is [2880×2516] but the oen being load is 640×559
+                    //so we add cache height and widht so flutter knows it needs to be only load at 640x559 so it wont cause perfoamcen issues
+                    Image.asset(
+                      "assets/images/MaskedSaleh.webp",
+                      cacheHeight:
+                          (560 * MediaQuery.of(context).devicePixelRatio)
+                              .round(),
+                      cacheWidth:
+                          (640 * MediaQuery.of(context).devicePixelRatio)
+                              .round(),
+                      fit: BoxFit.cover,
+                    ),
+                  ],
                 ),
-              ],
-            );
-          }
-          // NARROW SCREEN LAYOUT (Mobile)
-          else {
-            final isMobile = MediaQuery.of(context).size.width < 768;
-            // create a small variable for mobile horizontal padding so it's easy to tweak
-            final horizontalPadding = isMobile ? 16.w : 24.w;
+              ),
+            ],
+          );
+        }
+        // NARROW SCREEN LAYOUT (Mobile)
+        else {
+          final isMobile = MediaQuery.of(context).size.width < 768;
+          // create a small variable for mobile horizontal padding so it's easy to tweak
+          final horizontalPadding = isMobile ? 16.w : 24.w;
 
-            return Column(
-              children: [
-                const HeroImageStack(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                  child: const HeroTextContent(),
-                ),
-              ],
-            );
-          }
-        },
-      );
+          return Column(
+            children: [
+              const HeroImageStack(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                child: const HeroTextContent(),
+              ),
+            ],
+          );
+        }
+      },
+    );
   }
 }
 
@@ -137,7 +137,7 @@ class HeroTextContent extends StatelessWidget {
                   height: 1.2,
                   fontFamily: Fonts.playfair.fontFamily,
                 ),
-                speed: Duration(milliseconds: 150),
+                speed: Duration(milliseconds: 80),
               ),
             ],
             totalRepeatCount: 1,

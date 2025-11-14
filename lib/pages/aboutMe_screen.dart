@@ -4,6 +4,7 @@ import 'package:personal_portfolio/components/scrollable_page.dart';
 import 'package:personal_portfolio/sections/footer_wave.dart';
 import 'package:personal_portfolio/sections/socials_footer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 
 import 'aboutMe_section.dart'; // ← sections live here
 
@@ -20,7 +21,17 @@ class AboutMePage extends StatelessWidget {
         color: const Color(0xFFF9FAFF),
         child: Stack(
           children: [
-            // Content
+            SizedBox(
+              height: 600.h,
+              width: double.infinity,
+              child: LavaLampEffect(
+                size: Size(double.infinity, 600.h),
+                color: const Color.fromRGBO(252, 248, 230, 1.0),
+                lavaCount: 6,
+                speed: 1,
+                repeatDuration: const Duration(seconds: 10),
+              ),
+            ),
             SingleChildScrollView(
               child: Column(
                 children: [
@@ -41,6 +52,7 @@ class AboutMePage extends StatelessWidget {
                 ],
               ),
             ),
+            // Lava Lamp Effect
           ],
         ),
       ),

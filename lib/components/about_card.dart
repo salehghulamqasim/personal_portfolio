@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
 
+final BoxDecoration commonBoxDecoration = BoxDecoration(
+  color: Colors.white,
+  borderRadius: BorderRadius.circular(24.r),
+  boxShadow: [
+    BoxShadow(
+      color: const Color(0xFF7090B0).withAlpha(25),
+      offset: const Offset(0, 6),
+      blurRadius: 64,
+      spreadRadius: 0,
+    ),
+  ],
+);
+
 class AboutCard extends StatefulWidget {
   final String title; // e.g. "Languages" or "Education"
   final String? subtitle; // e.g. "Bachelors in Computer Science"
@@ -71,18 +84,7 @@ class _AboutCardState extends State<AboutCard>
           child: Container(
             width: isMobile ? 320.w : 450.w,
             height: isMobile ? 220.h : 340.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24.r),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF7090B0).withValues(alpha: 0.1),
-                  offset: const Offset(0, 6),
-                  blurRadius: 64,
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
+            decoration: commonBoxDecoration,
             child: Padding(
               padding: EdgeInsets.all(
                 isMobile ? 24.w : 32.w,

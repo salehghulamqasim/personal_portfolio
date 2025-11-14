@@ -13,26 +13,20 @@ class ProjectSection extends StatelessWidget {
       children: [
         // Play Baloot
         ProjectCard(
-          title: 'Play Baloot',
+          title: 'PlayBaloot — Real-time Multiplayer Baloot Score Keeper',
           description:
-              'A traditional card game application with modern UI design and multiplayer functionality.',
+              'A cross-platform Flutter app that creates and manages real-time Baloot game rooms with automated scoring and remote multiplayer support.',
           expandedDescription:
-              'Play Baloot is a digital recreation of the popular Middle Eastern card game Baloot. The application features an intuitive user interface, smooth gameplay mechanics, and engaging visual design. With multiple screens for game setup, gameplay, and scoring, this project demonstrates expertise in game development, UI/UX design, and mobile app architecture. The app includes features like player management, game statistics, and an immersive gaming experience.',
+              'Built in Flutter with Bloc (Cubit) for state management, PlayBaloot uses Firebase Authentication for secure sign-in and Firebase (Firestore + Realtime Database) to store room state and synchronize scores live between players. Rooms can be created and joined via QR codes, the UI uses Lottie/Rive/Flare animations and localization for multi-language support, and push notifications are handled through OneSignal.',
           keyFeatures: [
-            'Traditional Baloot card game mechanics',
-            'Multiplayer functionality and room creation',
-            'Player management and game statistics',
-            'Intuitive game interface and controls',
-            'Score tracking and match history',
-            'Engaging visual design and animations',
+            'Create and join game rooms',
+            'Real-time score synchronization',
+            'QR code room sharing',
+            'Multi-language support',
+            'Clean & intuitive UI',
+            'iOS & Android support',
           ],
-          technologies: [
-            'Flutter',
-            'Dart',
-            'Firebase',
-            'UI/UX Design',
-            'Figma',
-          ],
+          technologies: ['Flutter', 'Dart', 'BloC/Cubit', 'Figma'],
           imagePaths: [
             'assets/project_images/playbaloot_images/10.webp',
             'assets/project_images/playbaloot_images/20.webp',
@@ -49,31 +43,25 @@ class ProjectSection extends StatelessWidget {
 
         // Beauty App
         ProjectCard(
-          title: 'Beauty App',
+          title: 'Beauty-Clinic Website',
           description:
-              'A comprehensive beauty and skincare application with elegant UI design and smooth user experience.',
+              'A responsive website for showcasing beauty clinic services and engaging with clients.',
           expandedDescription:
-              'Beauty App is a modern mobile application designed for beauty enthusiasts and skincare lovers. The app features a clean, intuitive interface with carefully crafted screens for product browsing, skincare routines, and beauty tips. Built with Flutter, it showcases responsive design principles and smooth animations to enhance user engagement.',
+              'The Beauty-Clinic website is a multi-page platform designed to highlight beauty clinic services, client testimonials, and appointment booking options. Built with HTML, CSS, and Bootstrap, the site features a responsive design optimized for both desktop and mobile users. It includes sections for service descriptions, pricing, and a contact form for inquiries, making it ideal for clinics looking to establish an online presence.',
           keyFeatures: [
-            'Elegant UI design with a focus on user experience',
-            'Multiple screens for product browsing and skincare routines',
-            'Smooth animations and transitions',
-            'Responsive layout for various device sizes',
+            'Responsive multi-page design',
+            'Service descriptions and pricing',
+            'Client testimonials',
+            'Contact form for inquiries',
+            'Mobile-friendly layout',
           ],
-          technologies: [
-            'HTML',
-            'CSS',
-            'JavaScript',
-            'PHP',
-            'SQL',
-            'PhpMyAdmin',
-          ],
+          technologies: ['HTML', 'CSS', 'Bootstrap', 'JavaScript'],
           imagePaths: [
-            'assets/project_images/beauty/Screenshot From 2025-02-18 22-19-41_webP.webp',
-            'assets/project_images/beauty/Screenshot From 2025-02-18 22-20-03_webP.webp',
-            'assets/project_images/beauty/Screenshot From 2025-02-18 22-20-23_webP.webp',
-            'assets/project_images/beauty/Screenshot From 2025-02-18 22-42-40_webP.webp',
-            'assets/project_images/beauty/Screenshot From 2025-02-18 22-46-36_webP.webp',
+            'assets/project_images/beauty/Screenshot From 2025-02-18 22-19-41_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-beauty-.webp',
+            'assets/project_images/beauty/Screenshot From 2025-02-18 22-20-03_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-beauty-.webp',
+            'assets/project_images/beauty/Screenshot From 2025-02-18 22-20-23_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-beauty-.webp',
+            'assets/project_images/beauty/Screenshot From 2025-02-18 22-42-40_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-beauty-.webp',
+            'assets/project_images/beauty/Screenshot From 2025-02-18 22-46-36_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-beauty-.webp',
           ],
           mainImage: 'assets/project_images/mainImage/beauty.webp',
           imageOnRight: true,
@@ -81,25 +69,25 @@ class ProjectSection extends StatelessWidget {
 
         // Wavy Design
         ProjectCard(
-          title: 'Wavy Design',
+          title: 'Wavy Salon Booking',
           description:
-              'A creative design project featuring fluid wave patterns and modern visual aesthetics.',
+              'A comprehensive mobile platform connecting users with beauty salons for seamless booking and community engagement.',
           expandedDescription:
-              'Wavy Design is an innovative project that explores fluid design patterns and modern visual aesthetics. This project showcases expertise in creating dynamic, wave-inspired user interfaces that provide a unique and engaging user experience. The design emphasizes smooth curves, flowing animations, and contemporary styling principles to create visually appealing and functionally effective interfaces.',
+              'Wavy is a Flutter-based mobile application that enables users to discover, browse, and book beauty salons with an intuitive booking system. The app features user authentication, salon profiles with ratings and reviews, real-time community interactions, and a complete booking management system. Built with modern mobile development practices to ensure smooth navigation and engaging user experience across all screens.',
           keyFeatures: [
-            'Fluid wave patterns and dynamic designs',
-            'Modern visual aesthetics and styling',
-            'Smooth curves and flowing animations',
-            'Contemporary design principles',
-            'Unique and engaging user experience',
-            'Creative interface exploration',
+            'Salon discovery and booking system',
+            'User authentication and secure login',
+            'Community reviews and ratings',
+            'Real-time appointment management',
+            'Favorite salons and profiles',
+            'Arabic language interface support',
           ],
-          technologies: ['Flutter', 'Figma', 'Rive', 'Dart'],
+          technologies: ['Flutter', 'Dart', 'Provider', 'Rive Animations'],
           imagePaths: [
-            'assets/project_images/wavy/1_webP.webp',
-            'assets/project_images/wavy/2_webP.webp',
-            'assets/project_images/wavy/3_webP.webp',
-            'assets/project_images/wavy/4_webP.webp',
+            'assets/project_images/wavy/1_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-wavy-.webp',
+            'assets/project_images/wavy/2_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-wavy-.webp',
+            'assets/project_images/wavy/3_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-wavy-.webp',
+            'assets/project_images/wavy/4_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-wavy-.webp',
           ],
           mainImage: 'assets/project_images/mainImage/wavvy.webp',
           imageOnRight: false,
@@ -107,24 +95,23 @@ class ProjectSection extends StatelessWidget {
 
         // Green Project
         ProjectCard(
-          title: 'Green Project',
+          title: 'SolarEnergy Landing Page',
           description:
-              'An eco-friendly application focused on sustainability and environmental awareness.',
+              'A focused marketing landing page that clearly communicates solar installation benefits and captures leads from interested customers.',
           expandedDescription:
-              'Green Project is an innovative mobile application dedicated to promoting environmental consciousness and sustainable living. The app features multiple screens showcasing eco-friendly practices, green initiatives, and environmental tracking tools. With its clean design and intuitive navigation, users can easily access resources for reducing their carbon footprint and contributing to a greener planet.',
+              'This is a static, single-page site built with semantic HTML and a dedicated stylesheet (style.css) to provide a responsive, mobile-first layout without a frontend framework. Content is organized into hero, benefits, services, testimonial and newsletter sections, with prominent CTAs to request a quote or subscribe; media and icons are stored in an assets folder and the site is optimized for static hosting. The implementation favors simple, maintainable HTML/CSS so it can be quickly deployed (for example via GitHub Pages) and easily customized for different campaigns.',
           keyFeatures: [
-            'Environmental impact tracking and monitoring',
-            'Green initiatives and eco-friendly tips',
-            'Carbon footprint calculator',
-            'Sustainable living resources and guides',
-            'Clean and intuitive user interface',
+            'Clear value and savings messaging',
+            'Easy quote request call-to-action',
+            'Trust-building customer testimonials',
+            'Email newsletter lead capture',
           ],
-          technologies: ['HTML', 'CSS', 'BootStrap'],
+          technologies: ['HTML', 'CSS', 'Figma'],
           imagePaths: [
-            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-50-20_webP.webp',
-            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-50-36_webP.webp',
-            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-51-15_webP.webp',
-            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-51-51_webP.webp',
+            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-50-20_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-greenproject-.webp',
+            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-50-36_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-greenproject-.webp',
+            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-51-15_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-greenproject-.webp',
+            'assets/project_images/greenproject/Screenshot From 2025-02-18 22-51-51_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-greenproject-.webp',
           ],
           mainImage: 'assets/project_images/mainImage/green.webp',
           imageOnRight: true,
@@ -132,25 +119,23 @@ class ProjectSection extends StatelessWidget {
 
         // Ashwat App
         ProjectCard(
-          title: 'Ashwat App',
+          title: 'Ashwat — Tawaf & Sa’i Automated Lap Counter',
           description:
-              'Ashwat app to count tawaf counts for you while you perform tawwaf in Mecca.',
+              'A Flutter app that uses location and motion sensors to count Tawaf and Sa’i laps automatically.',
           expandedDescription:
-              'Ashwat App is a comprehensive lifestyle application designed to enhance daily life through smart features and intuitive design. The app showcases modern mobile development techniques with multiple interconnected screens, smooth transitions, and user-friendly navigation. Built with attention to detail, Ashwat demonstrates expertise in creating engaging mobile experiences that prioritize both functionality and aesthetic appeal.',
+              'Ashwat is an Android app built with Flutter/Dart to help pilgrims count ritual laps during Hajj and Umrah. It uses a geolocation zone to track laps when users exit and re-enter, so returning to the exact start point is not needed. Sessions are saved offline, and the app focuses on low power use and clear visual, audio, and haptic feedback. This project was Vibe coded by me to showcase my mobile development skills and problem-solving abilities in a real-world context with help of AI tools.',
           keyFeatures: [
-            'Comprehensive lifestyle management tools',
-            'Modern mobile development techniques',
-            'Multiple interconnected screens',
-            'Smooth transitions and animations',
-            'User-friendly navigation system',
-            'Dynamic features for daily life enhancement',
+            'Geofence-based lap counting (exit and re-enter to record).',
+            'Clean real-time UI with lap count, time, and distance.',
+            'Local session storage for offline review.',
+            'Configurable visual, audio, and haptic alerts; battery-aware.',
           ],
-          technologies: ['Flutter', 'Dart', 'Vibe Coding'],
+          technologies: ['Flutter', "Dart", "GPS", "Geolocator"],
           imagePaths: [
-            'assets/project_images/Ashwate/1_webP.webp',
-            'assets/project_images/Ashwate/2_webP.webp',
-            'assets/project_images/Ashwate/3_webP.webp',
-            'assets/project_images/Ashwate/4_webP.webp',
+            'assets/project_images/Ashwate/1_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-Ashwate-.webp',
+            'assets/project_images/Ashwate/2_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-Ashwate-.webp',
+            'assets/project_images/Ashwate/3_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-Ashwate-.webp',
+            'assets/project_images/Ashwate/4_webP_-Users-saleh-development-projects-personal_portfolio-assets-project_images-Ashwate-.webp',
           ],
           mainImage: 'assets/project_images/mainImage/ashwat.webp',
           imageOnRight: false,
@@ -158,25 +143,24 @@ class ProjectSection extends StatelessWidget {
 
         // Viva App
         ProjectCard(
-          title: 'Viva App',
+          title: 'VivaDecore Interior Design',
           description:
-              'A vibrant lifestyle application with dynamic features and engaging user interface.',
+              'A responsive static website showcasing premium interior design services with client-focused conversion elements.',
           expandedDescription:
-              'Viva App is a comprehensive lifestyle application designed to enhance daily life through smart features and intuitive design. The app showcases modern mobile development techniques with multiple interconnected screens, smooth transitions, and user-friendly navigation. Built with attention to detail, Viva demonstrates expertise in creating engaging mobile experiences that prioritize both functionality and aesthetic appeal.',
+              'VivaDecore is a frontend-only static website built with HTML, CSS, and Bootstrap, featuring a complete multi-page layout without backend dependencies. The platform utilizes Bootstrap\'s responsive grid system with custom CSS styling for visual appeal. All conversion-optimized elements—including service showcases, client statistics, and call-to-action buttons—are implemented purely with frontend technologies, making it ideal for static hosting platforms like GitHub Pages.',
           keyFeatures: [
-            'Comprehensive lifestyle management tools',
-            'Modern mobile development techniques',
-            'Multiple interconnected screens',
-            'Smooth transitions and animations',
-            'User-friendly navigation system',
-            'Dynamic features for daily life enhancement',
+            'Multi-page service showcases and portfolios',
+            'Structured project workflow visualization',
+            'Client statistics and achievement metrics',
+            'Conversion-focused call-to-action elements',
+            'Fully responsive frontend design',
           ],
-          technologies: ['HTML', 'CSS', 'BootStrap'],
+          technologies: ['HTML', 'CSS', 'Bootstrap', 'GitHub Pages'],
           imagePaths: [
-            'assets/project_images/viva/Screenshot From 2025-02-18 21-36-12_webP.webp',
-            'assets/project_images/viva/Screenshot From 2025-02-18 21-36-26_webP.webp',
-            'assets/project_images/viva/Screenshot From 2025-02-18 21-36-43_webP.webp',
-            'assets/project_images/viva/Screenshot From 2025-02-18 21-36-56_webP.webp',
+            'assets/project_images/viva/1viva.webp',
+            'assets/project_images/viva/2viva.webp',
+            'assets/project_images/viva/3viva.webp',
+            'assets/project_images/viva/4viva.webp',
           ],
           mainImage: 'assets/project_images/mainImage/viva.webp',
           imageOnRight: true,

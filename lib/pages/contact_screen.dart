@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 import 'package:personal_portfolio/components/scrollable_page.dart';
 import 'package:personal_portfolio/components/section_title.dart';
 import 'package:personal_portfolio/sections/contact_me.dart';
@@ -32,7 +33,13 @@ class ContactScreen extends StatelessWidget {
                 SizedBox(
                   height: 600.h,
                   width: double.infinity,
-                  child: Container(color: const Color(0xFFDADADA)),
+                  child: LavaLampEffect(
+                    size: Size(double.infinity, 600.h),
+                    color: const Color.fromRGBO(252, 248, 230, 1.0),
+                    lavaCount: 6,
+                    speed: 1,
+                    repeatDuration: const Duration(seconds: 10),
+                  ),
                 ),
 
                 Column(

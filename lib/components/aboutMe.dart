@@ -324,14 +324,14 @@ class _HackathonBoxState extends State<HackathonBox> {
       'duration': '1 year',
     },
     '2': {
-      'name': 'International Conference on Logistics',
-      'project': 'Jeddah University',
+      'name': 'Int. Conference Logistics',
+      'project': 'SkyPort Project',
       // 'award': '🥈 Technical Presentation Award',
       'description':
           'Presented research on logistics optimization using AI and mobile tracking solutions. Received recognition for technical excellence.',
       'tech': ['Research', 'AI', 'Mobile Apps'],
       'team': '3 members',
-      'duration': '2 months',
+      'duration': '2 Days',
     },
     '3': {
       'name': 'Tech Meetup 3',
@@ -339,18 +339,18 @@ class _HackathonBoxState extends State<HackathonBox> {
       // 'award': '⭐ Top 10 Finalist',
       'description':
           'Built an AR app that transforms traditional bookstores into interactive experiences. Users can preview books in 3D before purchasing.',
-      'tech': ['Unity', 'ARCore', 'C#'],
+      'tech': ['Unity', 'ARCore', 'Flutter', 'Figma'],
       'team': '4 members',
-      'duration': '48 hours',
+      'duration': '3 Days',
     },
     '4': {
       'name': 'Smart City Hackathon',
-      'project': 'Jeddah University',
+      'project': 'Plasticless Planet',
       // 'award': '🏆 Best Urban Solution',
       'description':
           'Developed a smart parking solution that reduces traffic congestion by 30% using IoT sensors and real-time data analytics.',
-      'tech': ['IoT', 'Firebase', 'Flutter', 'Node.js'],
-      'team': '3 members',
+      'tech': ['Figma', 'YoloV8', 'LabelBox', 'Kaggle'],
+      'team': '4 members',
       'duration': '36 hours',
     },
     '5': {
@@ -808,7 +808,7 @@ class _GDSCBoxState extends State<GDSCBox> {
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: Text(
-                              '🏆 Core Team Leadership',
+                              '💻 IT Core Team Member',
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
@@ -848,27 +848,27 @@ class _GDSCBoxState extends State<GDSCBox> {
                             children: [
                               _TechChip('Flutter'),
                               _TechChip('Firebase'),
-                              _TechChip('Public Speaking'),
+                              _TechChip('Figma'),
                               _TechChip('Event Management'),
-                              _TechChip('Mentoring'),
-                              _TechChip('Leadership'),
+                              _TechChip('Meeting Reporting'),
+                              _TechChip('Presentation'),
                             ],
                           ),
                           SizedBox(height: 24.h),
                           Row(
                             children: [
-                              Expanded(
-                                child: _StatItem(
-                                  icon: Icons.people,
-                                  label: 'Students Mentored',
-                                  value: '30+',
-                                ),
-                              ),
+                              // Expanded(
+                              //   child: _StatItem(
+                              //     icon: Icons.people,
+                              //     label: 'Students Mentored',
+                              //     value: '30+',
+                              //   ),
+                              // ),
                               SizedBox(width: 16.w),
                               Expanded(
                                 child: _StatItem(
                                   icon: Icons.event,
-                                  label: 'Events Organized',
+                                  label: 'Events Organized/Assisted',
                                   value: '5',
                                 ),
                               ),
@@ -996,7 +996,7 @@ class _GDSCBoxState extends State<GDSCBox> {
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    'Led technical workshops and mentored 30+ students in mobile development.',
+                    'Univeristy',
                     style: TextStyle(
                       fontSize: isMobile ? 13.sp : 15.sp,
                       color: const Color(0xFF525252),

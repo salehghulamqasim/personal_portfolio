@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
                 const ExperienceAndEducation(),
             '/contact': (context) => const ContactScreen(),
           },
-          title: 'Flutter Portfolio',
+          title: '</Saleh Ghulam> Portfolio',
           theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
             hoverColor: AppColors.primaryOrange.withValues(alpha: 0.1),

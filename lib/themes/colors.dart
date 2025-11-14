@@ -11,8 +11,6 @@ class AppColors {
     1.0,
   ); // RGB(252, 195, 70)
 
-  
-
   // Background Colors
   static const Color background = Color(0xFFF9FAFF); // RGB(249, 250, 255)
 
@@ -36,4 +34,12 @@ class AppColors {
   static const Color shadowLight = Color(0x1A000000); // 10% black
   static const Color shadowMedium = Color(0x33000000); // 20% black
   static const Color shadowDark = Color(0x4D000000); // 30% black
+
+  // Mobile Menu Bar Color
+  static const Color mobileMenuBarColor = Color.fromARGB(
+    118,
+    117,
+    117,
+    117,
+  ); // Medium gray
 }

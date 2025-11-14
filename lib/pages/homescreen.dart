@@ -46,13 +46,17 @@ class _HomescreenState extends State<Homescreen> {
 
             Stack(
               children: [
-                SizedBox(
-                  height: 950.h,
-                  width: double.infinity,
-                  child: Container(
-                    color: const Color.fromRGBO(252, 248, 230, 1.0),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 950.h,
+                //   width: double.infinity,
+                //   child: LavaLampEffect(
+                //     size: Size(double.infinity, 950.h),
+                //     color: const Color.fromRGBO(252, 248, 230, 1.0),
+                //     lavaCount: 6,
+                //     speed: 1,
+                //     repeatDuration: const Duration(seconds: 15),
+                //   ),
+                // ),
                 Column(
                   children: [
                     SizedBox(height: 58.h),

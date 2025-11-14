@@ -241,29 +241,33 @@ class _ContactFormState extends State<ContactForm> {
                 SizedBox(height: 60.h),
 
                 // ALT EMAIL LINK
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Wrap(
                   children: [
-                    const Text(
-                      'Or email me directly at: ',
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontSize: 16,
-                        color: Color(0xFF828282),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: launchEmail,
-                      child: const Text(
-                        'SalehTheCoder@gmail.com',
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontSize: 16,
-                          color: Color(0xFF25282B),
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Or email me directly at: ',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 16,
+                            color: Color(0xFF828282),
+                          ),
                         ),
-                      ),
+                        GestureDetector(
+                          onTap: launchEmail,
+                          child: const Text(
+                            'SalehTheCoder@gmail.com',
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: 16,
+                              color: Color(0xFF25282B),
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
