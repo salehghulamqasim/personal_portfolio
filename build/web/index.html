@@ -29,9 +29,13 @@
   <!-- Performance hints: preconnect to font hosts and preload critical assets -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- DNS prefetch -->
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   <!-- Preload hero image and main script to hint browser to fetch early -->
   <link rel="preload" href="assets/images/MaskedSaleh.webp" as="image">
   <link rel="preload" href="main.dart.js" as="script">
+  <!-- Preload Lottie splash screen -->
+  <link rel="preload" href="splash.json" as="fetch" crossorigin>
   <meta name="theme-color" content="#ffffff">
 
   <!-- Favicon -->
@@ -41,8 +45,197 @@
 
   <title>personal_portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- ============ SPLASH SCREEN STYLES ============ -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    /* Loading Screen Container */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      transition: opacity 1s ease-out;
+      will-change: opacity;
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Lottie Animation Container */
+    #lottie-container {
+      width: 400px;
+      height: 400px;
+      max-width: 90vw;
+      max-height: 90vh;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    /* Fallback Spinner (if Lottie fails) */
+    .spinner {
+      display: none;
+      width: 60px;
+      height: 60px;
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #lottie-container {
+        width: 400px;
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #lottie-container {
+        width: 320px;
+        height: 320px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- ============ SPLASH SCREEN ============ -->
+  <div id="splash-screen">
+    <div id="lottie-container"></div>
+    <!-- Fallback Spinner -->
+    <div class="spinner" id="fallback-spinner"></div>
+  </div>
+
+  <!-- ============ LOTTIE LIBRARY ============ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  
+  <!-- ============ LOTTIE ANIMATION INIT ============ -->
+  <script>
+    let lottieAnimation = null;
+    let splashVisible = true;
+    let minDisplayTime = 2000; // Minimum 2 seconds display time
+    let splashStartTime = Date.now();
+    let flutterReady = false;
+    
+    // Initialize Lottie Animation
+    (function initLottie() {
+      try {
+        lottieAnimation = lottie.loadAnimation({
+          container: document.getElementById('lottie-container'),
+          renderer: 'svg', // SVG is smoother than canvas
+          loop: true,
+          autoplay: true,
+          path: 'splash.json', // Your Lottie JSON file
+          rendererSettings: {
+            preserveAspectRatio: 'xMidYMid meet',
+            progressiveLoad: true,
+            hideOnTransparent: true,
+            // Performance optimizations
+            clearCanvas: false,
+            context: null
+          }
+        });
+
+        // Set animation speed for smoother playback
+        lottieAnimation.setSpeed(0.8); // 1 = normal, 0.5 = slower (smoother), 1.5 = faster
+
+        lottieAnimation.addEventListener('DOMLoaded', function() {
+          console.log('✅ Lottie animation loaded successfully!');
+        });
+
+        lottieAnimation.addEventListener('error', function(err) {
+          console.error('❌ Lottie load error:', err);
+          // Show fallback spinner
+          document.getElementById('lottie-container').style.display = 'none';
+          document.getElementById('fallback-spinner').style.display = 'block';
+        });
+      } catch (error) {
+        console.error('❌ Lottie initialization error:', error);
+        document.getElementById('lottie-container').style.display = 'none';
+        document.getElementById('fallback-spinner').style.display = 'block';
+      }
+    })();
+
+    // Function to hide splash screen smoothly
+    function hideSplashScreen() {
+      if (!splashVisible) return;
+      
+      const elapsedTime = Date.now() - splashStartTime;
+      const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+      
+      // Only hide if both Flutter is ready AND minimum time has passed
+      if (!flutterReady) return;
+      
+      // Wait for minimum display time before hiding
+      setTimeout(() => {
+        const splashScreen = document.getElementById('splash-screen');
+        
+        // Add smooth fade out
+        requestAnimationFrame(() => {
+          splashScreen.classList.add('fade-out');
+        });
+        
+        splashVisible = false;
+        
+        // Clean up Lottie instance after fade completes
+        setTimeout(() => {
+          if (lottieAnimation) {
+            lottieAnimation.destroy();
+            lottieAnimation = null;
+          }
+          splashScreen.remove();
+          console.log('✅ Splash screen removed');
+        }, 1000); // Match transition duration
+      }, remainingTime);
+    }
+
+    // Hide splash screen when Flutter is ready
+    window.addEventListener('flutter-first-frame', function() {
+      console.log('✅ Flutter first frame rendered');
+      flutterReady = true;
+      hideSplashScreen();
+    });
+
+    // Fallback: Hide splash after maximum time even if Flutter hasn't loaded
+    setTimeout(() => {
+      if (splashVisible) {
+        console.log('⚠️ Maximum splash time reached, forcing hide');
+        flutterReady = true;
+        hideSplashScreen();
+      }
+    }, 10000); // Maximum 10 seconds
+  </script>
+
+  <!-- ============ FLUTTER BOOTSTRAP ============ -->
+  <script>
+    const serviceWorkerVersion = '1.0.0'; // Example version
+    const serviceWorker = {
+      serviceWorkerVersion: serviceWorkerVersion,
+    };
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
