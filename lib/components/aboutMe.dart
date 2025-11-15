@@ -11,7 +11,7 @@ import 'package:personal_portfolio/components/section_title.dart';
     STORY  BOX  (tap opens modal)
     -------------------------------------------------- */
 class StoryBox extends StatefulWidget {
-  const StoryBox({Key? key}) : super(key: key);
+  const StoryBox({super.key});
   @override
   State<StoryBox> createState() => _StoryBoxState();
 }

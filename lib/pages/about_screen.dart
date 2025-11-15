@@ -32,6 +32,7 @@ class AboutSection extends StatelessWidget {
                 icon: Icons.language,
                 isLanguageCard: true,
                 languages: ["English", "Arabic", "Urdu"],
+                alignment: WrapAlignment.center,
               ),
             ],
           ),

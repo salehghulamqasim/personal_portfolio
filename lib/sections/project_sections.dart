@@ -181,6 +181,62 @@ class ProjectSection extends StatelessWidget {
           mainImage: 'assets/project_images/mainImage/viva.webp',
           imageOnRight: true,
         ),
+
+        // CleanJeddah Volunteer Hub
+        ProjectCard(
+          title: 'PlasticLess Planet App',
+          description:
+              'A community-driven environmental app that organizes volunteer efforts to clean plastic waste across Jeddah city.',
+          expandedDescription:
+              'CleanJeddah is a UI/UX prototype designed for a smart city hackathon, focusing on environmental sustainability and community engagement. The app enables citizens to report plastic waste locations, organize volunteer cleanups, and track environmental impact through data visualization. Designed with map integration and social features, the prototype demonstrates user flows for waste reporting, volunteer coordination, and community impact tracking through an intuitive mobile interface created in Figma.',
+          keyFeatures: [
+            'Plastic waste location reporting',
+            'Volunteer coordination and mapping',
+            'Environmental impact analytics',
+            'Community profile and contributions',
+            'District-based cleanup organization',
+            'Real-time waste reporting system',
+          ],
+          technologies: ['Figma', 'UI/UX Design', 'Prototyping'],
+          imagePaths: [
+            'assets/project_images/cleanjeddah/volunteer_map.png',
+            'assets/project_images/cleanjeddah/adding_volunteering_location.png',
+            'assets/project_images/cleanjeddah/report_screen.png',
+            'assets/project_images/cleanjeddah/graphs_and_charts.png',
+            'assets/project_images/cleanjeddah/profile.png',
+            'assets/project_images/cleanjeddah/settings.png',
+          ],
+          mainImage: 'assets/project_images/mainImage/plasticless.webp',
+          imageOnRight: false,
+        ),
+
+        // Jidni Library Navigator
+        ProjectCard(
+          title: 'Jidni Library Navigator',
+          description:
+              'An indoor navigation app prototype that helps users locate books and navigate library spaces efficiently using augmented reality.',
+          expandedDescription:
+              'PlasticLess Planet App is a UI/UX prototype designed for a hackathon, featuring indoor navigation technology for library environments. The app helps users find specific books using shelf locations, provides walking directions within the library, and includes book discovery features. Designed with Arabic language interface, the prototype demonstrates user flows for book searching, indoor navigation, and library space utilization through an intuitive mobile interface created in Figma.',
+          keyFeatures: [
+            'Plastic waste location reporting',
+            'Volunteer coordination and mapping',
+            'Environmental impact analytics',
+            'Community profile and contributions',
+            'District-based cleanup organization',
+            'Real-time waste reporting system',
+          ],
+          technologies: ['Figma', 'UI/UX Design', 'Prototyping'],
+          imagePaths: [
+            'assets/project_images/jidni/first.jpg',
+            'assets/project_images/jidni/first-1.jpg',
+            'assets/project_images/jidni/search.pdf',
+            'assets/project_images/jidni/search-1.pdf',
+            'assets/project_images/jidni/search-2.pdf',
+            'assets/project_images/jidni/search-3.pdf',
+          ],
+          mainImage: 'assets/project_images/mainImage/jidni.webp',
+          imageOnRight: true,
+        ),
       ],
     );
   }

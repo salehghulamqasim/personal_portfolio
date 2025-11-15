@@ -42,6 +42,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 768;
+
     return AnimatedOpacity(
       opacity: opacity,
       duration: const Duration(milliseconds: 320),
@@ -61,7 +63,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           automaticallyImplyLeading: false, //remove back button
           toolbarHeight: height,
           title: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.w),
+            padding: EdgeInsets.only(left: isMobile ? 5.w : 22.w, right: 22.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -79,6 +81,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 // Right side - Navigation buttons
                 Row(
                   children: [
+                    // Home button - show when on specific routes
+                    if (currentRoute == '/about' ||
+                        currentRoute == '/experience_education' ||
+                        currentRoute == '/projects' ||
+                        currentRoute == '/contact')
+                      _buildNavButton(
+                        text: 'Home',
+                        onPressed: () => Navigator.pushNamed(context, '/'),
+                        isActive: currentRoute == '/',
+                      ),
+
                     //here we use the _buildNavButton method to build buttons
                     //When the current route matches the button route, we set isActive to true
                     // hence highlighting the active page
