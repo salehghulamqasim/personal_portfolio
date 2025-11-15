@@ -1,115 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
   <base href="/">
+
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Saleh Ghulam - Full Stack Developer Portfolio">
+  <meta name="description" content="A new Flutter project.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Saleh Portfolio">
-  <link rel="apple-touch-icon" href="web/icons/saleh.svg">
-  <link rel="icon" type="image/webp" href="web/icons/saleh.svg"/>
+  <meta name="apple-mobile-web-app-title" content="personal_portfolio">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Critical Performance: Preconnect to external resources -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <!-- Performance hints: preconnect to font hosts and preload critical assets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  
-  <!-- Critical: Preload only essential resources -->
-  <link rel="preload" href="splash.json" as="fetch" crossorigin>
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" as="script" crossorigin>
-  
+  <!-- Preload hero image and main script to hint browser to fetch early -->
+  <link rel="preload" href="assets/images/MaskedSaleh.webp" as="image">
+  <link rel="preload" href="main.dart.js" as="script">
   <meta name="theme-color" content="#ffffff">
-  <link rel="icon" type="image/webp" href="web/icons/cat.webp"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
-  
-  <title>Saleh Ghulam - Portfolio</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>personal_portfolio</title>
   <link rel="manifest" href="manifest.json">
-  
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
-    #splash-screen{position:fixed;inset:0;background:#fff;display:flex;justify-content:center;align-items:center;z-index:99999;transition:opacity 1s ease-out;will-change:opacity}
-    #splash-screen.fade-out{opacity:0;pointer-events:none}
-    #lottie-container{width:400px;height:400px;max-width:90vw;max-height:90vh;transform:translateZ(0);backface-visibility:hidden}
-    .spinner{display:none;width:60px;height:60px;border:6px solid #f3f3f3;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:768px){#lottie-container{width:400px;height:400px}}
-    @media(max-width:480px){#lottie-container{width:320px;height:320px}}
-  </style>
 </head>
 <body>
-  <div id="splash-screen">
-    <div id="lottie-container"></div>
-    <div class="spinner" id="fallback-spinner"></div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" crossorigin="anonymous"></script>
-  
-  <script>
-    (function(){
-      'use strict';
-      var anim=null,visible=!0,minTime=2000,start=Date.now(),ready=!1;
-      
-      function init(){
-        try{
-          anim=lottie.loadAnimation({
-            container:document.getElementById('lottie-container'),
-            renderer:'svg',
-            loop:!0,
-            autoplay:!0,
-            path:'splash.json',
-            rendererSettings:{
-              preserveAspectRatio:'xMidYMid meet',
-              progressiveLoad:!0,
-              hideOnTransparent:!0,
-              clearCanvas:!1
-            }
-          });
-          anim.setSpeed(.8);
-        }catch(e){
-          document.getElementById('lottie-container').style.display='none';
-          document.getElementById('fallback-spinner').style.display='block';
-        }
-      }
-      
-      function hide(){
-        if(!visible||!ready)return;
-        var elapsed=Date.now()-start,
-            remaining=Math.max(0,minTime-elapsed);
-        setTimeout(function(){
-          var splash=document.getElementById('splash-screen');
-          requestAnimationFrame(function(){
-            splash.classList.add('fade-out');
-          });
-          visible=!1;
-          setTimeout(function(){
-            if(anim){
-              anim.destroy();
-              anim=null;
-            }
-            splash.remove();
-          },1000);
-        },remaining);
-      }
-      
-      init();
-      window.addEventListener('flutter-first-frame',function(){
-        ready=!0;
-        hide();
-      });
-      setTimeout(function(){
-        if(visible){
-          ready=!0;
-          hide();
-        }
-      },10000);
-    })();
-  </script>
-
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
