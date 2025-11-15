@@ -89073,7 +89073,7 @@ s=t.p
 r=A.b([],s)
 q=o.f
 p=q==="/about"
-if(p||q===m||q==="/projects")r.push(o.xm(q==="/",new A.a4H(a),"Home"))
+if(p||q===m||q==="/projects"||q==="/contact")r.push(o.xm(q==="/",new A.a4H(a),"Home"))
 r.push(o.xm(p,new A.a4I(o,a),"About Me"))
 r.push(o.xm(q===m,new A.a4J(o,a),"Experience & Education"))
 r.push(o.xm(q==="/contact",new A.a4K(o,a),"Contacts Me"))
