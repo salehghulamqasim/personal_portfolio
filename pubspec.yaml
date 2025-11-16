@@ -70,6 +70,8 @@ flutter:
     - assets/project_images/viva/
     - assets/project_images/wavy/
     - assets/project_images/Ashwate/
+    - assets/project_images/Plasticless/
+    - assets/project_images/Jidni/
 
     # Main photos of each project (edited in canva by me :)
     - assets/project_images/mainImage/

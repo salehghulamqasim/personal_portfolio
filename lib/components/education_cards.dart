@@ -54,6 +54,9 @@ class _EducationCardsState extends State<EducationCards> {
           duration: const Duration(milliseconds: 300),
           // Move UP by 8px when hovered (same as experience cards)
           transform: Matrix4.translationValues(0, isHovered ? -8 : 0, 0),
+          width: double
+              .infinity, // to take full width of parent SizedBox in EduAndExp page
+
           padding: EdgeInsets.all(
             isMobile ? 20.w : 24.w, // Match experience cards padding better
           ),

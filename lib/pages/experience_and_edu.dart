@@ -18,7 +18,7 @@ class ExperienceAndEducation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name ?? '/';
-
+    final isMobile = MediaQuery.of(context).size.width < 768;
     return ScrollablePage(
       currentRoute: currentRoute,
 
@@ -135,46 +135,67 @@ class ExperienceAndEducation extends StatelessWidget {
                       const SizedBox(height: 48),
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width < 768
-                                ? 40.w
-                                : 60.w, // align with timeline dot + gap
+                          padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width < 768
+                                ? 20.w
+                                : 60.w,
                           ),
                           child: Wrap(
                             spacing: 24.w,
                             runSpacing: 24.h,
+                            alignment:
+                                WrapAlignment.center, //this centers the card
                             children: [
-                              EducationCards(
-                                    institution:
-                                        'Pakistan International School Jeddah',
-                                    degree: 'HSSC - Commerce',
-                                    dateRange: '2007 - 2019',
-                                    description:
-                                        'Relevant coursework: Principles of Accounting, Business Mathematics, Economics, Banking, and Commerce.',
-                                  )
-                                  .animate()
-                                  .fadeIn(delay: 1100.ms, duration: 600.ms)
-                                  .scale(
-                                    begin: const Offset(0.9, 0.9),
-                                    duration: 600.ms,
-                                    curve: Curves.easeOut,
-                                  ),
-                              EducationCards(
-                                    institution:
-                                        'Arab Open University - Jeddah',
-                                    degree:
-                                        'Bachelor of Science in Computer Science',
-                                    dateRange: '2019 - 2024',
-                                    description:
-                                        'Relevant coursework: Data Structures & Algorithms, Database Management, Object Oriented Programming, Operating Systems, Mathematics.',
-                                  )
-                                  .animate()
-                                  .fadeIn(delay: 1200.ms, duration: 600.ms)
-                                  .scale(
-                                    begin: const Offset(0.9, 0.9),
-                                    duration: 600.ms,
-                                    curve: Curves.easeOut,
-                                  ),
+                              SizedBox(
+                                width: isMobile
+                                    ? 320.w
+                                    : 400.w, // so the width is fixed for consistency
+
+                                child:
+                                    EducationCards(
+                                          institution:
+                                              'Pakistan International School Jeddah',
+                                          degree: 'HSSC - Commerce',
+                                          dateRange: '2007 - 2019',
+                                          description:
+                                              'Relevant coursework: Principles of Accounting, Business Mathematics, Economics, Banking, and Commerce.',
+                                        )
+                                        .animate()
+                                        .fadeIn(
+                                          delay: 1100.ms,
+                                          duration: 600.ms,
+                                        )
+                                        .scale(
+                                          begin: const Offset(0.9, 0.9),
+                                          duration: 600.ms,
+                                          curve: Curves.easeOut,
+                                        ),
+                              ),
+                              SizedBox(
+                                width: isMobile
+                                    ? 320.w
+                                    : 400.w, // so the width is fixed for consistency
+                                child:
+                                    EducationCards(
+                                          institution:
+                                              'Arab Open University - Jeddah',
+                                          degree:
+                                              'Bachelor of Science in Computer Science',
+                                          dateRange: '2019 - 2024',
+                                          description:
+                                              'Relevant coursework: Data Structures & Algorithms, Database Management, Object Oriented Programming, Operating Systems, Mathematics.',
+                                        )
+                                        .animate()
+                                        .fadeIn(
+                                          delay: 1200.ms,
+                                          duration: 600.ms,
+                                        )
+                                        .scale(
+                                          begin: const Offset(0.9, 0.9),
+                                          duration: 600.ms,
+                                          curve: Curves.easeOut,
+                                        ),
+                              ),
                             ],
                           ),
                         ),

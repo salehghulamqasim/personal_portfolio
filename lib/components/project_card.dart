@@ -114,11 +114,13 @@ class _ProjectCardState extends State<ProjectCard> {
                   height: isMobile ? 320.h : 550.h,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.r),
+
                     child: Image.asset(
                       widget.imagePaths.isNotEmpty
                           ? widget.mainImage
                           : widget.imagePaths[0],
                       fit: BoxFit.contain,
+                      alignment: Alignment(0, -0.5),
                     ),
                   ),
                 ),
@@ -146,7 +148,7 @@ class _ProjectCardState extends State<ProjectCard> {
               margin: EdgeInsets.all(isMobile ? 8.w : 16.w),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(40.r),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: Column(
@@ -239,56 +241,69 @@ class _ProjectCardState extends State<ProjectCard> {
                               skills: widget.technologies ?? [],
                             ),
 
-                            // Buttons for demo and source code
-                            SizedBox(height: isMobile ? 24.h : 24.h),
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primaryOrange,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: isMobile ? 20.w : 16.w,
-                                      vertical: isMobile ? 14.h : 29.h,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    isMobile
-                                        ? 'Github Repo'
-                                        : 'Github Repository',
-                                    style: Fonts.roboto.copyWith(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: isMobile ? 12.w : 16.w),
-                                OutlinedButton(
-                                  onPressed: () {},
-                                  style: OutlinedButton.styleFrom(
-                                    side: const BorderSide(color: Colors.black),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: isMobile ? 20.w : 16.w,
-                                      vertical: isMobile ? 14.h : 29.h,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'View Live',
-                                    style: Fonts.roboto.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // Spacer with light grey color
+                            SizedBox(height: 16.h),
+                            Container(height: 1.h, color: Colors.grey[200]),
+                            SizedBox(height: 24.h),
 
+                            // Centered buttons for demo and source code
+                            Center(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primaryOrange,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: isMobile ? 20.w : 16.w,
+                                        vertical: isMobile ? 14.h : 29.h,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      isMobile
+                                          ? 'Github Repo'
+                                          : 'Github Repository',
+                                      style: Fonts.roboto.copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: isMobile ? 12.w : 16.w),
+                                  OutlinedButton(
+                                    onPressed: () {},
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: isMobile ? 20.w : 16.w,
+                                        vertical: isMobile ? 14.h : 29.h,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'View Live',
+                                      style: Fonts.roboto.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Spacer with light grey color
+                            SizedBox(height: 16.h),
+                            Container(height: 1.h, color: Colors.grey[200]),
+
+                            // SizedBox(height: 24.h),
                             SizedBox(height: isMobile ? 24.h : 24.h),
 
                             // Replace your CarouselSlider section with this:
@@ -315,8 +330,8 @@ class _ProjectCardState extends State<ProjectCard> {
                                 },
                                 layout: SwiperLayout.DEFAULT,
                                 viewportFraction:
-                                    0.9, // slightly smaller than 1 to show next image
-                                scale: 1.0, // full scale, no shrinking
+                                    1.0, // slightly smaller than 1 to show next image
+                                scale: 1.0,
                                 autoplay: false,
                                 loop: true,
                                 pagination: const SwiperPagination(

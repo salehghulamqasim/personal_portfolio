@@ -24,58 +24,61 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name ?? '/';
 
-    return ScrollablePage(
-      currentRoute: currentRoute,
-      child: Column(
-        children: [
-          const HeroSection(),
-            
+    return PopScope(
+      //should not back on homescreen
+      canPop: false,
+      child: ScrollablePage(
+        currentRoute: currentRoute,
+        child: Column(
+          children: [
+            const HeroSection(),
 
-          Stack(
-            children: [
-              // SizedBox(
-              //   height: 950.h,
-              //   width: double.infinity,
-              //   child: LavaLampEffect(
-              //     size: Size(double.infinity, 950.h),
-              //     color: const Color.fromRGBO(252, 248, 230, 1.0),
-              //     lavaCount: 6,
-              //     speed: 1,
-              //     repeatDuration: const Duration(seconds: 15),
-              //   ),
-              // ),
-              Column(
-                children: [
-                  SizedBox(height: 58.h),
-                  const AboutSection()
-                      .animate()
-                      .fadeIn(delay: 200.ms, duration: 600.ms)
-                      .slideY(
-                        begin: 0.1,
-                        end: 0,
-                        duration: 600.ms,
-                        curve: Curves.easeOut,
-                      ),
-                  SizedBox(height: 58.h),
+            Stack(
+              children: [
+                // SizedBox(
+                //   height: 950.h,
+                //   width: double.infinity,
+                //   child: LavaLampEffect(
+                //     size: Size(double.infinity, 950.h),
+                //     color: const Color.fromRGBO(252, 248, 230, 1.0),
+                //     lavaCount: 6,
+                //     speed: 1,
+                //     repeatDuration: const Duration(seconds: 15),
+                //   ),
+                // ),
+                Column(
+                  children: [
+                    SizedBox(height: 58.h),
+                    const AboutSection()
+                        .animate()
+                        .fadeIn(delay: 200.ms, duration: 600.ms)
+                        .slideY(
+                          begin: 0.1,
+                          end: 0,
+                          duration: 600.ms,
+                          curve: Curves.easeOut,
+                        ),
+                    SizedBox(height: 58.h),
 
-                  const SectionTitle(text: 'Projects!', lineWidth: 80),
+                    const SectionTitle(text: 'Projects!', lineWidth: 80),
 
-                  SizedBox(height: 8.h),
-                  const ProjectSection(),
+                    SizedBox(height: 8.h),
+                    const ProjectSection(),
 
-                  const SizedBox(height: 80),
-                  const Socials().animate().fadeIn(
-                    delay: 800.ms,
-                    duration: 600.ms,
-                  ),
-                  const SizedBox(height: 40),
+                    const SizedBox(height: 80),
+                    const Socials().animate().fadeIn(
+                      delay: 800.ms,
+                      duration: 600.ms,
+                    ),
+                    const SizedBox(height: 40),
 
-                  const FooterWave(),
-                ],
-              ),
-            ],
-          ),
-        ],
+                    const FooterWave(),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
