@@ -20,6 +20,7 @@
   
   <!-- Critical: Preload only essential resources -->
   <link rel="preload" href="splash.json" as="fetch" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" as="script" crossorigin>
   
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/webp" href="web/icons/cat.webp"/>
@@ -51,97 +52,61 @@
   <script>
     (function(){
       'use strict';
-      var anim = null, visible = true, minTime = 2000, start = Date.now(), ready = false;
-      var lottieLoaded = false;
-
+      var anim=null,visible=!0,minTime=2000,start=Date.now(),ready=!1;
+      
       function init(){
-        try {
-          // Check if Lottie loaded successfully
-          if (typeof lottie === 'undefined') {
-            throw new Error('Lottie not loaded');
-          }
-
-          anim = lottie.loadAnimation({
-            container: document.getElementById('lottie-container'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: 'splash.json',
-            rendererSettings: {
-              preserveAspectRatio: 'xMidYMid meet',
-              progressiveLoad: true,
-              hideOnTransparent: true,
-              clearCanvas: false
+        try{
+          anim=lottie.loadAnimation({
+            container:document.getElementById('lottie-container'),
+            renderer:'svg',
+            loop:!0,
+            autoplay:!0,
+            path:'splash.json',
+            rendererSettings:{
+              preserveAspectRatio:'xMidYMid meet',
+              progressiveLoad:!0,
+              hideOnTransparent:!0,
+              clearCanvas:!1
             }
           });
-
-          anim.addEventListener('DOMLoaded', function() {
-            lottieLoaded = true;
-          });
-
-          anim.addEventListener('data_failed', function() {
-            showFallback();
-          });
-
-        } catch(e) {
-          showFallback();
+          anim.setSpeed(.8);
+        }catch(e){
+          document.getElementById('lottie-container').style.display='none';
+          document.getElementById('fallback-spinner').style.display='block';
         }
       }
-
-      function showFallback() {
-        document.getElementById('lottie-container').style.display = 'none';
-        document.getElementById('fallback-spinner').style.display = 'block';
-        lottieLoaded = true;
-      }
-
+      
       function hide(){
-        if(!visible || !ready) return;
-        var elapsed = Date.now() - start;
-        var remaining = Math.max(0, minTime - elapsed);
-
+        if(!visible||!ready)return;
+        var elapsed=Date.now()-start,
+            remaining=Math.max(0,minTime-elapsed);
         setTimeout(function(){
-          var splash = document.getElementById('splash-screen');
+          var splash=document.getElementById('splash-screen');
           requestAnimationFrame(function(){
             splash.classList.add('fade-out');
           });
-          visible = false;
+          visible=!1;
           setTimeout(function(){
             if(anim){
               anim.destroy();
-              anim = null;
+              anim=null;
             }
             splash.remove();
-          }, 1000);
-        }, remaining);
+          },1000);
+        },remaining);
       }
-
-      // Initialize when Lottie script loads
-      if (typeof lottie !== 'undefined') {
-        init();
-      } else {
-        // If Lottie fails to load, wait a bit then show fallback
-        setTimeout(function() {
-          if (typeof lottie === 'undefined') {
-            showFallback();
-          }
-        }, 1000);
-      }
-
-      window.addEventListener('flutter-first-frame', function(){
-        ready = true;
-        // Wait for Lottie to load or timeout
-        if (lottieLoaded) {
-          hide();
-        } else {
-          setTimeout(hide, 500);
-        }
-      });
-
-      // Safety timeout - always hide after 8 seconds
-      setTimeout(function(){
-        ready = true;
+      
+      init();
+      window.addEventListener('flutter-first-frame',function(){
+        ready=!0;
         hide();
-      }, 8000);
+      });
+      setTimeout(function(){
+        if(visible){
+          ready=!0;
+          hide();
+        }
+      },10000);
     })();
   </script>
 
