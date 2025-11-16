@@ -10,27 +10,24 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Saleh Portfolio">
-  <link rel="apple-touch-icon" href="web/icons/saleh.png">
-  <link rel="icon" type="image/webp" href="web/icons/saleh.webp"/>
+  <link rel="apple-touch-icon" href="web/icons/saleh.svg">
+  <link rel="icon" type="image/webp" href="web/icons/saleh.svg"/>
 
   <!-- Critical Performance: Preconnect to external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-
+  
   <!-- Critical: Preload only essential resources -->
   <link rel="preload" href="splash.json" as="fetch" crossorigin>
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" as="script" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style" crossorigin>
-  <link rel="preload" href="assets/images/hero.webp" as="image" type="image/webp">
-
+  
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/webp" href="web/icons/cat.webp"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
-
+  
   <title>Saleh Ghulam - Portfolio</title>
   <link rel="manifest" href="manifest.json">
-
+  
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
@@ -49,69 +46,105 @@
     <div class="spinner" id="fallback-spinner"></div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" crossorigin="anonymous"></script>
+  
   <script>
     (function(){
       'use strict';
-      var anim=null,visible=!0,minTime=2000,start=Date.now(),ready=!1;
+      var anim = null, visible = true, minTime = 2000, start = Date.now(), ready = false;
+      var lottieLoaded = false;
 
       function init(){
-        try{
-          anim=lottie.loadAnimation({
-            container:document.getElementById('lottie-container'),
-            renderer:'svg',
-            loop:!0,
-            autoplay:!0,
-            path:'splash.json',
-            rendererSettings:{
-              preserveAspectRatio:'xMidYMid meet',
-              progressiveLoad:!0,
-              hideOnTransparent:!0,
-              clearCanvas:!1
+        try {
+          // Check if Lottie loaded successfully
+          if (typeof lottie === 'undefined') {
+            throw new Error('Lottie not loaded');
+          }
+
+          anim = lottie.loadAnimation({
+            container: document.getElementById('lottie-container'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'splash.json',
+            rendererSettings: {
+              preserveAspectRatio: 'xMidYMid meet',
+              progressiveLoad: true,
+              hideOnTransparent: true,
+              clearCanvas: false
             }
           });
-          anim.setSpeed(.8);
-        }catch(e){
-          document.getElementById('lottie-container').style.display='none';
-          document.getElementById('fallback-spinner').style.display='block';
+
+          anim.addEventListener('DOMLoaded', function() {
+            lottieLoaded = true;
+          });
+
+          anim.addEventListener('data_failed', function() {
+            showFallback();
+          });
+
+        } catch(e) {
+          showFallback();
         }
+      }
+
+      function showFallback() {
+        document.getElementById('lottie-container').style.display = 'none';
+        document.getElementById('fallback-spinner').style.display = 'block';
+        lottieLoaded = true;
       }
 
       function hide(){
-        if(!visible||!ready)return;
-        var elapsed=Date.now()-start,
-            remaining=Math.max(0,minTime-elapsed);
+        if(!visible || !ready) return;
+        var elapsed = Date.now() - start;
+        var remaining = Math.max(0, minTime - elapsed);
+
         setTimeout(function(){
-          var splash=document.getElementById('splash-screen');
+          var splash = document.getElementById('splash-screen');
           requestAnimationFrame(function(){
             splash.classList.add('fade-out');
           });
-          visible=!1;
+          visible = false;
           setTimeout(function(){
             if(anim){
               anim.destroy();
-              anim=null;
+              anim = null;
             }
             splash.remove();
-          },1000);
-        },remaining);
+          }, 1000);
+        }, remaining);
       }
 
-      init();
-      window.addEventListener('flutter-first-frame',function(){
-        ready=!0;
-        hide();
-      });
-      setTimeout(function(){
-        if(visible){
-          ready=!0;
+      // Initialize when Lottie script loads
+      if (typeof lottie !== 'undefined') {
+        init();
+      } else {
+        // If Lottie fails to load, wait a bit then show fallback
+        setTimeout(function() {
+          if (typeof lottie === 'undefined') {
+            showFallback();
+          }
+        }, 1000);
+      }
+
+      window.addEventListener('flutter-first-frame', function(){
+        ready = true;
+        // Wait for Lottie to load or timeout
+        if (lottieLoaded) {
           hide();
+        } else {
+          setTimeout(hide, 500);
         }
-      },10000);
+      });
+
+      // Safety timeout - always hide after 8 seconds
+      setTimeout(function(){
+        ready = true;
+        hide();
+      }, 8000);
     })();
   </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script>window.flutterWebRenderer="html";</script>
-  <script defer src="flutter_bootstrap.js"></script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
