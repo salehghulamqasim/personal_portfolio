@@ -98,47 +98,49 @@ class _HoverWidgetState extends State<HoverWidget>
         _animationController.reverse();
         widget.onHover?.call(false);
       },
-      child: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, child) {
-          Widget currentChild;
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            Widget currentChild;
 
-          // Use builder if provided, otherwise use child
-          if (widget.builder != null) {
-            currentChild = widget.builder!(_isHovered);
-          } else {
-            currentChild = widget.child!;
-          }
+            // Use builder if provided, otherwise use child
+            if (widget.builder != null) {
+              currentChild = widget.builder!(_isHovered);
+            } else {
+              currentChild = widget.child!;
+            }
 
-          // Apply scale animation if specified
-          if (widget.hoverScale != null && widget.hoverScale != 1.0) {
-            currentChild = Transform.scale(
-              scale: _scaleAnimation.value,
-              child: currentChild,
-            );
-          }
-
-          // Apply Material wrapper if any elevation/color effects are needed
-          bool needsMaterial =
-              widget.hoverColor != null ||
-              widget.normalColor != null ||
-              widget.elevation != null ||
-              widget.hoverElevation != null;
-
-          if (needsMaterial) {
-            currentChild = Material(
-              elevation: _elevationAnimation.value,
-              color: _colorAnimation.value ?? Colors.transparent,
-              borderRadius: widget.borderRadius ?? BorderRadius.circular(8.r),
-              child: Padding(
-                padding: widget.padding ?? EdgeInsets.zero,
+            // Apply scale animation if specified
+            if (widget.hoverScale != null && widget.hoverScale != 1.0) {
+              currentChild = Transform.scale(
+                scale: _scaleAnimation.value,
                 child: currentChild,
-              ),
-            );
-          }
+              );
+            }
 
-          return currentChild;
-        },
+            // Apply Material wrapper if any elevation/color effects are needed
+            bool needsMaterial =
+                widget.hoverColor != null ||
+                widget.normalColor != null ||
+                widget.elevation != null ||
+                widget.hoverElevation != null;
+
+            if (needsMaterial) {
+              currentChild = Material(
+                elevation: _elevationAnimation.value,
+                color: _colorAnimation.value ?? Colors.transparent,
+                borderRadius: widget.borderRadius ?? BorderRadius.circular(8.r),
+                child: Padding(
+                  padding: widget.padding ?? EdgeInsets.zero,
+                  child: currentChild,
+                ),
+              );
+            }
+
+            return currentChild;
+          },
+        ),
       ),
     );
   }

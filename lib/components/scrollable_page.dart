@@ -49,13 +49,14 @@ class _ScrollablePageState extends State<ScrollablePage> {
           currentRoute: widget.currentRoute,
         ),
         body: SafeArea(
-          top: false, // Important: This was missing!
+          top: false,
           child: SingleChildScrollView(
             controller: _scrollController,
-            child: widget.child,
+            physics: ClampingScrollPhysics(),
+            child: RepaintBoundary(child: widget.child),
           ),
         ),
-        resizeToAvoidBottomInset: false, // Important: This was missing!
+        resizeToAvoidBottomInset: false,
       );
     } else {
       // Desktop: Use regular AppBar
@@ -66,13 +67,14 @@ class _ScrollablePageState extends State<ScrollablePage> {
           currentRoute: widget.currentRoute,
         ),
         body: SafeArea(
-          top: false, // Important: This was missing!
+          top: false,
           child: SingleChildScrollView(
             controller: _scrollController,
-            child: widget.child,
+            physics: ClampingScrollPhysics(),
+            child: RepaintBoundary(child: widget.child),
           ),
         ),
-        resizeToAvoidBottomInset: false, // Important: This was missing!
+        resizeToAvoidBottomInset: false,
       );
     }
   }

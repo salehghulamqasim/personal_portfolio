@@ -17,21 +17,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  
+
   <!-- Critical: Preload only essential resources -->
   <link rel="preload" href="splash.json" as="fetch" crossorigin>
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" as="script" crossorigin>
-  
+  <link rel="preload" href="assets/images/MaskedSaleh.webp" as="image" type="image/webp">
+
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/webp" href="web/icons/cat.webp"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
-  
+
   <title>Saleh Ghulam - Portfolio</title>
   <link rel="manifest" href="manifest.json">
-  
+
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
+    body{
+      margin:0;overflow:hidden;font-family:system-ui,-apple-system,sans-serif,
+      
+      
+    }
     #splash-screen{position:fixed;inset:0;background:#fff;display:flex;justify-content:center;align-items:center;z-index:99999;transition:opacity 1s ease-out;will-change:opacity}
     #splash-screen.fade-out{opacity:0;pointer-events:none}
     #lottie-container{width:400px;height:400px;max-width:90vw;max-height:90vh;transform:translateZ(0);backface-visibility:hidden}
@@ -48,12 +53,12 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" crossorigin="anonymous"></script>
-  
+
   <script>
     (function(){
       'use strict';
       var anim=null,visible=!0,minTime=2000,start=Date.now(),ready=!1;
-      
+
       function init(){
         try{
           anim=lottie.loadAnimation({
@@ -75,7 +80,7 @@
           document.getElementById('fallback-spinner').style.display='block';
         }
       }
-      
+
       function hide(){
         if(!visible||!ready)return;
         var elapsed=Date.now()-start,
@@ -95,7 +100,7 @@
           },1000);
         },remaining);
       }
-      
+
       init();
       window.addEventListener('flutter-first-frame',function(){
         ready=!0;
