@@ -10,31 +10,27 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Saleh Portfolio">
-  <link rel="apple-touch-icon" href="web/icons/saleh.svg">
-  <link rel="icon" type="image/webp" href="web/icons/saleh.svg"/>
+  <link rel="apple-touch-icon" href="web/icons/saleh.png">
+  <link rel="icon" type="image/webp" href="web/icons/saleh.webp"/>
 
   <!-- Critical Performance: Preconnect to external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  
+
   <!-- Critical: Preload only essential resources -->
   <link rel="preload" href="splash.json" as="fetch" crossorigin>
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" as="script" crossorigin>
-  
-  <!-- Preload Google Fonts -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style" crossorigin>
-
-  <!-- Preload Hero Image -->
   <link rel="preload" href="assets/images/hero.webp" as="image" type="image/webp">
-  
+
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/webp" href="web/icons/cat.webp"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
-  
+
   <title>Saleh Ghulam - Portfolio</title>
   <link rel="manifest" href="manifest.json">
-  
+
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
@@ -53,13 +49,11 @@
     <div class="spinner" id="fallback-spinner"></div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" crossorigin="anonymous"></script>
-  
   <script>
     (function(){
       'use strict';
       var anim=null,visible=!0,minTime=2000,start=Date.now(),ready=!1;
-      
+
       function init(){
         try{
           anim=lottie.loadAnimation({
@@ -81,7 +75,7 @@
           document.getElementById('fallback-spinner').style.display='block';
         }
       }
-      
+
       function hide(){
         if(!visible||!ready)return;
         var elapsed=Date.now()-start,
@@ -101,7 +95,7 @@
           },1000);
         },remaining);
       }
-      
+
       init();
       window.addEventListener('flutter-first-frame',function(){
         ready=!0;
@@ -117,6 +111,6 @@
   </script>
 
   <script>window.flutterWebRenderer="html";</script>
-  <script src="flutter_bootstrap.js" async></script>
+  <script defer src="flutter_bootstrap.js"></script>
 </body>
 </html>
