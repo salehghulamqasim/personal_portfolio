@@ -148,7 +148,7 @@ class ExperienceAndEducation extends StatelessWidget {
                                     institution:
                                         'Pakistan International School Jeddah',
                                     degree: 'HSSC - Commerce',
-                                    dateRange: '2012 - 2019',
+                                    dateRange: '2007 - 2019',
                                     description:
                                         'Relevant coursework: Principles of Accounting, Business Mathematics, Economics, Banking, and Commerce.',
                                   )
@@ -164,9 +164,9 @@ class ExperienceAndEducation extends StatelessWidget {
                                         'Arab Open University - Jeddah',
                                     degree:
                                         'Bachelor of Science in Computer Science',
-                                    dateRange: '2019 - 2023',
+                                    dateRange: '2019 - 2024',
                                     description:
-                                        'Relevant coursework: Data Structures, Algorithms, Database Systems, Web Development, Mobile App Development.',
+                                        'Relevant coursework: Data Structures & Algorithms, Database Management, Object Oriented Programming, Operating Systems, Mathematics.',
                                   )
                                   .animate()
                                   .fadeIn(delay: 1200.ms, duration: 600.ms)
