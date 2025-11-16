@@ -2,114 +2,94 @@
 <html lang="en">
 <head>
   <base href="/">
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Saleh Ghulam - Full Stack Developer Portfolio">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Saleh Portfolio">
-  <link rel="apple-touch-icon" href="web/icons/saleh.svg">
-  <link rel="icon" type="image/webp" href="web/icons/saleh.svg"/>
-
-  <!-- Critical Performance: Preconnect to external resources -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  
-  <!-- Critical: Preload only essential resources -->
-  <link rel="preload" href="splash.json" as="fetch" crossorigin>
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" as="script" crossorigin>
-  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Saleh Ghulam – Full-Stack Developer Portfolio">
   <meta name="theme-color" content="#ffffff">
-  <link rel="icon" type="image/webp" href="web/icons/cat.webp"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
-  
-  <title>Saleh Ghulam - Portfolio</title>
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="web/icons/saleh.svg">
+
+  <!-- icon -->
+  <link rel="icon" href="web/icons/cat.webp">
+
+  <!-- critical preload – Safari-safe (no spaces!) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="splash.json" as="fetch" crossorigin>
+
+  <title>Saleh Ghulam – Portfolio</title>
   <link rel="manifest" href="manifest.json">
-  
+
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
-    #splash-screen{position:fixed;inset:0;background:#fff;display:flex;justify-content:center;align-items:center;z-index:99999;transition:opacity 1s ease-out;will-change:opacity}
-    #splash-screen.fade-out{opacity:0;pointer-events:none}
-    #lottie-container{width:400px;height:400px;max-width:90vw;max-height:90vh;transform:translateZ(0);backface-visibility:hidden}
-    .spinner{display:none;width:60px;height:60px;border:6px solid #f3f3f3;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}
+    html,body{height:100%}
+    body{display:flex;align-items:center;justify-content:center;background:#fff;font-family:system-ui,-apple-system,sans-serif}
+    #s{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fff;z-index:99999;transition:opacity .6s}
+    #s.out{opacity:0;pointer-events:none}
+    #l{width:80vmin;height:80vmin;max-width:400px;max-height:400px}
+    #f{display:none;width:60px;height:60px;border:6px solid #f3f3f3;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:768px){#lottie-container{width:400px;height:400px}}
-    @media(max-width:480px){#lottie-container{width:320px;height:320px}}
   </style>
 </head>
 <body>
-  <div id="splash-screen">
-    <div id="lottie-container"></div>
-    <div class="spinner" id="fallback-spinner"></div>
+  <div id="s">
+    <div id="l"></div>
+    <div id="f"></div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" crossorigin="anonymous"></script>
-  
+  <!-- Lottie loaded AFTER first paint -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
   <script>
     (function(){
-      'use strict';
-      var anim=null,visible=!0,minTime=2000,start=Date.now(),ready=!1;
-      
+      const splash = document.getElementById('s');
+      const lottieContainer = document.getElementById('l');
+      const spinner = document.getElementById('f');
+      const min = 1800;                 // minimum show time
+      const hard = 10000;               // absolute max
+      const start = performance.now();
+      let ok = 0;
+
+      /* Lottie or fallback */
       function init(){
+        if(!window.lottie){spinner.style.display='block';lottieContainer.style.display='none';return;}
         try{
-          anim=lottie.loadAnimation({
-            container:document.getElementById('lottie-container'),
+          lottie.loadAnimation({
+            container:lottieContainer,
             renderer:'svg',
-            loop:!0,
-            autoplay:!0,
-            path:'splash.json',
-            rendererSettings:{
-              preserveAspectRatio:'xMidYMid meet',
-              progressiveLoad:!0,
-              hideOnTransparent:!0,
-              clearCanvas:!1
-            }
-          });
-          anim.setSpeed(.8);
+            loop:true,
+            autoplay:true,
+            path:'splash.json'
+          }).setSpeed(.8);
         }catch(e){
-          document.getElementById('lottie-container').style.display='none';
-          document.getElementById('fallback-spinner').style.display='block';
+          spinner.style.display='block';
+          lottieContainer.style.display='none';
         }
       }
-      
+      /* tear down */
       function hide(){
-        if(!visible||!ready)return;
-        var elapsed=Date.now()-start,
-            remaining=Math.max(0,minTime-elapsed);
-        setTimeout(function(){
-          var splash=document.getElementById('splash-screen');
-          requestAnimationFrame(function(){
-            splash.classList.add('fade-out');
-          });
-          visible=!1;
-          setTimeout(function(){
-            if(anim){
-              anim.destroy();
-              anim=null;
-            }
-            splash.remove();
-          },1000);
-        },remaining);
+        ok=1;
+        const left = Math.max(0,min-(performance.now()-start));
+        setTimeout(()=>{
+          splash.classList.add('out');
+          requestAnimationFrame(()=>setTimeout(()=>splash.remove(),700));
+        },left);
       }
-      
-      init();
-      window.addEventListener('flutter-first-frame',function(){
-        ready=!0;
-        hide();
-      });
-      setTimeout(function(){
-        if(visible){
-          ready=!0;
-          hide();
-        }
-      },10000);
+      /* triggers */
+      window.addEventListener('flutter-first-frame',hide,{once:true});
+      setTimeout(hide,hard);
+
+      /* start Lottie when script arrives */
+      if(window.lottie)init();
+      else document.currentScript.onload=init;
     })();
   </script>
 
+  <!-- Flutter -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
