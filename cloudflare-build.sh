@@ -10,9 +10,9 @@ if ! command -v flutter &> /dev/null
 then
     echo "Flutter not found. Installing Flutter..."
     
-    # Clone Flutter SDK
-    git clone https://github.com/flutter/flutter.git -b stable --depth 1 /opt/flutter
-    export PATH="/opt/flutter/bin:$PATH"
+    # Clone Flutter SDK to current directory (we have permissions here)
+    git clone https://github.com/flutter/flutter.git -b stable --depth 1 $HOME/flutter
+    export PATH="$HOME/flutter/bin:$PATH"
     
     # Pre-download Flutter dependencies
     flutter doctor
