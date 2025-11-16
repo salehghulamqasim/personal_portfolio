@@ -33,7 +33,6 @@ flutter pub get
 echo "Building Flutter web app..."
 flutter build web \
   --release \
-  --web-renderer auto \
   --tree-shake-icons \
   --no-source-maps \
   --pwa-strategy offline-first
