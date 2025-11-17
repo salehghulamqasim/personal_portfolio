@@ -35,7 +35,8 @@ flutter build web \
   --release \
   --tree-shake-icons \
   --no-source-maps \
-  --pwa-strategy offline-first
+  --pwa-strategy offline-first \
+  --web-renderer=canvaskit
 
 # Verify build output
 if [ -d "build/web" ]; then
