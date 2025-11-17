@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 // import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 import 'package:personal_portfolio/components/education_cards.dart';
 // import 'package:personal_portfolio/components/hover_widget.dart';
@@ -38,9 +39,13 @@ class ExperienceAndEducation extends StatelessWidget {
                 SizedBox(
                   height: 2000, // Fixed large height
                   width: double.infinity,
-                  // child: LavaLampEffect(
-                  //   lavaCount: 5,
-                  // ),
+                  child: LavaLampEffect(
+                    size: Size(800.w, 600.h),
+                    color: const Color.fromRGBO(252, 248, 230, 1.0),
+                    lavaCount: 4,
+                    speed: 2,
+                    repeatDuration: const Duration(seconds: 4),
+                  ),
                 ),
                 SingleChildScrollView(
                   child: Column(

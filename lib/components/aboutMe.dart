@@ -316,22 +316,25 @@ class _HackathonBoxState extends State<HackathonBox> {
     '1': {
       'name': 'Computer Club Member',
       'project': 'University',
-      // 'award': '🥈 Outstanding Contribution',
+      'award': 'Certificate of Appreciation',
       'description':
-          'Led workshops on mobile development and contributed to club\'s open-source projects. Mentored 20+ students in Flutter development.',
-      'tech': ['Flutter', 'Dart', 'Firebase'],
-      'team': '5 members',
+          'I was a proud member of my university\'s Computer Club. During my time there, I actively participated in organizing and attending club events. I helped plan and execute events, attended regular meetings, and played a key role in recruiting students who were interested in joining the club. The Computer Club was a hub for creativity and innovation, and I was honored to receive a Certificate of Appreciation for my contributions, especially in idea generation. It was an incredible experience that allowed me to collaborate with talented peers and make a meaningful impact.',
+      'team': '30 members',
       'duration': '1 year',
+      'imagePath':
+          'assets/Certificates/computer club certificate of appreciation.pdf',
     },
     '2': {
       'name': 'International Conference on Logistics',
-      'project': 'Jeddah University',
-      // 'award': '🥈 Technical Presentation Award',
+      'project': 'SkyPort',
+      'award': 'Certificate of Appreciation',
       'description':
-          'Presented research on logistics optimization using AI and mobile tracking solutions. Received recognition for technical excellence.',
-      'tech': ['Research', 'AI', 'Mobile Apps'],
+          'At the International Conference on Logistics, my team of three presented SkyPort, a project aimed at revolutionizing port operations using drones, AI, and data analytics. We collaborated with Dr. Nesrine Atitallah and the Arab Open University to refine our concept, design a poster, and pitch our vision to industry professionals. SkyPort focuses on enhancing safety, efficiency, and sustainability in port logistics through real-time tracking, predictive analytics, and aerial surveillance.',
+      'tech': ['Drones', 'AI', 'Data Analytics', 'AWS S3'],
       'team': '3 members',
       'duration': '2 months',
+      'imagePath':
+          'assets/Certificates/international_conference_certificate.pdf',
     },
     '3': {
       'name': 'Tech Meetup 3',
@@ -352,16 +355,6 @@ class _HackathonBoxState extends State<HackathonBox> {
       'tech': ['IoT', 'Firebase', 'Flutter', 'Node.js'],
       'team': '3 members',
       'duration': '36 hours',
-    },
-    '5': {
-      'name': 'Interests',
-      // 'project': 'Jeddah University',
-      // 'award': '🏆 Best Urban Solution',
-      // 'description':
-      //     'Developed a smart parking solution that reduces traffic congestion by 30% using IoT sensors and real-time data analytics.',
-      // 'tech': ['IoT', 'Firebase', 'Flutter', 'Node.js'],
-      // 'team': '3 members',
-      // 'duration': '36 hours',
     },
   };
 

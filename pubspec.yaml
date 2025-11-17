@@ -83,6 +83,9 @@ flutter:
     - assets/project_images/mainImage/viva.webp
     - assets/project_images/mainImage/wavvy.webp
 
+    # Certificates
+    - assets/Certificates/
+
     # Splash screen 
     - web/splash.json
     - assets/splash_screen/cat.json

@@ -27,7 +27,7 @@ class AboutCard extends StatelessWidget {
 
     return Container(
       width: isMobile ? 340.w : 450.w,
-      height: isMobile ? 280.h : 340.h,
+      // height: isMobile ? 280.h : 340.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(40.r),
@@ -113,23 +113,3 @@ class AboutCard extends StatelessWidget {
     );
   }
 }
-
-/// USAGE EXAMPLES:
-/// 
-/// ```dart
-/// // Language Card
-/// AboutCard(
-///   title: 'Languages',
-///   icon: Icons.language,
-///   isLanguageCard: true,
-///   languages: ['English', 'Arabic', 'Urdu'],
-///   alignment: WrapAlignment.center,
-/// )
-/// 
-/// // Education Card
-/// AboutCard(
-///   title: 'Degree',
-///   icon: Icons.school,
-///   subtitle: 'Bachelors in Computer Science',
-/// )
-/// ``
