@@ -42,71 +42,89 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: opacity,
-      duration: const Duration(milliseconds: 320),
-      curve: Curves.easeOut, //easeout for smoothness
-      child: IgnorePointer(
-        ignoring: opacity < 0.5, // avoid clicks when hidden/fading out
-        child: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: AppColors.primaryOrange, // Android status bar
-            statusBarIconBrightness: Brightness.dark, // Dark icons
-          ),
-          //backgroundColor: Colors.blue.withOpacity(0.0), // Make transparent
-          backgroundColor: Colors.transparent,
-          //elevation: 0, // Remove shadow
-          surfaceTintColor: Colors.transparent,
-          scrolledUnderElevation: 0,
-          automaticallyImplyLeading: false, //remove back button
-          toolbarHeight: height,
-          title: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Left side - Name
-                Text(
-                  name,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 19.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: Fonts.comfortaa.fontFamily,
+    final isMobile = MediaQuery.of(context).size.width < 768;
+
+    return RepaintBoundary(
+      child: AnimatedOpacity(
+        opacity: opacity,
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOut, //easeout for smoothness
+        child: IgnorePointer(
+          ignoring: opacity < 0.5, // avoid clicks when hidden/fading out
+          child: AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: AppColors.primaryOrange, // Android status bar
+              statusBarIconBrightness: Brightness.dark, // Dark icons
+            ),
+            //backgroundColor: Colors.blue.withOpacity(0.0), // Make transparent
+            backgroundColor: Colors.transparent,
+            //elevation: 0, // Remove shadow
+            surfaceTintColor: Colors.transparent,
+            scrolledUnderElevation: 0,
+            automaticallyImplyLeading: false, //remove back button
+            toolbarHeight: height,
+            title: Padding(
+              padding: EdgeInsets.only(
+                left: isMobile ? 5.w : 22.w,
+                right: 22.w,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Left side - Name
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 19.sp,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: Fonts.comfortaa.fontFamily,
+                    ),
                   ),
-                ),
 
-                // Right side - Navigation buttons
-                Row(
-                  children: [
-                    //here we use the _buildNavButton method to build buttons
-                    //When the current route matches the button route, we set isActive to true
-                    // hence highlighting the active page
-                    _buildNavButton(
-                      text: 'About Me',
-                      onPressed: () => _onAboutPressed(context),
-                      isActive: currentRoute == '/about',
-                    ),
+                  // Right side - Navigation buttons
+                  Row(
+                    children: [
+                      // Home button - show when on specific routes
+                      if (currentRoute == '/about' ||
+                          currentRoute == '/experience_education' ||
+                          currentRoute == '/projects' ||
+                          currentRoute == '/contact')
+                        _buildNavButton(
+                          text: 'Home',
+                          onPressed: () => Navigator.pushNamed(context, '/'),
+                          isActive: currentRoute == '/',
+                        ),
 
-                    // _buildNavButton(
-                    //   text: 'Projects',
-                    //   onPressed: () => _onProjectsPressed(context),
-                    //   isActive: currentRoute == '/projects',
-                    // ),
-                    _buildNavButton(
-                      text: 'Experience & Education',
-                      onPressed: () => _onExperienceEducationPressed(context),
-                      isActive: currentRoute == '/experience_education',
-                    ),
+                      //here we use the _buildNavButton method to build buttons
+                      //When the current route matches the button route, we set isActive to true
+                      // hence highlighting the active page
+                      _buildNavButton(
+                        text: 'About Me',
+                        onPressed: () => _onAboutPressed(context),
+                        isActive: currentRoute == '/about',
+                      ),
 
-                    _buildNavButton(
-                      text: 'Contacts Me',
-                      onPressed: () => _onContactPressed(context),
-                      isActive: currentRoute == '/contact',
-                    ),
-                  ],
-                ),
-              ],
+                      // _buildNavButton(
+                      //   text: 'Projects',
+                      //   onPressed: () => _onProjectsPressed(context),
+                      //   isActive: currentRoute == '/projects',
+                      // ),
+                      _buildNavButton(
+                        text: 'Experience & Education',
+                        onPressed: () => _onExperienceEducationPressed(context),
+                        isActive: currentRoute == '/experience_education',
+                      ),
+
+                      _buildNavButton(
+                        text: 'Contacts Me',
+                        onPressed: () => _onContactPressed(context),
+                        isActive: currentRoute == '/contact',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

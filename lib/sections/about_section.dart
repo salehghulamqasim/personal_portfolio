@@ -170,6 +170,12 @@
 //           duration: const Duration(milliseconds: 300),
 //           curve: Curves.easeOut,
 //           child: Container(
+//             child: ConstrainedBox(
+//               constraints: BoxConstraints(
+//                 minHeight: isMobile ? 150.h : 200.h, // Ensure minimum height for mobile
+//                 maxHeight: double.infinity, // Allow expansion based on content
+//               ),
+//             ),
 //             decoration: BoxDecoration(
 //               color: Colors.white,
 //               borderRadius: BorderRadius.circular(24),
@@ -542,9 +548,8 @@
 //             ),
 //           ),
 //         ),
-//       ),
-//     );
-//   }
+//       );
+//     }
 // }
 
 // /// USAGE EXAMPLE:

@@ -26,9 +26,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
           surfaceTintColor: Colors.transparent,
           scrolledUnderElevation: 0,
           automaticallyImplyLeading: false,
+          leadingWidth: 0, // Remove default leading space
           toolbarHeight: height,
           title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.only(left: 4, right: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

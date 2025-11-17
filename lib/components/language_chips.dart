@@ -7,7 +7,6 @@ import 'package:personal_portfolio/themes/colors.dart';
 class LanguageChips extends StatelessWidget {
   final List<String> languages;
   final WrapAlignment alignment;
-  
 
   const LanguageChips({
     super.key,
@@ -18,50 +17,59 @@ class LanguageChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Constrain the content so it visually sits inside a box without borders
+    final isMobile = MediaQuery.of(context).size.width < 768;
+
+    // Use isMobile to adjust chip size dynamically
     return Container(
-      constraints: BoxConstraints(
-        // Limit the width so chips wrap nicely like inside a box
-        maxWidth: 900.w,
-      ),
-      padding: EdgeInsets.all(12.w),
-      color: Colors.transparent, // no border/background, just constraints
+      constraints: BoxConstraints(maxWidth: 900.w), // Limit max width
+      padding: EdgeInsets.all(7.w),
+      color: Colors.transparent,
       child: Wrap(
-        alignment:
-            alignment, //by default its center but we can specify where we want it
-        // center items in each row
-        runAlignment: alignment, // center rows as well
-        spacing: 14.w, // horizontal gap
-        runSpacing: 14.h, // vertical gap
-        children: [for (var language in languages) _buildChip(language)],
-      ),
-    );
-  }
-
-  Widget _buildChip(String label) {
-    return HoverWidget(
-      hoverScale: 1.1,
-
-      borderRadius: BorderRadius.circular(20.r),
-      builder: (isHovered) {
-        return Chip(
-          label: Text(
-            label,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 16.sp,
+        alignment: alignment,
+        runAlignment: alignment,
+        spacing: 19.w,
+        runSpacing: 14.h,
+        children: [
+          for (var language in languages)
+            HoverWidget(
+              hoverScale: 1.0,
+              borderRadius: BorderRadius.circular(28.r),
+              builder: (isHovered) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeOut,
+                  transform: Matrix4.identity()
+                    ..translate(
+                      0.0,
+                      isHovered ? -4.0 : 0.0,
+                    ), // Raise up on hover
+                  child: Chip(
+                    label: Text(
+                      language,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: isMobile ? 16.sp : 18.sp,
+                      ),
+                    ),
+                    backgroundColor: AppColors.primaryOrange,
+                    side: BorderSide(
+                      color: AppColors.primaryOrange,
+                      width: 0.w,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28.r),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: isMobile ? 12.h : 20.h,
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-          backgroundColor: AppColors.primaryOrange,
-          // backgroundColor: isHovered ? AppColors.primaryOrange : Colors.orange,
-          side: BorderSide(color: AppColors.primaryOrange, width: 0.w),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-        );
-      },
+        ],
+      ),
     );
   }
 }

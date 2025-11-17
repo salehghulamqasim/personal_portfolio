@@ -29,20 +29,20 @@ dependencies:
   # carousel_slider: ^5.1.1
   expansion_tile_card: ^3.0.0
   skeletonizer: ^2.1.0+1
-  visibility_detector: ^0.4.0+2
+  # visibility_detector: ^0.4.0+2
   animated_text_kit: ^4.3.0
-  # rive: ^0.13.20
-  # rive_splash_screen: ^0.1.1
+ 
   another_flutter_splash_screen: ^1.2.1
   # alp_animated_splashscreen: ^0.0.6
   lottie: ^3.3.2
   flutter_animate: ^4.5.2
   flutter_screenutil: ^5.9.3
   flutter_swiper_view: ^1.1.8
-  web_smooth_scroll: ^2.0.0
+  # web_smooth_scroll: ^2.0.0
   # flutter_staggered_animations: ^1.1.1
   # auto_animated: ^3.2.0 
   confirmation_success: ^0.0.2
+  device_preview: ^1.3.1
 
 dev_dependencies:
   flutter_test:
@@ -60,37 +60,37 @@ flutter:
     # Images (use wildcard to include all files)
     - assets/images/
     - assets/images/MaskedSaleh.webp
-    
+
     # Project images - each folder explicitly listed
     - assets/project_images/
     - assets/project_images/beauty/
 
-    
     - assets/project_images/greenproject/
-    - assets/project_images/myphotos/
     - assets/project_images/playbaloot_images/
     - assets/project_images/viva/
     - assets/project_images/wavy/
     - assets/project_images/Ashwate/
+    - assets/project_images/Plasticless/
+    - assets/project_images/Jidni/
 
     # Main photos of each project (edited in canva by me :)
     - assets/project_images/mainImage/
     - assets/project_images/mainImage/ashwat.webp
     - assets/project_images/mainImage/beauty.webp
     - assets/project_images/mainImage/green.webp
-    
+
     - assets/project_images/mainImage/playbaloot.webp
     - assets/project_images/mainImage/viva.webp
     - assets/project_images/mainImage/wavvy.webp
 
+    # Certificates
+    - assets/Certificates/
 
     # Splash screen 
-    - assets/splash_screen/
-    - assets/splash_screen/15450-29175-splash-screen-bouncing-ball.riv
-    - assets/splash_screen/Gradient_blob.json
-    - assets/splash_screen/Gradient_blob.lottie
-
- 
+    - web/splash.json
+    - assets/splash_screen/cat.json
+    #  splash screen images are in web folder bcuz i use them wtih index.html
+    
     # Icons/SVGs
     - assets/icons/
 

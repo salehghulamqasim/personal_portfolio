@@ -1,16 +1,48 @@
 #!/bin/bash
-# Cloudflare Pages build script for Flutter web
 
-# Install Flutter dependencies
-flutter pub get
+# Exit on any error
+set -e
 
-# Build the web app
-flutter build web --release --dart2js-optimization=O3 --no-source-maps
+echo "Starting Flutter web build..."
 
-# Copy _redirects file to build output for SPA routing
-if [ -f "_redirects" ]; then
-  cp _redirects build/web/_redirects
+# Check if Flutter is installed
+if ! command -v flutter &> /dev/null
+then
+    echo "Flutter not found. Installing Flutter..."
+    
+    # Clone Flutter SDK to current directory (we have permissions here)
+    git clone https://github.com/flutter/flutter.git -b stable --depth 1 $HOME/flutter
+    export PATH="$HOME/flutter/bin:$PATH"
+    
+    # Pre-download Flutter dependencies
+    flutter doctor
 fi
 
-# The build output is in build/web, which Cloudflare Pages will serve
+# Print Flutter version
+flutter --version
 
+# Clean previous builds
+echo "Cleaning previous builds..."
+flutter clean
+
+# Get dependencies
+echo "Getting Flutter dependencies..."
+flutter pub get
+
+# Build for web with optimizations
+echo "Building Flutter web app..."
+flutter build web \
+  --release \
+  --tree-shake-icons \
+  --no-source-maps \
+  --pwa-strategy offline-first
+
+# Verify build output
+if [ -d "build/web" ]; then
+    echo "✓ Build completed successfully!"
+    echo "Build output is in build/web directory"
+    ls -la build/web
+else
+    echo "✗ Build failed - build/web directory not found"
+    exit 1
+fi

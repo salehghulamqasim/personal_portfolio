@@ -13,6 +13,7 @@ ExperienceCard(
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
 
 class ExperienceCards extends StatefulWidget {
@@ -63,17 +64,26 @@ class _ExperienceCardsState extends State<ExperienceCards> {
                   onEnter: (_) => setState(() => isDotHovered = true),
                   onExit: (_) => setState(() => isDotHovered = false),
                   cursor: SystemMouseCursors.click,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: isDotHovered
-                        ? 26.w
-                        : 20.w, // 20px normal, 26px hover
-                    height: isDotHovered ? 26.h : 20.h,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFFDC435),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
+                  child:
+                      AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            width: isDotHovered
+                                ? 26.w
+                                : 20.w, // 20px normal, 26px hover
+                            height: isDotHovered ? 26.h : 20.h,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFFDC435),
+                              shape: BoxShape.circle,
+                            ),
+                          )
+                          .animate()
+                          .fadeIn(delay: 200.ms, duration: 500.ms)
+                          .scale(
+                            begin: Offset(0.5, 0.5),
+                            end: Offset(1, 1),
+                            duration: 500.ms,
+                            curve: Curves.easeOut,
+                          ),
                 ),
 
                 // Timeline line below the dot
@@ -83,7 +93,7 @@ class _ExperienceCardsState extends State<ExperienceCards> {
                     height: MediaQuery.of(context).size.height * 0.08,
                     color: const Color(0xFFFDC435).withValues(alpha: 0.5),
                     margin: EdgeInsets.symmetric(vertical: 8.h),
-                  ),
+                  ).animate().fadeIn(delay: 400.ms, duration: 500.ms),
               ],
             ),
 

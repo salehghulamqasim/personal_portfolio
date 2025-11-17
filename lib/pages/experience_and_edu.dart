@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 // import 'package:lava_lamp_effect/lava_lamp_effect.dart';
 import 'package:personal_portfolio/components/education_cards.dart';
 // import 'package:personal_portfolio/components/hover_widget.dart';
@@ -18,7 +19,7 @@ class ExperienceAndEducation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name ?? '/';
-
+    final isMobile = MediaQuery.of(context).size.width < 768;
     return ScrollablePage(
       currentRoute: currentRoute,
 
@@ -38,9 +39,13 @@ class ExperienceAndEducation extends StatelessWidget {
                 SizedBox(
                   height: 2000, // Fixed large height
                   width: double.infinity,
-                  // child: LavaLampEffect(
-                  //   lavaCount: 5,
-                  // ),
+                  child: LavaLampEffect(
+                    size: Size(800.w, 600.h),
+                    color: const Color.fromRGBO(252, 248, 230, 1.0),
+                    lavaCount: 4,
+                    speed: 2,
+                    repeatDuration: const Duration(seconds: 4),
+                  ),
                 ),
                 SingleChildScrollView(
                   child: Column(
@@ -135,100 +140,104 @@ class ExperienceAndEducation extends StatelessWidget {
                       const SizedBox(height: 48),
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width < 768
-                                ? 40.w
-                                : 60.w, // align with timeline dot + gap
+                          padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width < 768
+                                ? 20.w
+                                : 60.w,
                           ),
                           child: Wrap(
                             spacing: 24.w,
                             runSpacing: 24.h,
+                            alignment:
+                                WrapAlignment.center, //this centers the card
                             children: [
-                              EducationCards(
-                                    institution:
-                                        'Pakistan International School Jeddah',
-                                    degree: 'HSSC - Commerce',
-                                    dateRange: '2012 - 2019',
-                                    description:
-                                        'Graduated with Honors. Relevant coursework: Data Structures, Algorithms, Database Systems, Web Development, Mobile App Development.',
-                                  )
-                                  .animate()
-                                  .fadeIn(delay: 1100.ms, duration: 600.ms)
-                                  .scale(
-                                    begin: const Offset(0.9, 0.9),
-                                    duration: 600.ms,
-                                    curve: Curves.easeOut,
-                                  ),
-                              EducationCards(
-                                    institution: 'University of XYZ',
-                                    degree:
-                                        'Bachelor of Science in Computer Science',
-                                    dateRange: '2019 - 2023',
-                                    description:
-                                        'Graduated with Honors. Relevant coursework: Data Structures, Algorithms, Database Systems, Web Development, Mobile App Development.',
-                                  )
-                                  .animate()
-                                  .fadeIn(delay: 1200.ms, duration: 600.ms)
-                                  .scale(
-                                    begin: const Offset(0.9, 0.9),
-                                    duration: 600.ms,
-                                    curve: Curves.easeOut,
-                                  ),
+                              SizedBox(
+                                width: isMobile
+                                    ? 320.w
+                                    : 400.w, // so the width is fixed for consistency
+
+                                child:
+                                    EducationCards(
+                                          institution:
+                                              'Pakistan International School Jeddah',
+                                          degree: 'HSSC - Commerce',
+                                          dateRange: '2007 - 2019',
+                                          description:
+                                              'Relevant coursework: Principles of Accounting, Business Mathematics, Economics, Banking, and Commerce.',
+                                        )
+                                        .animate()
+                                        .fadeIn(
+                                          delay: 1100.ms,
+                                          duration: 600.ms,
+                                        )
+                                        .scale(
+                                          begin: const Offset(0.9, 0.9),
+                                          duration: 600.ms,
+                                          curve: Curves.easeOut,
+                                        ),
+                              ),
+                              SizedBox(
+                                width: isMobile
+                                    ? 320.w
+                                    : 400.w, // so the width is fixed for consistency
+                                child:
+                                    EducationCards(
+                                          institution:
+                                              'Arab Open University - Jeddah',
+                                          degree:
+                                              'Bachelor of Science in Computer Science',
+                                          dateRange: '2019 - 2024',
+                                          description:
+                                              'Relevant coursework: Data Structures & Algorithms, Database Management, Object Oriented Programming, Operating Systems, Mathematics.',
+                                        )
+                                        .animate()
+                                        .fadeIn(
+                                          delay: 1200.ms,
+                                          duration: 600.ms,
+                                        )
+                                        .scale(
+                                          begin: const Offset(0.9, 0.9),
+                                          duration: 600.ms,
+                                          curve: Curves.easeOut,
+                                        ),
+                              ),
                             ],
                           ),
                         ),
                       ),
                       const SizedBox(height: 48),
                       const SectionTitle(
-                            text: 'Tech Skills',
-                            lineWidth: 80,
-                            size: 32,
-                          )
-                          .animate()
-                          .fadeIn(delay: 1400.ms, duration: 600.ms)
-                          .slideY(
-                            begin: 0.1,
-                            end: 0,
-                            duration: 600.ms,
-                            curve: Curves.easeOut,
-                          ),
+                        text: 'Tech Skills',
+                        lineWidth: 80,
+                        size: 32,
+                      ),
+
                       const SizedBox(height: 24),
                       TechSkills(
-                            skills: const [
-                              "flutter",
-                              "dart",
-                              "figma",
-                              "adobe xd",
-                              "sketch",
-                              "photoshop",
-                              "illustrator",
-                              "html/css",
-                              "javascript",
-                              "react",
-                              "user research",
-                              "prototyping",
-                              "design systems",
-                              "wireframing",
-                              "typography",
-                              "color theory",
-                            ],
-                          )
-                          .animate()
-                          .fadeIn(delay: 1600.ms, duration: 600.ms)
-                          .scale(
-                            begin: const Offset(0.95, 0.95),
-                            duration: 600.ms,
-                            curve: Curves.easeOut,
-                          ),
-                      const SizedBox(height: 48),
-                      Socials().animate().fadeIn(
-                        delay: 1800.ms,
-                        duration: 600.ms,
+                        skills: const [
+                          "flutter",
+                          "dart",
+                          "figma",
+                          "adobe xd",
+                          "sketch",
+                          "photoshop",
+                          "illustrator",
+                          "html/css",
+                          "javascript",
+                          "react",
+                          "user research",
+                          "prototyping",
+                          "design systems",
+                          "wireframing",
+                          "typography",
+                          "color theory",
+                        ],
                       ),
+
+                      const SizedBox(height: 48),
+                      Socials(),
                       const SizedBox(height: 80),
-                      FooterWave(
-                        userColor: Color(0xFFF9FAFF),
-                      ).animate().fadeIn(delay: 2000.ms, duration: 600.ms),
+                      FooterWave(userColor: Color(0xFFF9FAFF)),
                     ],
                   ),
                 ),
