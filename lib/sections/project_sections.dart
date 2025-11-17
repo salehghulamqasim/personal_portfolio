@@ -46,6 +46,7 @@ class ProjectSection extends StatelessWidget {
             ],
             mainImage: 'assets/project_images/mainImage/playbaloot.webp',
             imageOnRight: false,
+            githubUrl: 'https://github.com/salehghulamqasim/Play-Baloot.git',
           ),
 
           // Beauty App
@@ -78,22 +79,29 @@ class ProjectSection extends StatelessWidget {
             ],
             mainImage: 'assets/project_images/mainImage/beauty.webp',
             imageOnRight: true,
+            githubUrl: "https://github.com/salehghulamqasim/myhealthhub.git",
+            liveUrl:
+                "https://drive.google.com/file/d/1JoloGVjKC78pHSCnYLhHop44ib0vguCr/view",
+            liveButtonText: "Video",
           ),
 
           // Wavy Design
           ProjectCard(
-            title: 'Wavy Design',
+            title: 'Wavy - Salon Booking App',
             description:
-                'A creative design project featuring fluid wave patterns and modern visual aesthetics.',
+                'A comprehensive Flutter mobile application for salon bookings and beauty services with Arabic language support.',
             expandedDescription:
-                'Wavy Design is an innovative project that explores fluid design patterns and modern visual aesthetics. This project showcases expertise in creating dynamic, wave-inspired user interfaces that provide a unique and engaging user experience. The design emphasizes smooth curves, flowing animations, and contemporary styling principles to create visually appealing and functionally effective interfaces.',
+                'Wavy is a full-featured Flutter application designed for salon bookings and beauty services. The app features a complete user journey from onboarding to booking confirmation, with special attention to the Middle Eastern market through Arabic language localization. The application includes user authentication, salon discovery, community features for reviews and ratings, and a seamless booking system. Built with Flutter and Dart, it demonstrates modern mobile app development practices with clean architecture and responsive design.',
             keyFeatures: [
-              'Fluid wave patterns and dynamic designs',
-              'Modern visual aesthetics and styling',
-              'Smooth curves and flowing animations',
-              'Contemporary design principles',
-              'Unique and engaging user experience',
-              'Creative interface exploration',
+              'Arabic language localization and RTL support',
+              'User authentication with OTP verification',
+              'Salon discovery and booking system',
+              'Community features with reviews and ratings',
+              'Real-time notifications and messaging',
+              'Clean architecture with Flutter Bloc pattern',
+              'Responsive UI for all mobile devices',
+              "PHP backend with MySQL database",
+              "Admin panel for salon management",
             ],
             technologies: ['Flutter', 'Figma', 'Rive', 'Dart'],
             imagePaths: [
@@ -104,21 +112,52 @@ class ProjectSection extends StatelessWidget {
             ],
             mainImage: 'assets/project_images/mainImage/wavvy.webp',
             imageOnRight: false,
+            githubUrl: "https://github.com/salehghulamqasim/Wavvy.git",
           ),
-
-          // Green Project
+          // Viva App
           ProjectCard(
-            title: 'Green Project',
+            title: 'VivaDecor - Luxury Interior Design Website',
             description:
-                'An eco-friendly application focused on sustainability and environmental awareness.',
+                'An elegant and modern website for a luxury interior design company showcasing premium design services.',
             expandedDescription:
-                'Green Project is an innovative mobile application dedicated to promoting environmental consciousness and sustainable living. The app features multiple screens showcasing eco-friendly practices, green initiatives, and environmental tracking tools. With its clean design and intuitive navigation, users can easily access resources for reducing their carbon footprint and contributing to a greener planet.',
+                'VivaDecor is a sophisticated website for a high-end interior design company, featuring a clean and luxurious design that reflects their premium brand identity. The website effectively showcases their interior design services, client testimonials, and company portfolio with a focus on user experience and visual appeal. Built with modern web technologies, it demonstrates professional presentation of design services with clear call-to-actions and engaging content layout.',
             keyFeatures: [
-              'Environmental impact tracking and monitoring',
-              'Green initiatives and eco-friendly tips',
-              'Carbon footprint calculator',
-              'Sustainable living resources and guides',
-              'Clean and intuitive user interface',
+              'Comprehensive lifestyle management tools',
+              'Modern mobile development techniques',
+              'Multiple interconnected screens',
+              'Smooth transitions and animations',
+              'User-friendly navigation system',
+              'Dynamic features for daily life enhancement',
+            ],
+            technologies: ['HTML', 'CSS', 'BootStrap'],
+            imagePaths: [
+              'assets/project_images/viva/1viva.webp',
+              'assets/project_images/viva/2viva.webp',
+              'assets/project_images/viva/3viva.webp',
+              'assets/project_images/viva/4viva.webp',
+              'assets/project_images/viva/5viva.webp',
+            ],
+            mainImage: 'assets/project_images/mainImage/viva.webp',
+            imageOnRight: true,
+            githubUrl:
+                "https://github.com/salehghulamqasim/VivaDecore--LandingPage.git",
+            liveUrl:
+                "https://salehghulamqasim.github.io/VivaDecore--LandingPage/",
+          ),
+          // Green
+          ProjectCard(
+            title: 'Solar Project Landing Page',
+            description:
+                'A visually appealing landing page showcasing modern UI design principles with an eco-friendly solar energy theme.',
+            expandedDescription:
+                'This project demonstrates my front-end development skills through a beautifully designed solar energy landing page. Built with pure HTML and CSS, it features a clean, modern interface with eco-friendly aesthetics. The design includes responsive layouts, intuitive navigation, and visually engaging sections that effectively communicate the solar energy concept. This project highlights my ability to create professional-looking websites with attention to typography, color schemes, and user experience.',
+            keyFeatures: [
+              'Modern and clean UI design with eco-friendly aesthetics',
+              'Fully responsive layout for all screen sizes',
+              'Professional typography and color scheme',
+              'Interactive navigation and call-to-action elements',
+              'Well-structured content sections with visual hierarchy',
+              'Optimized images and efficient CSS styling',
             ],
             technologies: ['HTML', 'CSS', 'BootStrap'],
             imagePaths: [
@@ -131,6 +170,10 @@ class ProjectSection extends StatelessWidget {
             ],
             mainImage: 'assets/project_images/mainImage/green.webp',
             imageOnRight: true,
+            githubUrl:
+                "https://github.com/salehghulamqasim/Task1-SolarEnergyLandingPage.git",
+            liveUrl:
+                "https://salehghulamqasim.github.io/SolarEnergyLandingPage/",
           ),
 
           // Ashwat App
@@ -157,33 +200,7 @@ class ProjectSection extends StatelessWidget {
             ],
             mainImage: 'assets/project_images/mainImage/ashwat.webp',
             imageOnRight: false,
-          ),
-
-          // Viva App
-          ProjectCard(
-            title: 'Viva App',
-            description:
-                'A vibrant lifestyle application with dynamic features and engaging user interface.',
-            expandedDescription:
-                'Viva App is a comprehensive lifestyle application designed to enhance daily life through smart features and intuitive design. The app showcases modern mobile development techniques with multiple interconnected screens, smooth transitions, and user-friendly navigation. Built with attention to detail, Viva demonstrates expertise in creating engaging mobile experiences that prioritize both functionality and aesthetic appeal.',
-            keyFeatures: [
-              'Comprehensive lifestyle management tools',
-              'Modern mobile development techniques',
-              'Multiple interconnected screens',
-              'Smooth transitions and animations',
-              'User-friendly navigation system',
-              'Dynamic features for daily life enhancement',
-            ],
-            technologies: ['HTML', 'CSS', 'BootStrap'],
-            imagePaths: [
-              'assets/project_images/viva/1viva.webp',
-              'assets/project_images/viva/2viva.webp',
-              'assets/project_images/viva/3viva.webp',
-              'assets/project_images/viva/4viva.webp',
-              'assets/project_images/viva/5viva.webp',
-            ],
-            mainImage: 'assets/project_images/mainImage/viva.webp',
-            imageOnRight: true,
+            githubUrl: 'https://github.com/salehghulamqasim/Ashwat4Android.git',
           ),
 
           // CleanJeddah Volunteer Hub
@@ -212,6 +229,10 @@ class ProjectSection extends StatelessWidget {
             ],
             mainImage: 'assets/project_images/mainImage/plasticless.webp',
             imageOnRight: false,
+
+            liveUrl:
+                "https://www.figma.com/design/pxyeDjaGBFqqUMjb7rpLZA/PlasticlessPlanet-UI%2FUX-design-of-the-prototype?node-id=7-485&t=IXFwo7EmSylV04Qy-1",
+            liveButtonText: "Figma Link",
           ),
 
           // Jidni Library Navigator
@@ -240,6 +261,9 @@ class ProjectSection extends StatelessWidget {
             ],
             mainImage: 'assets/project_images/mainImage/jidni.webp',
             imageOnRight: true,
+            liveButtonText: "Figma Link",
+            liveUrl:
+                "https://www.figma.com/design/8gSlid4qysv4GEbEtQB31E/Untitled?node-id=0-1&t=ayRlYUjvnQhWhFE5-1",
           ),
         ],
       ),
