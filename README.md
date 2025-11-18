@@ -74,27 +74,14 @@ For detailed documentation, please refer to the [Project Documentation](docs/pro
 
 ---
 
-## 📸 Screenshots
-
-Add screenshots of your portfolio here to showcase its design and functionality.
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to fork the repository and submit pull requests.
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ---
 
 ## 🌐 Live Demo
 
-[Live Demo Link](https://salehghulam.com/) (Add your hosted portfolio link here)
+[Live Demo Link](https://salehghulam.com/) 
 
 ---
 
