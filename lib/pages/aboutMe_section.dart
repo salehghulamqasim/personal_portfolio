@@ -7,6 +7,8 @@ import 'package:personal_portfolio/components/aboutMe.dart'
         HackathonBox,
         StoryBox,
         GDSCBox,
+        RaqmanBox,
+        IftarBox,
         TitleBoxWhite,
         TitleBoxColored;
 
@@ -65,27 +67,19 @@ class BentoGridSection extends StatelessWidget {
 
     if (isMobile) {
       return GridView.count(
-        shrinkWrap:
-            true, //shrinkwrap is used to shrink the grid view to the size of the content
-        // below line stops the user from scrolling that widget by touch/drag
+        shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 2,
         mainAxisSpacing: 20.h,
         crossAxisSpacing: 16.w,
         childAspectRatio: 0.75,
         children: const [
-          // StoryBox(),
           TitleBoxWhite(title: 'Interests', size: 24),
           PassionBox(
             icon: Icons.camera_alt,
             title: 'Photography',
             color: Color(0xFFFCC346),
           ),
-          // PassionBox(
-          //   icon: Icons.music_note,
-          //   title: 'Music',
-          //   color: Color(0xFFFF6B6B),
-          // ),
           PassionBox(
             icon: Icons.menu_book,
             title: 'Reading',
@@ -101,12 +95,13 @@ class BentoGridSection extends StatelessWidget {
             size: 24,
             color: Color(0xFFFCC346),
           ),
-
           HackathonBox(number: '1'),
           HackathonBox(number: '2'),
           GDSCBox(),
           HackathonBox(number: '3'),
           HackathonBox(number: '4'),
+          RaqmanBox(),
+          IftarBox(),
         ],
       );
     }
@@ -195,6 +190,16 @@ class BentoGridSection extends StatelessWidget {
           width: (1200.w - 72.w) / 4,
           height: 310.h,
           child: const HackathonBox(number: '4'),
+        ),
+        SizedBox(
+          width: (1200.w - 48.w) / 2,
+          height: 310.h,
+          child: const RaqmanBox(),
+        ),
+        SizedBox(
+          width: (1200.w - 48.w) / 2,
+          height: 310.h,
+          child: const IftarBox(),
         ),
       ],
     );

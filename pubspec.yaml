@@ -85,6 +85,8 @@ flutter:
 
     # Certificates
     - assets/Certificates/
+    - assets/Certificates/computer_club.webp
+    
 
     # Splash screen 
     - web/splash.json

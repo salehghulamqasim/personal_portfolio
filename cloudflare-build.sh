@@ -35,7 +35,8 @@ flutter build web \
   --release \
   --tree-shake-icons \
   --no-source-maps \
-  --pwa-strategy offline-first
+  --pwa-strategy offline-first \
+  -- wasm
 
 # Verify build output
 if [ -d "build/web" ]; then
