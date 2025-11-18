@@ -65,11 +65,11 @@ class ExperienceAndEducation extends StatelessWidget {
                           ),
                       SizedBox(height: 48.h),
                       ExperienceCards(
-                            title: 'Qayd Tech Solutions',
-                            position: ' Software Developer',
-                            dateRange: 'Nov 2025 - Oct 2025',
+                            title: 'QaYd Company, Jeddah, Saudi Arabia',
+                            position: 'Software Developer',
+                            dateRange: 'Mar 2025 – Aug 2025',
                             description:
-                                'Worked on developing mobile applications using Flutter framework. Collaborated with cross-functional teams to design and implement new features, improving user engagement by 20%.',
+                                '• Created and managed company GitHub org for version control and collaboration.\n• Added QR code features in Flutter, fixed NFC, integrated backend, created docs, supported handover.\n• Enhanced and optimized WordPress site for SEO, performance, responsiveness, and booking features.\n• Managed company POS devices, handled IT troubleshooting, and set up ClickUp for project management.',
                           )
                           .animate()
                           .fadeIn(delay: 400.ms, duration: 600.ms)
@@ -81,11 +81,12 @@ class ExperienceAndEducation extends StatelessWidget {
                           ),
                       const SizedBox(height: 24),
                       ExperienceCards(
-                            title: 'RedSand Technology',
-                            position: 'Front end web developer',
-                            dateRange: 'Nov 2025 - Oct 2025',
+                            title:
+                                'RedSand Technology - Internship, Jeddah, Saudi Arabia',
+                            position: 'Front-End Web Developer',
+                            dateRange: 'Oct 2023 – Dec 2023',
                             description:
-                                'Developed responsive web applications using React.js and Redux. Improved website performance by 30% through code optimization and implemented SEO best practices to increase organic traffic.',
+                                '• Developed front-end using HTML, CSS, and JavaScript, enhancing user interface.\n• Collaborated with UI/UX designers to ensure responsive, cross-browser compatibility.\n• Created a MySQL database schema and optimized SQL queries.',
                           )
                           .animate()
                           .fadeIn(delay: 500.ms, duration: 600.ms)
@@ -97,11 +98,11 @@ class ExperienceAndEducation extends StatelessWidget {
                           ),
                       const SizedBox(height: 24),
                       ExperienceCards(
-                            title: 'Technocolab',
-                            position: 'Data Analysis Intern',
-                            dateRange: 'Nov 2025 - Oct 2025',
+                            title: 'Technocolab - Internship, Remote',
+                            position: 'Data Analyst',
+                            dateRange: 'Jan 2023 – Mar 2023',
                             description:
-                                'Assisted in data collection and analysis for various projects. Developed dashboards using Tableau to visualize key metrics and support decision-making processes.',
+                                '• Streamlined data processing and analysis, improving data quality and usability.\n• Executed data visualizations and exploratory analysis to extract actionable insights.\n• Built machine learning models to predict trends, optimizing decision-making processes.',
                           )
                           .animate()
                           .fadeIn(delay: 600.ms, duration: 600.ms)
@@ -113,11 +114,12 @@ class ExperienceAndEducation extends StatelessWidget {
                           ),
                       const SizedBox(height: 24),
                       ExperienceCards(
-                            title: 'SmartMethods',
-                            position: 'IOT engineer Intern',
-                            dateRange: 'Nov 2025 - Oct 2025',
+                            title:
+                                'SmartMethods - Internship, Jeddah, Saudi Arabia',
+                            position: 'Internet of Things Engineer',
+                            dateRange: 'Jun 2021 – Aug 2021',
                             description:
-                                'Worked on developing IoT solutions using Raspberry Pi and Arduino. Collaborated with hardware engineers to design and implement new features, improving device connectivity and performance.',
+                                '• Developed robot arm control interfaces using HTML, CSS, and JavaScript.\n• Implemented PHP and MySQL backends, ensuring robust data integration.\n• Utilized IBM Watson for AI tasks for enhanced user interaction and automation.',
                           )
                           .animate()
                           .fadeIn(delay: 700.ms, duration: 600.ms)

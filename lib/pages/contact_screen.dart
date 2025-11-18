@@ -33,12 +33,16 @@ class ContactScreen extends StatelessWidget {
                 SizedBox(
                   height: 600.h,
                   width: double.infinity,
-                  child: LavaLampEffect(
-                    size: Size(800.w, 600.h),
-                    color: const Color.fromRGBO(252, 248, 230, 1.0),
-                    lavaCount: 4,
-                    speed: 2,
-                    repeatDuration: const Duration(seconds: 4),
+                  child: RepaintBoundary(
+                    child: IgnorePointer(
+                      child: LavaLampEffect(
+                        size: Size(800.w, 600.h),
+                        color: const Color.fromRGBO(252, 248, 230, 1.0),
+                        lavaCount: 4,
+                        speed: 2,
+                        repeatDuration: const Duration(seconds: 4),
+                      ),
+                    ),
                   ),
                 ),
 
@@ -60,8 +64,8 @@ class ContactScreen extends StatelessWidget {
                           curve: Curves.easeOut,
                         ),
                     SizedBox(
-                      height: 32.h,
-                    ), // Standardized height after SectionTitle
+                      height: isMobile ? 16.h : 32.h,
+                    ), // Standardized height after SectionTitle, reduced on mobile
                     SizedBox(
                           width: isMobile ? 300.w : 700.w,
                           child: Text(
@@ -85,7 +89,7 @@ class ContactScreen extends StatelessWidget {
                           curve: Curves.easeOut,
                         ),
 
-                    SizedBox(height: 30.h),
+                    SizedBox(height: isMobile ? 15.h : 30.h),
 
                     const ContactForm()
                         .animate()

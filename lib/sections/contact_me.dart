@@ -19,11 +19,19 @@ class _ContactFormState extends State<ContactForm> {
   final messageController = TextEditingController();
 
   bool isSubmitting = false; // prevent spam clicks
+  bool isEmailValid = false; // track email validity
 
   // Cache these values to avoid recalculating on every keystroke
   late final bool isMobile;
   late final double horizontalPadding;
   late final double maxWidth;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listener to email controller to validate on change
+    emailController.addListener(_validateEmail);
+  }
 
   @override
   void didChangeDependencies() {
@@ -41,6 +49,20 @@ class _ContactFormState extends State<ContactForm> {
     emailController.dispose();
     messageController.dispose();
     super.dispose();
+  }
+
+  // Email validation using regex
+  bool _isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+    return emailRegex.hasMatch(email);
+  }
+
+  // Validate email and update state
+  void _validateEmail() {
+    final valid = _isValidEmail(emailController.text.trim());
+    if (valid != isEmailValid) {
+      setState(() => isEmailValid = valid);
+    }
   }
 
   // SEND VIA FORMSPREE
@@ -61,6 +83,7 @@ class _ContactFormState extends State<ContactForm> {
       if (response.statusCode == 200) {
         print('✅ Email sent (status 200)');
 
+        // Clear the text fields after successful submission
         nameController.clear();
         emailController.clear();
         messageController.clear();
@@ -104,6 +127,11 @@ class _ContactFormState extends State<ContactForm> {
       }
     } catch (e) {
       print('⚠️ Exception (might be CORS) but email may have sent: $e');
+
+      // Clear the text fields even if there's an exception (assuming email sent)
+      nameController.clear();
+      emailController.clear();
+      messageController.clear();
 
       await showDialog(
         context: context,
@@ -192,7 +220,7 @@ class _ContactFormState extends State<ContactForm> {
         width: double.infinity,
         padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding,
-          vertical: 20.h,
+          vertical: isMobile ? 10.h : 20.h,
         ),
         child: Align(
           alignment: Alignment.center,
@@ -227,6 +255,7 @@ class _ContactFormState extends State<ContactForm> {
                 Center(
                   child: _SubmitButton(
                     isSubmitting: isSubmitting,
+                    isEmailValid: isEmailValid,
                     onPressed: sendEmail,
                   ),
                 ),
@@ -330,28 +359,39 @@ class _CustomTextField extends StatelessWidget {
 // Submit button - StatelessWidget
 class _SubmitButton extends StatelessWidget {
   final bool isSubmitting;
+  final bool isEmailValid;
   final VoidCallback onPressed;
 
-  const _SubmitButton({required this.isSubmitting, required this.onPressed});
+  const _SubmitButton({
+    required this.isSubmitting,
+    required this.isEmailValid,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: isSubmitting ? null : onPressed,
+      onPressed: (isSubmitting || !isEmailValid) ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFFDC435),
+        backgroundColor: (isSubmitting || !isEmailValid)
+            ? Colors.grey
+            : const Color(0xFFFDC435),
         padding: EdgeInsets.symmetric(horizontal: 38.w, vertical: 32.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),
-        shadowColor: const Color(0xFFFDC435).withValues(alpha: 0.3),
-        elevation: 4,
+        shadowColor: (isSubmitting || !isEmailValid)
+            ? Colors.transparent
+            : const Color(0xFFFDC435).withValues(alpha: 0.3),
+        elevation: (isSubmitting || !isEmailValid) ? 0 : 4,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            isSubmitting ? 'Sending...' : 'Send Message',
+            isSubmitting
+                ? 'Sending...'
+                : (!isEmailValid ? 'Enter a valid email' : 'Send Message'),
             style: const TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w500,
@@ -359,7 +399,7 @@ class _SubmitButton extends StatelessWidget {
               color: Color(0xFF25282B),
             ),
           ),
-          if (!isSubmitting) ...[
+          if (!isSubmitting && isEmailValid) ...[
             SizedBox(width: 10.w),
             const Icon(Icons.send, size: 20, color: Color(0xFF25282B)),
           ],
