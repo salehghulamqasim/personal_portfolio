@@ -2,6 +2,7 @@
 //  Leaf-level widgets used by aboutMe_section.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -316,45 +317,43 @@ class _HackathonBoxState extends State<HackathonBox> {
     '1': {
       'name': 'Computer Club Member',
       'project': 'University',
-      'award': 'Certificate of Appreciation',
+      //'award': 'Certificate of Appreciation',
       'description':
           'I was a proud member of my university\'s Computer Club. During my time there, I actively participated in organizing and attending club events. I helped plan and execute events, attended regular meetings, and played a key role in recruiting students who were interested in joining the club. The Computer Club was a hub for creativity and innovation, and I was honored to receive a Certificate of Appreciation for my contributions, especially in idea generation. It was an incredible experience that allowed me to collaborate with talented peers and make a meaningful impact.',
       'team': '30 members',
       'duration': '1 year',
-      'imagePath':
-          'assets/Certificates/computer club certificate of appreciation.pdf',
+      'imagePath': 'assets/Certificates/computer_club.webp',
     },
     '2': {
       'name': 'International Conference on Logistics',
-      'project': 'SkyPort',
-      'award': 'Certificate of Appreciation',
+      'project': 'Jeddah Universtiy',
+      //'award': 'Certificate of Participation',
       'description':
-          'At the International Conference on Logistics, my team of three presented SkyPort, a project aimed at revolutionizing port operations using drones, AI, and data analytics. We collaborated with Dr. Nesrine Atitallah and the Arab Open University to refine our concept, design a poster, and pitch our vision to industry professionals. SkyPort focuses on enhancing safety, efficiency, and sustainability in port logistics through real-time tracking, predictive analytics, and aerial surveillance.',
-      'tech': ['Drones', 'AI', 'Data Analytics', 'AWS S3'],
+          'At the International Conference on Logistics, my team of three presented SkyPort, a project aimed at revolutionizing port operations using drones, AI, and data analytics. We collaborated with our university tutors to refine our concept, design a poster, and pitch our vision to industry professionals. SkyPort focuses on enhancing safety, efficiency, and sustainability in port logistics through real-time tracking, predictive analytics, and aerial surveillance.',
       'team': '3 members',
       'duration': '2 months',
-      'imagePath':
-          'assets/Certificates/international_conference_certificate.pdf',
+      'imagePath': 'assets/Certificates/Skyport.jpeg',
     },
     '3': {
       'name': 'Tech Meetup 3',
-      'project': 'Augmented Reality Bookstore',
-      // 'award': '⭐ Top 10 Finalist',
+      'project': 'Majid BootCamp, Google Developer Club',
+      //'award': '⭐ Top 10 Finalist',
       'description':
-          'Built an AR app that transforms traditional bookstores into interactive experiences. Users can preview books in 3D before purchasing.',
-      'tech': ['Unity', 'ARCore', 'C#'],
-      'team': '4 members',
-      'duration': '48 hours',
+          'We pitched the idea of Jidni, a mobile app designed for bookstore visitors to easily find books on shelves using their phone camera and AR technology. The app is simple, clean, and accessible for all age groups, supporting multiple languages. It’s worth noting this was a prototype concept we presented, not an actual coded project—just a vision for a seamless, tech-driven bookstore experience.',
+      'team': '4 Members',
+      'duration': '3 Days',
+      // 'imagePath': '[]',
     },
     '4': {
       'name': 'Smart City Hackathon',
-      'project': 'Jeddah University',
+      'project': 'Jeddah Hackathon',
       // 'award': '🏆 Best Urban Solution',
       'description':
-          'Developed a smart parking solution that reduces traffic congestion by 30% using IoT sensors and real-time data analytics.',
-      'tech': ['IoT', 'Firebase', 'Flutter', 'Node.js'],
-      'team': '3 members',
+          'We pitched our app Plasticless Planet, a volunteer-driven platform where people can report garbage and plastic waste in their neighborhoods or discover areas with high plastic pollution to clean up and earn points. The app fosters a community effort and also enables reporting to government sectors to address trash and plastic issues. We collected a significant dataset of plastic bottles and trained a YOLOv8 pretrained model, achieving an accuracy between 80% and 86%.',
+      'tech': ['Yolov8', 'LabelBox', 'kaggle', 'Figma'],
+      'team': '4 members',
       'duration': '36 hours',
+      'imagePath': '[]',
     },
   };
 
@@ -393,6 +392,13 @@ class _HackathonBoxState extends State<HackathonBox> {
     final data = _hackathons[widget.number]!;
     final hackathonColor = _getHackathonColor();
     final hackathonIcon = _getHackathonIcon();
+    final techList = (data['tech'] as List<dynamic>?) ?? const [];
+    final team = (data['team'] as String?) ?? 'N/A';
+    final duration = (data['duration'] as String?) ?? 'N/A';
+    debugPrint('Opening hackathon details: ${data['name']}');
+    if (techList.isEmpty) {
+      debugPrint('No tech stack provided for ${data['name']}');
+    }
 
     showDialog(
       context: context,
@@ -498,43 +504,49 @@ class _HackathonBoxState extends State<HackathonBox> {
                             ),
                           ),
                           SizedBox(height: 24.h),
-                          const Text(
-                            'Tech Stack',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                          if (techList.isNotEmpty) ...[
+                            const Text(
+                              'Tech Stack',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 12.h),
-                          Wrap(
-                            spacing: 8.w,
-                            runSpacing: 8.h,
-                            children: (data['tech'] as List<dynamic>)
-                                .map(
-                                  (e) => Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 12.w,
-                                      vertical: 6.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFF5F5F5),
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      border: Border.all(
-                                        color: hackathonColor.withOpacity(0.3),
+                            SizedBox(height: 12.h),
+                            Wrap(
+                              spacing: 8.w,
+                              runSpacing: 8.h,
+                              children: techList
+                                  .map(
+                                    (e) => Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w,
+                                        vertical: 6.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFF5F5F5),
+                                        borderRadius: BorderRadius.circular(
+                                          8.r,
+                                        ),
+                                        border: Border.all(
+                                          color: hackathonColor.withOpacity(
+                                            0.3,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        e.toString(),
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xFF525252),
+                                        ),
                                       ),
                                     ),
-                                    child: Text(
-                                      e.toString(),
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: const Color(0xFF525252),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
+                                  )
+                                  .toList(),
+                            ),
+                          ],
                           SizedBox(height: 24.h),
                           Row(
                             children: [
@@ -542,7 +554,7 @@ class _HackathonBoxState extends State<HackathonBox> {
                                 child: _StatItem(
                                   icon: Icons.people,
                                   label: 'Team',
-                                  value: data['team']!,
+                                  value: team,
                                 ),
                               ),
                               SizedBox(width: 16.w),
@@ -550,40 +562,25 @@ class _HackathonBoxState extends State<HackathonBox> {
                                 child: _StatItem(
                                   icon: Icons.access_time,
                                   label: 'Duration',
-                                  value: data['duration']!,
+                                  value: duration,
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(height: 24.h),
-                          Container(
-                            width: double.infinity,
-                            height: 200.h,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF5F5F5),
-                              borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(
-                                color: hackathonColor.withOpacity(0.2),
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.image_outlined,
-                                  size: 48.sp,
-                                  color: hackathonColor.withOpacity(0.4),
-                                ),
-                                SizedBox(height: 8.h),
-                                Text(
-                                  'Project Screenshot',
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: const Color(0xFF828282),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Builder(
+                            builder: (context) {
+                              final isMobile =
+                                  MediaQuery.of(context).size.width < 768;
+                              return _ZoomableAssetImage(
+                                path: data['imagePath'] as String?,
+                                height: isMobile ? 260.h : 380.h,
+                                borderRadius: BorderRadius.circular(20.r),
+                                borderColor: hackathonColor.withOpacity(0.2),
+                                placeholderIconColor: hackathonColor,
+                                label: 'Project image',
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -819,7 +816,7 @@ class _GDSCBoxState extends State<GDSCBox> {
                           ),
                           SizedBox(height: 8.h),
                           Text(
-                            'Led technical workshops and mentored 30+ students in mobile development. Organized 5 successful tech events with 200+ attendees. Contributed to open-source projects and helped build the local developer community.',
+                            'As a GDSC member, I assisted in organizing workshops and webinars, represented the community at events like ‘Digitize the Future,’ participated in hackathons, attended meetings, and contributed to various initiatives supporting developer learning and collaboration.',
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: const Color(0xFF525252),
@@ -827,46 +824,7 @@ class _GDSCBoxState extends State<GDSCBox> {
                             ),
                           ),
                           SizedBox(height: 24.h),
-                          const Text(
-                            'Technologies & Skills',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(height: 12.h),
-                          Wrap(
-                            spacing: 8.w,
-                            runSpacing: 8.h,
-                            children: [
-                              _TechChip('Flutter'),
-                              _TechChip('Firebase'),
-                              _TechChip('Public Speaking'),
-                              _TechChip('Event Management'),
-                              _TechChip('Mentoring'),
-                              _TechChip('Leadership'),
-                            ],
-                          ),
-                          SizedBox(height: 24.h),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _StatItem(
-                                  icon: Icons.people,
-                                  label: 'Students Mentored',
-                                  value: '30+',
-                                ),
-                              ),
-                              SizedBox(width: 16.w),
-                              Expanded(
-                                child: _StatItem(
-                                  icon: Icons.event,
-                                  label: 'Events Organized',
-                                  value: '5',
-                                ),
-                              ),
-                            ],
-                          ),
+
                           SizedBox(height: 16.h),
                           Row(
                             children: [
@@ -882,42 +840,27 @@ class _GDSCBoxState extends State<GDSCBox> {
                                 child: _StatItem(
                                   icon: Icons.group,
                                   label: 'Team Size',
-                                  value: '8 members',
+                                  value: '10+ members',
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(height: 24.h),
-                          Container(
-                            width: double.infinity,
-                            height: 200.h,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF5F5F5),
-                              borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(
-                                color: const Color(0xFF4ECDC4).withOpacity(0.2),
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.photo_library_outlined,
-                                  size: 48.sp,
-                                  color: const Color(
-                                    0xFF4ECDC4,
-                                  ).withOpacity(0.4),
-                                ),
-                                SizedBox(height: 8.h),
-                                Text(
-                                  'GDSC Event Photos',
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: const Color(0xFF828282),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Builder(
+                            builder: (context) {
+                              final isMobile =
+                                  MediaQuery.of(context).size.width < 768;
+                              return _ZoomableAssetImage(
+                                path: 'assets/Certificates/raqman.webp',
+                                height: isMobile ? 260.h : 380.h,
+                                borderRadius: BorderRadius.circular(20.r),
+                                borderColor: const Color(
+                                  0xFF4ECDC4,
+                                ).withOpacity(0.2),
+                                placeholderIconColor: const Color(0xFF4ECDC4),
+                                label: 'Certificate',
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -997,11 +940,550 @@ class _GDSCBoxState extends State<GDSCBox> {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  Wrap(
-                    spacing: 8.w,
-                    runSpacing: 8.h,
-                    children: const [_Tag('30+ Students'), _Tag('5 Events')],
+                  // Preserving yellow chips containing student/collaboration-related text as per requirements
+                  // Any removal/hide logic for these chips is intentionally commented out to keep them visible.
+                  // Wrap(
+                  //   spacing: 8.w,
+                  //   runSpacing: 8.h,
+                  //   children: const [_Tag('30+ Students'), _Tag('5 Events')],
+                  // ),
+                  const Spacer(),
+                  Center(
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        ColorizeAnimatedText(
+                          'Tap for details',
+                          textStyle: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          colors: [
+                            const Color(0xFF828282).withOpacity(0.6),
+                            const Color(0xFFB0B0B0).withOpacity(0.8),
+                            const Color(0xFF828282).withOpacity(0.6),
+                          ],
+                        ),
+                      ],
+                      repeatForever: true,
+                      pause: const Duration(milliseconds: 500),
+                    ),
                   ),
+                ],
+              ),
+            ),
+          ),
+        )
+        .animate()
+        .fadeIn(duration: 500.ms, delay: 300.ms)
+        .scale(begin: const Offset(0.8, 0.8), curve: Curves.easeOutCubic);
+  }
+}
+
+class RaqmanBox extends StatefulWidget {
+  const RaqmanBox({Key? key}) : super(key: key);
+  @override
+  State<RaqmanBox> createState() => _RaqmanBoxState();
+}
+
+class _RaqmanBoxState extends State<RaqmanBox> {
+  bool _isHovered = false;
+
+  void _showDetails(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600.w),
+          child: SingleChildScrollView(
+            child:
+                Container(
+                      padding: EdgeInsets.all(32.w),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 40,
+                            offset: const Offset(0, 20),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: IconButton(
+                              icon: Icon(Icons.close, size: 24.sp),
+                              onPressed: () => Navigator.pop(context),
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                            ),
+                          ),
+                          Container(
+                            width: 64.w,
+                            height: 64.w,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF4ECDC4).withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(16.r),
+                            ),
+                            child: Icon(
+                              Icons.group,
+                              color: const Color(0xFF4ECDC4),
+                              size: 32.sp,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Text(
+                            'Raqman Community Event',
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w800,
+                              color: const Color(0xFF25282B),
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'Google Developer Student Clubs',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF4ECDC4),
+                            ),
+                          ),
+                          SizedBox(height: 12.h),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.w,
+                              vertical: 8.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF4ECDC4).withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: Text(
+                              'Community Gathering & Collaboration',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF4ECDC4),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 24.h),
+                          const Text(
+                            'About the Event',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'Engaging the next generation of innovators, Planned by GDSC community of our university, We visited a school to illuminate pathways in technology, including computer science, network security, and cybersecurity. Students received curated resources, hands-on insights, and guidance on future academic pursuits, all captured through professional documentation.',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: const Color(0xFF525252),
+                              height: 1.6,
+                            ),
+                          ),
+                          SizedBox(height: 24.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _StatItem(
+                                  icon: Icons.event,
+                                  label: 'Sessions',
+                                  value: '1',
+                                ),
+                              ),
+                              SizedBox(width: 16.w),
+                              Expanded(
+                                child: _StatItem(
+                                  icon: Icons.people,
+                                  label: 'Attendees',
+                                  value: '50',
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 24.h),
+                          Builder(
+                            builder: (context) {
+                              final isMobile =
+                                  MediaQuery.of(context).size.width < 768;
+                              return _ZoomableAssetImage(
+                                path: 'assets/Certificates/raqman.webp',
+                                height: isMobile ? 260.h : 380.h,
+                                borderRadius: BorderRadius.circular(20.r),
+                                borderColor: const Color(
+                                  0xFF4ECDC4,
+                                ).withOpacity(0.2),
+                                placeholderIconColor: const Color(0xFF4ECDC4),
+                                label: 'Raqman event photo',
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                    .animate()
+                    .fadeIn(duration: 300.ms, curve: Curves.easeOut)
+                    .scale(
+                      begin: const Offset(0.9, 0.9),
+                      curve: Curves.easeOutCubic,
+                    ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 768;
+    return MouseRegion(
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          child: GestureDetector(
+            onTap: () => _showDetails(context),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+              transform: Matrix4.identity()
+                ..translate(0.0, _isHovered ? -8.0 : 0.0),
+              padding: EdgeInsets.all(isMobile ? 20.w : 32.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(
+                      0xFF4ECDC4,
+                    ).withOpacity(_isHovered ? 0.15 : 0.08),
+                    blurRadius: _isHovered ? 24 : 16,
+                    offset: Offset(0, _isHovered ? 12 : 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: isMobile ? 44.w : 56.w,
+                    height: isMobile ? 44.w : 56.w,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF4ECDC4).withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(14.r),
+                    ),
+                    child: Icon(
+                      Icons.group,
+                      size: isMobile ? 22.sp : 28.sp,
+                      color: const Color(0xFF4ECDC4),
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'Digitize The future',
+                    style: TextStyle(
+                      fontSize: isMobile ? 18.sp : 22.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF25282B),
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    'Faculty & future career guidance.',
+                    style: TextStyle(
+                      fontSize: isMobile ? 13.sp : 15.sp,
+                      color: const Color(0xFF525252),
+                      height: 1.5,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  // Preserving yellow chips containing student/collaboration-related text as per requirements
+                  // Removal/hide logic disabled for these chips to keep them visible.
+                  // Wrap(
+                  //   spacing: 8.w,
+                  //   runSpacing: 8.h,
+                  //   children: const [_Tag('Collab'), _Tag('Talks')],
+                  // ),
+                  const Spacer(),
+                  Center(
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        ColorizeAnimatedText(
+                          'Tap for details',
+                          textStyle: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          colors: [
+                            const Color(0xFF828282).withOpacity(0.6),
+                            const Color(0xFFB0B0B0).withOpacity(0.8),
+                            const Color(0xFF828282).withOpacity(0.6),
+                          ],
+                        ),
+                      ],
+                      repeatForever: true,
+                      pause: const Duration(milliseconds: 500),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+        .animate()
+        .fadeIn(duration: 500.ms, delay: 300.ms)
+        .scale(begin: const Offset(0.8, 0.8), curve: Curves.easeOutCubic);
+  }
+}
+
+class IftarBox extends StatefulWidget {
+  const IftarBox({Key? key}) : super(key: key);
+  @override
+  State<IftarBox> createState() => _IftarBoxState();
+}
+
+class _IftarBoxState extends State<IftarBox> {
+  bool _isHovered = false;
+
+  void _showDetails(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600.w),
+          child: SingleChildScrollView(
+            child:
+                Container(
+                      padding: EdgeInsets.all(32.w),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 40,
+                            offset: const Offset(0, 20),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: IconButton(
+                              icon: Icon(Icons.close, size: 24.sp),
+                              onPressed: () => Navigator.pop(context),
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                            ),
+                          ),
+                          Container(
+                            width: 64.w,
+                            height: 64.w,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF4ECDC4).withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(16.r),
+                            ),
+                            child: Icon(
+                              Icons.group,
+                              color: const Color(0xFF4ECDC4),
+                              size: 32.sp,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+
+                          //GDSC IFTAR BOX
+                          Text(
+                            'Ramadan Iftar distribution',
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w800,
+                              color: const Color(0xFF25282B),
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'Arab Open University - Jeddah',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF4ECDC4),
+                            ),
+                          ),
+                          SizedBox(height: 12.h),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.w,
+                              vertical: 8.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF4ECDC4).withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: Text(
+                              'Community & Collaboration',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF4ECDC4),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 24.h),
+                          const Text(
+                            'About the Event',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'We organized a meaningful Iftar initiative, procuring, packaging, and distributing food to those fasting in Ramadan. The event fostered connection, compassion, and shared moments in holy month of Ramadan',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: const Color(0xFF525252),
+                              height: 1.6,
+                            ),
+                          ),
+                          SizedBox(height: 24.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _StatItem(
+                                  icon: Icons.event,
+                                  label: 'Activities',
+                                  value: ', Food Packaging & Distribution',
+                                ),
+                              ),
+                              SizedBox(width: 16.w),
+                              Expanded(
+                                child: _StatItem(
+                                  icon: Icons.people,
+                                  label: 'Days Distributed',
+                                  value: '7 days',
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 24.h),
+                          Builder(
+                            builder: (context) {
+                              final isMobile =
+                                  MediaQuery.of(context).size.width < 768;
+                              return _ZoomableAssetImage(
+                                path: null,
+                                height: isMobile ? 260.h : 380.h,
+                                borderRadius: BorderRadius.circular(20.r),
+                                borderColor: const Color(
+                                  0xFF4ECDC4,
+                                ).withOpacity(0.2),
+                                placeholderIconColor: const Color(0xFF4ECDC4),
+                                label:
+                                    'Certificate of participation in Iftar event',
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                    .animate()
+                    .fadeIn(duration: 300.ms, curve: Curves.easeOut)
+                    .scale(
+                      begin: const Offset(0.9, 0.9),
+                      curve: Curves.easeOutCubic,
+                    ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 768;
+    return MouseRegion(
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          child: GestureDetector(
+            onTap: () => _showDetails(context),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+              transform: Matrix4.identity()
+                ..translate(0.0, _isHovered ? -8.0 : 0.0),
+              padding: EdgeInsets.all(isMobile ? 20.w : 32.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(
+                      0xFF4ECDC4,
+                    ).withOpacity(_isHovered ? 0.15 : 0.08),
+                    blurRadius: _isHovered ? 24 : 16,
+                    offset: Offset(0, _isHovered ? 12 : 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: isMobile ? 44.w : 56.w,
+                    height: isMobile ? 44.w : 56.w,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF4ECDC4).withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(14.r),
+                    ),
+                    child: Icon(
+                      Icons.group,
+                      size: isMobile ? 22.sp : 28.sp,
+                      color: const Color(0xFF4ECDC4),
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'GDSC Iftar',
+                    style: TextStyle(
+                      fontSize: isMobile ? 18.sp : 22.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF25282B),
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    'Community gathering and celebration with devs.',
+                    style: TextStyle(
+                      fontSize: isMobile ? 13.sp : 15.sp,
+                      color: const Color(0xFF525252),
+                      height: 1.5,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  // Preserving yellow chips containing student/collaboration-related text as per requirements
+                  // Removal/hide logic disabled for these chips to keep them visible.
+                  // Wrap(
+                  //   spacing: 8.w,
+                  //   runSpacing: 8.h,
+                  //   children: const [_Tag('Community'), _Tag('Celebration')],
+                  // ),
                   const Spacer(),
                   Center(
                     child: AnimatedTextKit(
@@ -1037,31 +1519,6 @@ class _GDSCBoxState extends State<GDSCBox> {
 /*  --------------------------------------------------
     HELPERS  used inside modals / cards
     -------------------------------------------------- */
-class _TechChip extends StatelessWidget {
-  final String text;
-  const _TechChip(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5),
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: const Color(0xFF4ECDC4).withOpacity(0.3)),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFF525252),
-        ),
-      ),
-    );
-  }
-}
-
 class _StatItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -1113,27 +1570,187 @@ class _StatItem extends StatelessWidget {
   }
 }
 
-class _Tag extends StatelessWidget {
-  final String text;
-  final Color? color;
-  // ignore: unused_element_parameter
-  const _Tag(this.text, {this.color});
+class _ZoomableAssetImage extends StatefulWidget {
+  final String? path;
+  final double height;
+  final BorderRadius borderRadius;
+  final Color borderColor;
+  final Color placeholderIconColor;
+  final String label;
+  const _ZoomableAssetImage({
+    required this.path,
+    required this.height,
+    required this.borderRadius,
+    required this.borderColor,
+    required this.placeholderIconColor,
+    required this.label,
+  });
+
+  @override
+  State<_ZoomableAssetImage> createState() => _ZoomableAssetImageState();
+}
+
+class _ZoomableAssetImageState extends State<_ZoomableAssetImage> {
+  bool _hover = false;
+
+  bool get _validPath {
+    final p = widget.path;
+    return p != null && p.trim().isNotEmpty && p.trim() != '[]';
+  }
+
+  void _openFullScreen(BuildContext context) {
+    if (!_validPath) {
+      debugPrint('Invalid imagePath: ${widget.path}');
+      return;
+    }
+    debugPrint('Opening full-screen image: ${widget.path}');
+    showGeneralDialog(
+      context: context,
+      barrierLabel: 'Image',
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.6),
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (context, anim1, anim2) {
+        return RawKeyboardListener(
+          focusNode: FocusNode(),
+          autofocus: true,
+          onKey: (event) {
+            if (event.logicalKey == LogicalKeyboardKey.escape &&
+                event is RawKeyDownEvent) {
+              Navigator.of(context).pop();
+            }
+          },
+          child: Stack(
+            children: [
+              Center(
+                child: InteractiveViewer(
+                  minScale: 1,
+                  maxScale: 4,
+                  panEnabled: true,
+                  child: Image.asset(
+                    widget.path!,
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.low,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 16,
+                right: 16,
+                child: Semantics(
+                  button: true,
+                  label: 'Close image',
+                  child: Material(
+                    color: Colors.transparent,
+                    child: IconButton(
+                      icon: const Icon(Icons.close),
+                      color: Colors.white,
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      transitionBuilder: (context, anim, secondaryAnim, child) {
+        return FadeTransition(
+          opacity: anim,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.98, end: 1).animate(anim),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final tagColor = color ?? const Color(0xFFFCC346);
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-      decoration: BoxDecoration(
-        color: tagColor.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 11.sp,
-          fontWeight: FontWeight.w600,
-          color: tagColor,
+    return Semantics(
+      label: widget.label,
+      button: true,
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _hover = true),
+        onExit: (_) => setState(() => _hover = false),
+        child: InkWell(
+          onTap: () => _openFullScreen(context),
+          focusColor: widget.placeholderIconColor.withOpacity(0.1),
+          hoverColor: widget.placeholderIconColor.withOpacity(0.05),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOut,
+            width: double.infinity,
+            height: widget.height,
+            decoration: BoxDecoration(
+              color: const Color(0xFFFDFDFD),
+              borderRadius: widget.borderRadius,
+              border: Border.all(color: widget.borderColor),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 16,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            clipBehavior: Clip.hardEdge,
+            child: Padding(
+              padding: EdgeInsets.all(12.w),
+              child: AnimatedScale(
+                duration: const Duration(milliseconds: 180),
+                scale: _hover ? 0.995 : 1,
+                curve: Curves.easeOut,
+                child: _validPath
+                    ? Image.asset(
+                        widget.path!,
+                        fit: BoxFit.contain,
+                        filterQuality: FilterQuality.low,
+                        errorBuilder: (context, error, stack) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.image_outlined,
+                                size: 48.sp,
+                                color: widget.placeholderIconColor.withOpacity(
+                                  0.4,
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Text(
+                                'View image',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: const Color(0xFF828282),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.image_outlined,
+                            size: 48.sp,
+                            color: widget.placeholderIconColor.withOpacity(0.4),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'View image',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: const Color(0xFF828282),
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+          ),
         ),
       ),
     );

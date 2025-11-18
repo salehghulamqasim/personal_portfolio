@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com/skia/canvaskit/" crossorigin>
 
   <!-- Critical: Preload only essential resources -->
   <link rel="preload" href="splash.json" as="fetch" crossorigin>
@@ -113,6 +114,12 @@
         }
       },10000);
     })();
+  </script>
+
+  <script>
+    window.flutterConfiguration = {
+      canvasKitBaseUrl: 'https://www.gstatic.com/skia/canvaskit/v0.38.0/'
+    };
   </script>
 
   <script src="flutter_bootstrap.js" async></script>

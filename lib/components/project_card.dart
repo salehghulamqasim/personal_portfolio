@@ -334,7 +334,6 @@ class _ProjectCardState extends State<ProjectCard> {
                             // SizedBox(height: 24.h),
                             SizedBox(height: isMobile ? 24.h : 24.h),
 
-                            // Replace your CarouselSlider section with this:
                             SizedBox(
                               height: isMobile ? 350.h : 500.h,
                               child: Swiper(
@@ -375,36 +374,6 @@ class _ProjectCardState extends State<ProjectCard> {
                                 // ),
                               ),
                             ),
-
-                            // // Carousel Section
-                            // CarouselSlider(
-                            //   options: CarouselOptions(
-                            //     height: isMobile ? 350.h : 500.h,
-                            //     viewportFraction: isMobile ? 1.0 : 0.9,
-                            //     enableInfiniteScroll: imagePaths.length > 1,
-                            //     autoPlay: false,
-                            //     enlargeCenterPage: !isMobile,
-                            //   ),
-                            //   items: imagePaths.map((imagePath) {
-                            //     return Builder(
-                            //       builder: (BuildContext context) {
-                            //         return Container(
-                            //           margin: EdgeInsets.symmetric(
-                            //             horizontal: isMobile ? 0 : 8.w,
-                            //           ),
-                            //           child: ClipRRect(
-                            //             borderRadius: BorderRadius.circular(12.r),
-                            //             child: Image.asset(
-                            //               imagePath,
-                            //               fit: BoxFit.contain,
-                            //               width: double.infinity,
-                            //             ),
-                            //           ),
-                            //         );
-                            //       },
-                            //     );
-                            //   }).toList(),
-                            // ),
                           ],
                         ],
                       ),
