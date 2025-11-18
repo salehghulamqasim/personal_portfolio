@@ -128,6 +128,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           : widget.imagePaths[0],
                       fit: BoxFit.contain,
                       alignment: Alignment(0, -0.5),
+                      semanticLabel: '${widget.title} project preview image',
                     ),
                   ),
                 ),
@@ -350,6 +351,8 @@ class _ProjectCardState extends State<ProjectCard> {
                                             .contain, // make sure the full image fits without cropping
                                         child: Image.asset(
                                           widget.imagePaths[index],
+                                          semanticLabel:
+                                              '${widget.title} project screenshot ${index + 1}',
                                         ),
                                       ),
                                     ),

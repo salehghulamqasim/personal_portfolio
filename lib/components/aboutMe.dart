@@ -1656,6 +1656,7 @@ class _ZoomableAssetImageState extends State<_ZoomableAssetImage> {
                     widget.path!,
                     fit: BoxFit.contain,
                     filterQuality: FilterQuality.low,
+                    semanticLabel: 'Certificate or achievement document',
                   ),
                 ),
               ),
@@ -1732,6 +1733,7 @@ class _ZoomableAssetImageState extends State<_ZoomableAssetImage> {
                         widget.path!,
                         fit: BoxFit.contain,
                         filterQuality: FilterQuality.low,
+                        semanticLabel: 'Certificate or achievement document',
                         errorBuilder: (context, error, stack) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,

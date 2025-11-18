@@ -56,6 +56,7 @@ class HeroSection extends StatelessWidget {
                                 (640 * MediaQuery.of(context).devicePixelRatio)
                                     .round(),
                             fit: BoxFit.cover,
+                            semanticLabel: 'Saleh Ghulam - Software Developer and Flutter expert',
                           )
                           .animate()
                           .fadeIn(
@@ -151,6 +152,7 @@ class HeroImageStack extends StatelessWidget {
               cacheWidth: (640 * MediaQuery.of(context).devicePixelRatio)
                   .round(),
               fit: BoxFit.cover,
+              semanticLabel: 'Saleh Ghulam professional profile image',
             ),
           ),
 
