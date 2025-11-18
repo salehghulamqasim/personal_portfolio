@@ -20,6 +20,29 @@ class _ContactFormState extends State<ContactForm> {
 
   bool isSubmitting = false; // prevent spam clicks
 
+  // Cache these values to avoid recalculating on every keystroke
+  late final bool isMobile;
+  late final double horizontalPadding;
+  late final double maxWidth;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Calculate once when dependencies change, not on every rebuild
+    isMobile = MediaQuery.of(context).size.width < 768;
+    horizontalPadding = isMobile ? 20.w : 40.w;
+    maxWidth = 600.w;
+  }
+
+  @override
+  void dispose() {
+    // Don't forget to dispose controllers
+    nameController.dispose();
+    emailController.dispose();
+    messageController.dispose();
+    super.dispose();
+  }
+
   // SEND VIA FORMSPREE
   Future<void> sendEmail() async {
     if (isSubmitting) return;
@@ -35,7 +58,6 @@ class _ContactFormState extends State<ContactForm> {
         },
       );
 
-      // Check status code first
       if (response.statusCode == 200) {
         print('✅ Email sent (status 200)');
 
@@ -49,85 +71,92 @@ class _ContactFormState extends State<ContactForm> {
           barrierDismissible: false,
           useRootNavigator: true,
           builder: (context) => _FadeAwayDialog(
+            child: RepaintBoundary(
+              child: ConfirmationSuccess(
+                reactColor: AppColors.primaryOrange,
+                bubbleColors: const [
+                  Color.fromRGBO(253, 210, 120, 0.3),
+                  Color.fromRGBO(252, 195, 70, 0.6),
+                  Color.fromRGBO(255, 205, 100, 1.0),
+                ],
+                numofBubbles: 35,
+                maxBubbleRadius: 8,
+                child: const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Sent",
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        _showErrorSnackBar();
+      }
+    } catch (e) {
+      print('⚠️ Exception (might be CORS) but email may have sent: $e');
+
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        useRootNavigator: true,
+        builder: (context) => _FadeAwayDialog(
+          child: RepaintBoundary(
             child: ConfirmationSuccess(
-              reactColor: AppColors.primaryOrange,
-              bubbleColors: [
-                Color.fromRGBO(253, 210, 120, 0.3), // Lighter bubble color
-                Color.fromRGBO(252, 195, 70, 0.6), // Medium bubble color
-                Color.fromRGBO(255, 205, 100, 1.0), // Tick / accent
-              ],
+              reactColor: const Color(0xFFFDC435),
+              bubbleColors: const [Color(0xFFFDC435)],
               numofBubbles: 35,
               maxBubbleRadius: 8,
-              child: Column(
+              child: const Column(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Text(
-                    "Sent",
+                    "Message Sent!",
                     style: TextStyle(
                       fontFamily: 'Nunito',
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: Color(0xFF25282B),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Thanks for reaching out — I'll get back to you soon.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 16,
+                      color: Color(0xFF25282B),
                     ),
                   ),
                 ],
               ),
             ),
           ),
-        );
-      } else {
-        // Non-200 code
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error sending email. Please try again manually :)'),
-          ),
-        );
-      }
-    } catch (e) {
-      // ⚠️ On Flutter Web, CORS sometimes throws ClientException even on success
-      print('⚠️ Exception (might be CORS) but email may have sent: $e');
-
-      // show success anyway if you know Formspree received it
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        useRootNavigator: true,
-        builder: (context) => _FadeAwayDialog(
-          child: ConfirmationSuccess(
-            reactColor: const Color(0xFFFDC435),
-            bubbleColors: [const Color(0xFFFDC435)],
-            numofBubbles: 35,
-            maxBubbleRadius: 8,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Text(
-                  "Message Sent!",
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF25282B),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Thanks for reaching out — I'll get back to you soon.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    fontSize: 16,
-                    color: Color(0xFF25282B),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       );
     } finally {
-      setState(() => isSubmitting = false);
+      if (mounted) {
+        setState(() => isSubmitting = false);
+      }
     }
+  }
+
+  void _showErrorSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Error sending email. Please try again manually :)'),
+      ),
+    );
   }
 
   // OPEN DEFAULT MAIL APP
@@ -157,40 +186,38 @@ class _ContactFormState extends State<ContactForm> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 768;
-
     return Center(
       child: Container(
         constraints: BoxConstraints(maxWidth: 700.w),
         width: double.infinity,
         padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 20.w : 40.w,
+          horizontal: horizontalPadding,
           vertical: 20.h,
         ),
         child: Align(
           alignment: Alignment.center,
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 600.w),
+            constraints: BoxConstraints(maxWidth: maxWidth),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildLabel('Name'),
-                _buildTextField(
+                const _FieldLabel(text: 'Name'),
+                _CustomTextField(
                   controller: nameController,
                   hintText: 'Your name',
                 ),
                 SizedBox(height: 32.h),
 
-                _buildLabel('Email'),
-                _buildTextField(
+                const _FieldLabel(text: 'Email'),
+                _CustomTextField(
                   controller: emailController,
                   hintText: 'your.email@example.com',
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 32.h),
 
-                _buildLabel('Message'),
-                _buildTextField(
+                const _FieldLabel(text: 'Message'),
+                _CustomTextField(
                   controller: messageController,
                   hintText: 'Tell me about your project...',
                   maxLines: 6,
@@ -198,104 +225,13 @@ class _ContactFormState extends State<ContactForm> {
                 SizedBox(height: 32.h),
 
                 Center(
-                  child: ElevatedButton(
-                    onPressed: isSubmitting ? null : sendEmail,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFDC435),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 38.w,
-                        vertical: 32.h,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      shadowColor: const Color(
-                        0xFFFDC435,
-                      ).withValues(alpha: 0.3),
-                      elevation: 4,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          isSubmitting ? 'Sending...' : 'Send Message',
-                          style: const TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Color(0xFF25282B),
-                          ),
-                        ),
-                        if (!isSubmitting) ...[
-                          SizedBox(width: 10.w),
-                          const Icon(
-                            Icons.send,
-                            size: 20,
-                            color: Color(0xFF25282B),
-                          ),
-                        ],
-                      ],
-                    ),
+                  child: _SubmitButton(
+                    isSubmitting: isSubmitting,
+                    onPressed: sendEmail,
                   ),
                 ),
                 SizedBox(height: 60.h),
-                isMobile
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Or email me directly at: ',
-                              style: TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: 16,
-                                color: Color(0xFF828282),
-                              ),
-                            ),
-                            SizedBox(height: 8.h),
-                            GestureDetector(
-                              onTap: launchEmail,
-                              child: Text(
-                                'SalehTheCoder@gmail.com',
-                                style: TextStyle(
-                                  fontFamily: 'Nunito',
-                                  fontSize: 16,
-                                  color: Color(0xFF25282B),
-                                  fontWeight: FontWeight.w500,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Or email me directly at: ',
-                            style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: 16,
-                              color: Color(0xFF828282),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: launchEmail,
-                            child: Text(
-                              'SalehTheCoder@gmail.com',
-                              style: TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: 16,
-                                color: Color(0xFF25282B),
-                                fontWeight: FontWeight.w500,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                _EmailDirectLink(isMobile: isMobile, onTap: launchEmail),
               ],
             ),
           ),
@@ -303,9 +239,18 @@ class _ContactFormState extends State<ContactForm> {
       ),
     );
   }
+}
 
-  // 🧩 Helper for field labels
-  Widget _buildLabel(String text) {
+// 🎯 EXTRACTED WIDGETS FOR BETTER PERFORMANCE
+
+// Field label - now a const StatelessWidget
+class _FieldLabel extends StatelessWidget {
+  final String text;
+
+  const _FieldLabel({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
     return Text(
       text,
       style: const TextStyle(
@@ -316,14 +261,24 @@ class _ContactFormState extends State<ContactForm> {
       ),
     );
   }
+}
 
-  // 🧩 Helper for text fields (consistent look)
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String hintText,
-    TextInputType? keyboardType,
-    int maxLines = 1,
-  }) {
+// Custom text field - StatelessWidget to prevent unnecessary rebuilds
+class _CustomTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final TextInputType? keyboardType;
+  final int maxLines;
+
+  const _CustomTextField({
+    required this.controller,
+    required this.hintText,
+    this.keyboardType,
+    this.maxLines = 1,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 12.h),
       child: SizedBox(
@@ -372,6 +327,117 @@ class _ContactFormState extends State<ContactForm> {
   }
 }
 
+// Submit button - StatelessWidget
+class _SubmitButton extends StatelessWidget {
+  final bool isSubmitting;
+  final VoidCallback onPressed;
+
+  const _SubmitButton({required this.isSubmitting, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: isSubmitting ? null : onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFFFDC435),
+        padding: EdgeInsets.symmetric(horizontal: 38.w, vertical: 32.h),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        shadowColor: const Color(0xFFFDC435).withValues(alpha: 0.3),
+        elevation: 4,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            isSubmitting ? 'Sending...' : 'Send Message',
+            style: const TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              color: Color(0xFF25282B),
+            ),
+          ),
+          if (!isSubmitting) ...[
+            SizedBox(width: 10.w),
+            const Icon(Icons.send, size: 20, color: Color(0xFF25282B)),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// Email direct link - StatelessWidget
+class _EmailDirectLink extends StatelessWidget {
+  final bool isMobile;
+  final VoidCallback onTap;
+
+  const _EmailDirectLink({required this.isMobile, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return isMobile
+        ? Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Or email me directly at: ',
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                    fontSize: 16,
+                    color: Color(0xFF828282),
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                GestureDetector(
+                  onTap: onTap,
+                  child: const Text(
+                    'SalehTheCoder@gmail.com',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 16,
+                      color: Color(0xFF25282B),
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Or email me directly at: ',
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontSize: 16,
+                  color: Color(0xFF828282),
+                ),
+              ),
+              GestureDetector(
+                onTap: onTap,
+                child: const Text(
+                  'SalehTheCoder@gmail.com',
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                    fontSize: 16,
+                    color: Color(0xFF25282B),
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          );
+  }
+}
+
 // Beautiful fade-away dialog with smooth animation
 class _FadeAwayDialog extends StatefulWidget {
   final Widget child;
@@ -396,13 +462,11 @@ class _FadeAwayDialogState extends State<_FadeAwayDialog>
       vsync: this,
     );
 
-    // Smooth fade animation with easeOutCubic curve
     _fadeAnimation = Tween<double>(
       begin: 1.0,
       end: 0.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
 
-    // Subtle scale animation (slightly shrink as it fades)
     _scaleAnimation = Tween<double>(
       begin: 1.0,
       end: 0.9,
@@ -441,16 +505,3 @@ class _FadeAwayDialogState extends State<_FadeAwayDialog>
     );
   }
 }
-
-/* 
-──────────────────────────────
-📘 HOW IT WORKS
-──────────────────────────────
-1. When user taps "Send Message", sendEmail() runs.
-2. It posts data to your Formspree endpoint.
-3. If statusCode == 200 → it clears form + shows ConfirmationSuccess.
-4. The animation dialog shows for 2 seconds, then beautifully fades away.
-5. Prevents multiple sends using isSubmitting flag.
-6. Works both in localhost & Netlify since it's tied to success status, not Flutter DevTools.
-──────────────────────────────
-*/
