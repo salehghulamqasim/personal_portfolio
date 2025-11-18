@@ -1,6 +1,6 @@
 # Personal Portfolio
 
-Welcome to the **Personal Portfolio** project! This is a Flutter-based web application designed to showcase your skills, projects, and achievements in a visually appealing and responsive manner.
+Welcome to the **Saleh Ghulam Personal Portfolio** project! This is a Flutter-based web application designed to showcase my skills, projects, and achievements in a visually appealing and responsive manner.
 
 ---
 
