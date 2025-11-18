@@ -94,7 +94,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 🌐 Live Demo
 
-[Live Demo Link](salehghulam.com) (Add your hosted portfolio link here)
+[Live Demo Link](https://salehghulam.com/) (Add your hosted portfolio link here)
 
 ---
 
