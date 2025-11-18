@@ -53,6 +53,22 @@ flutter build web \
 # Verify build output
 if [ -d "build/web" ]; then
     echo "✅ Build completed successfully!"
+    
+    # Remove source map files and references
+    echo "🧹 Removing source maps..."
+    
+    # Delete all .map files
+    find build/web -name "*.map" -type f -delete
+    
+    # Remove sourceMappingURL comments from JS files
+    # Works on both macOS (sed -i '') and Linux (sed -i)
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        find build/web -name "*.js" -type f -exec sed -i '' '/sourceMappingURL/d' {} \;
+    else
+        find build/web -name "*.js" -type f -exec sed -i '/sourceMappingURL/d' {} \;
+    fi
+    
+    echo "✅ Source maps removed"
     echo "📦 Build output is in build/web directory"
     echo ""
     echo "Build contents:"

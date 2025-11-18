@@ -1,2 +1,7 @@
+# Sitemap and robots.txt must be served directly, not redirected
+/sitemap.xml    /sitemap.xml   200
+/robots.txt     /robots.txt    200
+
+# Catch-all: redirect all other routes to index.html for Flutter SPA
 /*    /index.html   200
 
