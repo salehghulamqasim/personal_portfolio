@@ -49,7 +49,7 @@ function generateSEOHTML(path) {
   
   // Determine page-specific meta tags
   let title = 'Saleh Ghulam - Software Developer | Flutter & Mobile Development Expert';
-  let description = 'Experienced Software Developer and Flutter expert based in Jeddah. Specializing in mobile app development, UI/UX design, and full-stack solutions.';
+let description = 'Experienced Software Developer and Flutter developer based in Jeddah. Specializing in mobile app development, UI/UX design, and modern software solutions.';
   
   switch (path) {
     case '/about':
@@ -109,7 +109,7 @@ function generateSEOHTML(path) {
     "@type": "Person",
     "name": "Saleh Ghulam",
     "jobTitle": "Software Developer",
-    "description": "Experienced Software Developer and Flutter expert specializing in mobile app development, UI/UX design, and full-stack solutions.",
+    "description": "Experienced Software Developer and Flutter developer specializing in mobile app development, UI/UX design, and modern software solutions.",
     "email": "SalehTheCoder@gmail.com",
     "url": "${baseUrl}",
     "image": "${baseUrl}/assets/images/MaskedSaleh.webp",

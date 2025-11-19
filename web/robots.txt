@@ -4,13 +4,12 @@
 User-agent: *
 Allow: /
 
-# Disallow admin or private areas (if any exist in future)
+# Disallow admin or private areas (none currently)
 # Disallow: /admin/
 # Disallow: /private/
 
 # Sitemap location
-Sitemap: https://YOUR-DOMAIN.com/sitemap.xml
+Sitemap: https://salehghulam.com/sitemap.xml
 
-# Crawl-delay (optional, adjust if needed)
+# Crawl-delay (optional)
 # Crawl-delay: 1
-

@@ -332,7 +332,11 @@ class _HackathonBoxState extends State<HackathonBox> {
           'At the International Conference on Logistics, my team of three presented SkyPort, a project aimed at revolutionizing port operations using drones, AI, and data analytics. We collaborated with our university tutors to refine our concept, design a poster, and pitch our vision to industry professionals. SkyPort focuses on enhancing safety, efficiency, and sustainability in port logistics through real-time tracking, predictive analytics, and aerial surveillance.',
       'team': '3 members',
       'duration': '2 months',
-      'imagePath': 'assets/Certificates/Skyport.jpeg',
+      'imagePath': 'assets/Certificates/skyport.webp',
+      'imagePaths': [
+        'assets/Certificates/skyport.webp',
+        'assets/Certificates/skyportProject.webp',
+      ],
     },
     '3': {
       'name': 'Tech Meetup 3',
@@ -554,9 +558,33 @@ class _HackathonBoxState extends State<HackathonBox> {
                             builder: (context) {
                               final isMobile =
                                   MediaQuery.of(context).size.width < 768;
+                              final galleryPaths =
+                                  (data['imagePaths'] as List<dynamic>?)
+                                      ?.whereType<String>()
+                                      .where(
+                                        (path) =>
+                                            path.trim().isNotEmpty &&
+                                            path.trim() != '[]',
+                                      )
+                                      .toList();
+                              final double imageHeight = isMobile
+                                  ? 260.h
+                                  : 380.h;
+                              if (galleryPaths != null &&
+                                  galleryPaths.isNotEmpty) {
+                                return _SwipeableCertificateGallery(
+                                  paths: galleryPaths,
+                                  height: imageHeight,
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderColor: hackathonColor.withOpacity(0.2),
+                                  placeholderIconColor: hackathonColor,
+                                  labelPrefix:
+                                      data['name']?.toString() ?? 'Certificate',
+                                );
+                              }
                               return _ZoomableAssetImage(
                                 path: data['imagePath'] as String?,
-                                height: isMobile ? 260.h : 380.h,
+                                height: imageHeight,
                                 borderRadius: BorderRadius.circular(20.r),
                                 borderColor: hackathonColor.withOpacity(0.2),
                                 placeholderIconColor: hackathonColor,
@@ -1591,6 +1619,91 @@ class _StatItem extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SwipeableCertificateGallery extends StatefulWidget {
+  final List<String> paths;
+  final double height;
+  final BorderRadius borderRadius;
+  final Color borderColor;
+  final Color placeholderIconColor;
+  final String labelPrefix;
+
+  const _SwipeableCertificateGallery({
+    required this.paths,
+    required this.height,
+    required this.borderRadius,
+    required this.borderColor,
+    required this.placeholderIconColor,
+    required this.labelPrefix,
+  });
+
+  @override
+  State<_SwipeableCertificateGallery> createState() =>
+      _SwipeableCertificateGalleryState();
+}
+
+class _SwipeableCertificateGalleryState
+    extends State<_SwipeableCertificateGallery> {
+  late final PageController _pageController = PageController();
+  int _currentIndex = 0;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.paths.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return Column(
+      children: [
+        SizedBox(
+          height: widget.height,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: widget.paths.length,
+            onPageChanged: (index) => setState(() => _currentIndex = index),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: _ZoomableAssetImage(
+                  path: widget.paths[index],
+                  height: widget.height,
+                  borderRadius: widget.borderRadius,
+                  borderColor: widget.borderColor,
+                  placeholderIconColor: widget.placeholderIconColor,
+                  label: '${widget.labelPrefix} - ${index + 1}',
+                ),
+              );
+            },
+          ),
+        ),
+        SizedBox(height: 12.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(widget.paths.length, (index) {
+            final isActive = index == _currentIndex;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              margin: EdgeInsets.symmetric(horizontal: 3.w),
+              height: 6.h,
+              width: isActive ? 18.w : 8.w,
+              decoration: BoxDecoration(
+                color: isActive
+                    ? widget.placeholderIconColor
+                    : widget.placeholderIconColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            );
+          }),
+        ),
+      ],
     );
   }
 }
