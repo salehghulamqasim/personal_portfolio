@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
-import 'package:personal_portfolio/components/hover_widget.dart';
 import 'package:personal_portfolio/components/tech_skills.dart';
 import 'package:personal_portfolio/themes/colors.dart';
 import 'package:personal_portfolio/themes/text_styles.dart';
