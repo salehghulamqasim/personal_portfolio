@@ -42,11 +42,14 @@ class ProjectCard extends StatefulWidget {
 
 class _ProjectCardState extends State<ProjectCard> {
   late bool isMobile;
+  late bool isDesktop;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    isMobile = MediaQuery.of(context).size.width < 768;
+    final width = MediaQuery.of(context).size.width;
+    isMobile = width < 768;
+    isDesktop = width >= 1024;
   }
 
   @override
@@ -93,19 +96,80 @@ class _ProjectCardState extends State<ProjectCard> {
 
                   SizedBox(height: isMobile ? 12.h : 22.h),
 
-                  // Expandable button indicator
-                  ExpandableButton(
-                    child: OutlinedButton(
-                      onPressed: null, // Disabled tap functionality
-                      child: Text(
-                        isExpanded ? 'Tap to Collapse' : 'Tap to Expand',
-                        style: TextStyle(
-                          fontFamily: Fonts.roboto.fontFamily,
-                          fontSize: isMobile ? 14.sp : 16.sp,
+                  // Neutral, pill-shaped Expand/Collapse button
+                  Center(
+                    child: ExpandableButton(
+                      child: Semantics(
+                        button: true,
+                        label: isExpanded
+                            ? 'Collapse project details'
+                            : 'Expand project details',
+                        toggled: isExpanded,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                          width: double.infinity,
+                          constraints: BoxConstraints(
+                            minHeight: 48.h,
+                            minWidth: 120.w,
+                          ),
+                          decoration: BoxDecoration(
+                            color: isExpanded
+                                ? const Color(0xFFF3F4F6)
+                                : Colors.white,
+                            border: Border.all(
+                              color: const Color(0xFFE5E7EB),
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(30.r),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12.h,
+                              horizontal: 18.w,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AnimatedRotation(
+                                  turns: isExpanded ? 0.5 : 0.0,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                  child: Icon(
+                                    Icons.expand_more,
+                                    color: const Color(0xFF888888),
+                                    size: isMobile ? 22.sp : 24.sp,
+                                  ),
+                                ),
+                                SizedBox(width: 10.w),
+                                Text(
+                                  isExpanded ? 'Show Less' : 'Show More',
+                                  style: TextStyle(
+                                    fontFamily: Fonts.roboto.fontFamily,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: isMobile ? 15.sp : 17.sp,
+                                    color: const Color(0xFF444444),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
+                  // ---
+                  // Style Guide: ProjectCard Expand/Collapse Button
+                  //
+                  // - Muted color palette: #F3F4F6 (background), #888888 (icon/border), #444444 (text)
+                  // - No hover effect on desktop; all interaction is via click/tap
+                  // - Touch targets: min 52px height, 140px width (mobile-first)
+                  // - Visual feedback: subtle color change on tap (mobile)
+                  // - Only button area triggers expand/collapse (no accidental triggers)
+                  // - Accessible: proper contrast, semantics, keyboard focusable
+                  // - Animation: smooth expand/collapse, animated icon rotation
+                  // ---
                 ],
               ),
             );
@@ -114,22 +178,17 @@ class _ProjectCardState extends State<ProjectCard> {
             Widget imageSection = Container(
               width: double.infinity,
               alignment: Alignment.center,
-              child: HoverWidget(
-                hoverScale: 1.05,
-                animationDuration: Duration(milliseconds: 300),
-                child: SizedBox(
-                  height: isMobile ? 320.h : 550.h,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12.r),
-
-                    child: Image.asset(
-                      widget.imagePaths.isNotEmpty
-                          ? widget.mainImage
-                          : widget.imagePaths[0],
-                      fit: BoxFit.contain,
-                      alignment: Alignment(0, -0.5),
-                      semanticLabel: '${widget.title} project preview image',
-                    ),
+              child: SizedBox(
+                height: isMobile ? 220.h : 340.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: Image.asset(
+                    widget.imagePaths.isNotEmpty
+                        ? widget.mainImage
+                        : widget.imagePaths[0],
+                    fit: BoxFit.contain,
+                    alignment: Alignment(0, -0.5),
+                    semanticLabel: '${widget.title} project preview image',
                   ),
                 ),
               ),
@@ -156,7 +215,7 @@ class _ProjectCardState extends State<ProjectCard> {
               margin: EdgeInsets.all(isMobile ? 8.w : 16.w),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(40.r),
+                borderRadius: BorderRadius.circular(30.r),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: Column(

@@ -18,8 +18,7 @@ class _ContactFormState extends State<ContactForm> {
   final emailController = TextEditingController();
   final messageController = TextEditingController();
 
-  bool isSubmitting = false; // prevent spam clicks
-  bool isEmailValid = false; // track email validity
+  bool isSubmitting = false;
 
   // Cache these values to avoid recalculating on every keystroke
   late final bool isMobile;
@@ -29,14 +28,15 @@ class _ContactFormState extends State<ContactForm> {
   @override
   void initState() {
     super.initState();
-    // Add listener to email controller to validate on change
-    emailController.addListener(_validateEmail);
+    // Add listeners to trigger rebuilds when text changes
+    nameController.addListener(_onFieldChanged);
+    emailController.addListener(_onFieldChanged);
+    messageController.addListener(_onFieldChanged);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Calculate once when dependencies change, not on every rebuild
     isMobile = MediaQuery.of(context).size.width < 768;
     horizontalPadding = isMobile ? 20.w : 40.w;
     maxWidth = 600.w;
@@ -44,51 +44,59 @@ class _ContactFormState extends State<ContactForm> {
 
   @override
   void dispose() {
-    // Don't forget to dispose controllers
+    nameController.removeListener(_onFieldChanged);
+    emailController.removeListener(_onFieldChanged);
+    messageController.removeListener(_onFieldChanged);
     nameController.dispose();
     emailController.dispose();
     messageController.dispose();
     super.dispose();
   }
 
-  // Email validation using regex
-  bool _isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
-    return emailRegex.hasMatch(email);
+  // Trigger rebuild when any field changes
+  void _onFieldChanged() {
+    setState(() {});
   }
 
-  // Validate email and update state
-  void _validateEmail() {
-    final valid = _isValidEmail(emailController.text.trim());
-    if (valid != isEmailValid) {
-      setState(() => isEmailValid = valid);
-    }
+  // Improved email validation
+  bool _isValidEmail(String email) {
+    if (email.isEmpty) return false;
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    return emailRegex.hasMatch(email.trim());
+  }
+
+  // Check if form is valid
+  bool get _isFormValid {
+    return nameController.text.trim().isNotEmpty &&
+        _isValidEmail(emailController.text) &&
+        messageController.text.trim().isNotEmpty;
   }
 
   // SEND VIA FORMSPREE
   Future<void> sendEmail() async {
-    if (isSubmitting) return;
+    if (isSubmitting || !_isFormValid) return;
+
     setState(() => isSubmitting = true);
 
     try {
       final response = await http.post(
         Uri.parse('https://formspree.io/f/manlvavv'),
         body: {
-          'name': nameController.text,
-          'email': emailController.text,
-          'message': messageController.text,
+          'name': nameController.text.trim(),
+          'email': emailController.text.trim(),
+          'message': messageController.text.trim(),
         },
       );
 
       if (response.statusCode == 200) {
         print('✅ Email sent (status 200)');
 
-        // Clear the text fields after successful submission
         nameController.clear();
         emailController.clear();
         messageController.clear();
 
-        // show confirmation animation
         await showDialog(
           context: context,
           barrierDismissible: false,
@@ -108,7 +116,7 @@ class _ContactFormState extends State<ContactForm> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Sent",
+                      "Sent!",
                       style: TextStyle(
                         fontFamily: 'Nunito',
                         fontSize: 24,
@@ -128,7 +136,6 @@ class _ContactFormState extends State<ContactForm> {
     } catch (e) {
       print('⚠️ Exception (might be CORS) but email may have sent: $e');
 
-      // Clear the text fields even if there's an exception (assuming email sent)
       nameController.clear();
       emailController.clear();
       messageController.clear();
@@ -255,7 +262,7 @@ class _ContactFormState extends State<ContactForm> {
                 Center(
                   child: _SubmitButton(
                     isSubmitting: isSubmitting,
-                    isEmailValid: isEmailValid,
+                    isFormValid: _isFormValid,
                     onPressed: sendEmail,
                   ),
                 ),
@@ -272,7 +279,6 @@ class _ContactFormState extends State<ContactForm> {
 
 // 🎯 EXTRACTED WIDGETS FOR BETTER PERFORMANCE
 
-// Field label - now a const StatelessWidget
 class _FieldLabel extends StatelessWidget {
   final String text;
 
@@ -292,7 +298,6 @@ class _FieldLabel extends StatelessWidget {
   }
 }
 
-// Custom text field - StatelessWidget to prevent unnecessary rebuilds
 class _CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -356,52 +361,60 @@ class _CustomTextField extends StatelessWidget {
   }
 }
 
-// Submit button - StatelessWidget
 class _SubmitButton extends StatelessWidget {
   final bool isSubmitting;
-  final bool isEmailValid;
+  final bool isFormValid;
   final VoidCallback onPressed;
 
   const _SubmitButton({
     required this.isSubmitting,
-    required this.isEmailValid,
+    required this.isFormValid,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isEnabled = !isSubmitting && isFormValid;
+
     return ElevatedButton(
-      onPressed: (isSubmitting || !isEmailValid) ? null : onPressed,
+      onPressed: isEnabled ? onPressed : null,
       style: ElevatedButton.styleFrom(
-        backgroundColor: (isSubmitting || !isEmailValid)
-            ? Colors.grey
-            : const Color(0xFFFDC435),
+        backgroundColor: isEnabled
+            ? const Color(0xFFFDC435)
+            : const Color(0xFFE5E7EB),
         padding: EdgeInsets.symmetric(horizontal: 38.w, vertical: 32.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),
-        shadowColor: (isSubmitting || !isEmailValid)
-            ? Colors.transparent
-            : const Color(0xFFFDC435).withValues(alpha: 0.3),
-        elevation: (isSubmitting || !isEmailValid) ? 0 : 4,
+        shadowColor: isEnabled
+            ? const Color(0xFFFDC435).withValues(alpha: 0.3)
+            : Colors.transparent,
+        elevation: isEnabled ? 4 : 0,
+        disabledBackgroundColor: const Color(0xFFE5E7EB),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            isSubmitting
-                ? 'Sending...'
-                : (!isEmailValid ? 'Enter a valid email' : 'Send Message'),
-            style: const TextStyle(
+            isSubmitting ? 'Sending...' : 'Send Message',
+            style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w500,
               fontSize: 18,
-              color: Color(0xFF25282B),
+              color: isEnabled
+                  ? const Color(0xFF25282B)
+                  : const Color(0xFF828282),
             ),
           ),
-          if (!isSubmitting && isEmailValid) ...[
+          if (!isSubmitting) ...[
             SizedBox(width: 10.w),
-            const Icon(Icons.send, size: 20, color: Color(0xFF25282B)),
+            Icon(
+              Icons.send,
+              size: 20,
+              color: isEnabled
+                  ? const Color(0xFF25282B)
+                  : const Color(0xFF828282),
+            ),
           ],
         ],
       ),
@@ -409,7 +422,6 @@ class _SubmitButton extends StatelessWidget {
   }
 }
 
-// Email direct link - StatelessWidget
 class _EmailDirectLink extends StatelessWidget {
   final bool isMobile;
   final VoidCallback onTap;
@@ -478,7 +490,6 @@ class _EmailDirectLink extends StatelessWidget {
   }
 }
 
-// Beautiful fade-away dialog with smooth animation
 class _FadeAwayDialog extends StatefulWidget {
   final Widget child;
 
@@ -512,7 +523,6 @@ class _FadeAwayDialogState extends State<_FadeAwayDialog>
       end: 0.9,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
 
-    // Start fade out after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         _controller.forward().then((_) {
